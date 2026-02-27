@@ -1,0 +1,164 @@
+<html lang="en" class="scroll-smooth"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+</head>
+<body class="antialiased selection:bg-neutral-200 selection:text-neutral-900 min-h-screen flex flex-col text-neutral-600 font-sans bg-white">
+
+
+
+    
+    <div class="max-w-3xl mx-auto px-6 py-12 md:py-24 w-full flex-grow flex flex-col gap-24">
+        
+        <!-- Header / Navigation -->
+        <header class="flex items-center justify-between w-full">
+            <a href="/" aria-label="Home" class="text-neutral-900 font-semibold tracking-tighter text-lg hover:text-black transition-colors">
+                fk
+            </a>
+            <nav class="flex items-center gap-6 text-sm font-medium">
+                <a href="#about" class="hover:text-neutral-900 transition-colors">About</a>
+                <a href="#experience" class="hover:text-neutral-900 transition-colors">Experience</a>
+                <a href="#projects" class="hover:text-neutral-900 transition-colors">Projects</a>
+            </nav>
+        </header>
+
+        <!-- Hero Section -->
+        <main class="flex flex-col gap-24">
+            <section class="flex flex-col gap-6 md:pt-20 pt-12 gap-x-6 gap-y-6" id="about">
+                <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&amp;w=256&amp;auto=format&amp;fit=crop" alt="Profile Photo" class="w-16 h-16 md:w-20 md:h-20 rounded-full object-cover ring-1 ring-neutral-900/5 shadow-sm">
+                <h1 class="text-3xl md:text-5xl font-semibold tracking-tight text-neutral-900 max-w-2xl leading-tight">
+                    Software engineer and designer building digital experiences.
+                </h1>
+                <p class="text-base leading-relaxed max-w-xl text-neutral-600">
+                    I'm a developer focused on creating accessible, high-performance, and beautifully designed web applications. Currently, I specialize in the React ecosystem, design systems, and bridging the gap between engineering and design.
+                </p>
+                <div class="flex items-center gap-4 mt-4 text-sm font-medium">
+                    <a href="#" class="flex items-center gap-1.5 text-neutral-900 hover:text-black transition-colors group">
+                        <iconify-icon icon="solar:letter-linear" width="18" stroke-width="1.5"></iconify-icon>
+                        <span>Email</span>
+                    </a>
+                    <a href="#" class="flex items-center gap-1.5 text-neutral-500 hover:text-neutral-900 transition-colors group">
+                        <iconify-icon icon="solar:code-circle-linear" width="18" stroke-width="1.5"></iconify-icon>
+                        <span>GitHub</span>
+                    </a>
+                    <a href="#" class="flex items-center gap-1.5 text-neutral-500 hover:text-neutral-900 transition-colors group">
+                        <iconify-icon icon="solar:user-circle-linear" width="18" stroke-width="1.5"></iconify-icon>
+                        <span>LinkedIn</span>
+                    </a>
+                </div>
+            </section>
+
+            <!-- Experience Section -->
+            <section id="experience" class="flex flex-col gap-8">
+                <h2 class="text-xs font-semibold uppercase tracking-widest text-neutral-400">Experience</h2>
+                
+                <div class="flex flex-col gap-12">
+                    <!-- Experience Item 1 -->
+                    <div class="group relative grid pb-1 sm:grid-cols-8 sm:gap-8 md:gap-4 transition-all">
+                        <!-- Card Hover Background -->
+                        <div class="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-2xl transition-all duration-300 ease-out motion-reduce:transition-none sm:-inset-x-6 sm:block sm:group-hover:bg-neutral-50/80 sm:group-hover:scale-[1.01]"></div>
+                        
+                        <div class="z-10 mb-2 mt-1 text-xs font-medium text-neutral-500 sm:col-span-2 tracking-wide uppercase">
+                            2022 — Present
+                        </div>
+                        <div class="z-10 sm:col-span-6 flex flex-col gap-2">
+                            <h3 class="font-medium text-base text-neutral-900 leading-snug">
+                                Senior Frontend Engineer <span class="text-neutral-500">· Stripe</span>
+                            </h3>
+                            <p class="text-sm leading-relaxed text-neutral-600">
+                                Lead development of core dashboard features. Implemented a new component library reducing development time by 30%. Mentored junior engineers and established frontend testing standards.
+                            </p>
+                            <ul class="flex flex-wrap gap-2 mt-2">
+                                <li class="flex items-center rounded-full bg-neutral-100 px-3 py-1 text-xs font-medium text-neutral-600">React</li>
+                                <li class="flex items-center rounded-full bg-neutral-100 px-3 py-1 text-xs font-medium text-neutral-600">TypeScript</li>
+                                <li class="flex items-center rounded-full bg-neutral-100 px-3 py-1 text-xs font-medium text-neutral-600">Tailwind</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Experience Item 2 -->
+                    <div class="group relative grid pb-1 sm:grid-cols-8 sm:gap-8 md:gap-4 transition-all">
+                        <!-- Card Hover Background -->
+                        <div class="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-2xl transition-all duration-300 ease-out motion-reduce:transition-none sm:-inset-x-6 sm:block sm:group-hover:bg-neutral-50/80 sm:group-hover:scale-[1.01]"></div>
+                        
+                        <div class="z-10 mb-2 mt-1 text-xs font-medium text-neutral-500 sm:col-span-2 tracking-wide uppercase">
+                            2019 — 2022
+                        </div>
+                        <div class="z-10 sm:col-span-6 flex flex-col gap-2">
+                            <h3 class="font-medium text-base text-neutral-900 leading-snug">
+                                UI Engineer <span class="text-neutral-500">· Vercel</span>
+                            </h3>
+                            <p class="text-sm leading-relaxed text-neutral-600">
+                                Developed responsive, accessible, and performant interfaces for the main marketing site and documentation. Collaborated closely with designers to ensure pixel-perfect implementation.
+                            </p>
+                            <ul class="flex flex-wrap gap-2 mt-2">
+                                <li class="flex items-center rounded-full bg-neutral-100 px-3 py-1 text-xs font-medium text-neutral-600">Next.js</li>
+                                <li class="flex items-center rounded-full bg-neutral-100 px-3 py-1 text-xs font-medium text-neutral-600">CSS Modules</li>
+                                <li class="flex items-center rounded-full bg-neutral-100 px-3 py-1 text-xs font-medium text-neutral-600">Figma</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Projects Section -->
+            <section id="projects" class="flex flex-col gap-8">
+                <h2 class="text-xs font-semibold uppercase tracking-widest text-neutral-400">Selected Projects</h2>
+                
+                <div class="flex flex-col gap-12">
+                    <!-- Project Item 1 -->
+                    <div class="group relative grid pb-1 sm:grid-cols-8 sm:gap-8 md:gap-4 transition-all">
+                        <!-- Card Hover Background -->
+                        <div class="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-2xl transition-all duration-300 ease-out motion-reduce:transition-none sm:-inset-x-6 sm:block sm:group-hover:bg-neutral-50/80 sm:group-hover:scale-[1.01]"></div>
+                        
+                        <div class="z-10 mb-2 mt-1 text-xs font-medium text-neutral-500 sm:col-span-2 tracking-wide uppercase">
+                            2023
+                        </div>
+                        <div class="z-10 sm:col-span-6 flex flex-col gap-2">
+                            <a href="#" class="inline-flex items-baseline gap-1.5 font-medium text-base text-neutral-900 hover:text-black focus-visible:text-black group/link transition-colors">
+                                <span>Design System UI</span>
+                                <iconify-icon icon="solar:arrow-right-up-linear" width="16" class="translate-y-[1px] text-neutral-400 group-hover/link:text-black transition-all group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5"></iconify-icon>
+                            </a>
+                            <p class="text-sm leading-relaxed text-neutral-600">
+                                An open-source, highly customizable component library built on top of Radix UI and Tailwind CSS. Focuses on accessibility and developer experience.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Project Item 2 -->
+                    <div class="group relative grid pb-1 sm:grid-cols-8 sm:gap-8 md:gap-4 transition-all">
+                        <!-- Card Hover Background -->
+                        <div class="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-2xl transition-all duration-300 ease-out motion-reduce:transition-none sm:-inset-x-6 sm:block sm:group-hover:bg-neutral-50/80 sm:group-hover:scale-[1.01]"></div>
+                        
+                        <div class="z-10 mb-2 mt-1 text-xs font-medium text-neutral-500 sm:col-span-2 tracking-wide uppercase">
+                            2022
+                        </div>
+                        <div class="z-10 sm:col-span-6 flex flex-col gap-2">
+                            <a href="#" class="inline-flex items-baseline gap-1.5 font-medium text-base text-neutral-900 hover:text-black focus-visible:text-black group/link transition-colors">
+                                <span>Analytics Dashboard</span>
+                                <iconify-icon icon="solar:arrow-right-up-linear" width="16" class="translate-y-[1px] text-neutral-400 group-hover/link:text-black transition-all group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5"></iconify-icon>
+                            </a>
+                            <p class="text-sm leading-relaxed text-neutral-600">
+                                A real-time data visualization dashboard for SaaS metrics. Features complex D3.js charts, light/dark mode support, and seamless state management.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="mt-12 pt-8 border-t border-neutral-100 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-medium text-neutral-500">
+            <p>© 2024 Fay. All rights reserved.</p>
+            <div class="flex items-center gap-4">
+                <a href="#" class="hover:text-neutral-900 transition-colors">Twitter</a>
+                <a href="#" class="hover:text-neutral-900 transition-colors">GitHub</a>
+                <a href="#" class="hover:text-neutral-900 transition-colors">Dribbble</a>
+            </div>
+        </footer>
+
+    </div>
+
+</body></html>
