@@ -1,212 +1,398 @@
-<html lang="en" class="scroll-smooth">
-
-<head>
+<html lang="en" class="scroll-smooth"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio</title>
+    <title>Denis Safonov — Product Designer</title>
+    <style>
+        @font-face { font-family:'Founders Grotesk'; src:url('./Font/FoundersGrotesk-Light.otf') format('opentype'); font-weight:300; font-style:normal; font-display:swap; }
+        @font-face { font-family:'Founders Grotesk'; src:url('./Font/FoundersGrotesk-LightItalic.otf') format('opentype'); font-weight:300; font-style:italic; font-display:swap; }
+        @font-face { font-family:'Founders Grotesk'; src:url('./Font/FoundersGrotesk-Regular.otf') format('opentype'); font-weight:400; font-style:normal; font-display:swap; }
+        @font-face { font-family:'Founders Grotesk'; src:url('./Font/FoundersGrotesk-RegularItalic.otf') format('opentype'); font-weight:400; font-style:italic; font-display:swap; }
+        @font-face { font-family:'Founders Grotesk'; src:url('./Font/FoundersGrotesk-Medium.otf') format('opentype'); font-weight:500; font-style:normal; font-display:swap; }
+        @font-face { font-family:'Founders Grotesk'; src:url('./Font/FoundersGrotesk-MediumItalic.otf') format('opentype'); font-weight:500; font-style:italic; font-display:swap; }
+        @font-face { font-family:'Founders Grotesk'; src:url('./Font/FoundersGrotesk-Semibold.otf') format('opentype'); font-weight:600; font-style:normal; font-display:swap; }
+        @font-face { font-family:'Founders Grotesk'; src:url('./Font/FoundersGrotesk-SemiboldItalic.otf') format('opentype'); font-weight:600; font-style:italic; font-display:swap; }
+        @font-face { font-family:'Founders Grotesk'; src:url('./Font/FoundersGrotesk-Bold.otf') format('opentype'); font-weight:700; font-style:normal; font-display:swap; }
+        @font-face { font-family:'Founders Grotesk'; src:url('./Font/FoundersGrotesk-BoldItalic.otf') format('opentype'); font-weight:700; font-style:italic; font-display:swap; }
+    </style>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: { extend: { fontFamily: { sans: ['Founders Grotesk', 'sans-serif'] } } }
+        }
+    </script>
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <style>
+        /* Preloader */
+        #preloader {
+            position: fixed; inset: 0; z-index: 10000;
+            display: flex; align-items: center; justify-content: center;
+            background: #000;
+            transition: opacity .5s cubic-bezier(.22,1,.36,1), visibility .5s;
+        }
+        #preloader.done {
+            opacity: 0; visibility: hidden;
+        }
+        #preloader .counter {
+            font-family: 'Founders Grotesk', sans-serif;
+            font-size: 36px; font-weight: 400; color: #fff;
+            letter-spacing: -0.02em;
+        }
+        #preloader .line {
+            position: absolute; bottom: 0; left: 0; height: 2px;
+            background: #fff;
+            transition: width .05s linear;
+        }
+
+        /* Page transition overlay */
+        #page-transition {
+            position: fixed; inset: 0; z-index: 9998;
+            background: #000;
+            transform: translateY(100%);
+            transition: transform .6s cubic-bezier(.76,0,.24,1);
+        }
+        #page-transition.active {
+            transform: translateY(0);
+        }
+        #page-transition.exit {
+            transform: translateY(-100%);
+        }
+
+        /* Link underline animation — slide through */
+        .link-underline {
+            position: relative;
+            text-decoration: none;
+        }
+        .link-underline::after {
+            content: '';
+            position: absolute;
+            bottom: -2px; left: 0; right: 0;
+            height: 1px;
+            background: currentColor;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform .45s cubic-bezier(.22,1,.36,1);
+        }
+        .link-underline:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        /* Project cards */
+        .proj-card {
+            display:flex; flex-direction:column; gap:20px;
+            cursor:pointer; text-decoration:none; color:inherit;
+        }
+        .proj-card .proj-arrow {
+            transition: transform .34s cubic-bezier(.22,1,.36,1), opacity .28s;
+            opacity:0; transform:translateX(-4px);
+        }
+        .proj-card:hover .proj-arrow { opacity:1; transform:translateX(0); }
+        .card-stack {
+            position: relative; width: 200px; height: 90px;
+        }
+        .card-stack img {
+            position: absolute; width: 75px; height: 75px;
+            object-fit: cover; border-radius: 8px;
+            border: 2px solid #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,.06), 0 4px 12px rgba(0,0,0,.04);
+            transition: transform .4s cubic-bezier(.22,1,.36,1);
+        }
+        .dark .card-stack img {
+            border-color: #1a1a1a;
+            box-shadow: 0 2px 8px rgba(0,0,0,.4), 0 4px 12px rgba(0,0,0,.3);
+        }
+        .card-stack img:nth-child(1) { z-index:1; top:8px; left:0; transform:rotate(-3deg); }
+        .card-stack img:nth-child(2) { z-index:2; top:4px; left:43px; transform:rotate(0deg); }
+        .card-stack img:nth-child(3) { z-index:3; top:0; left:86px; transform:rotate(3deg); }
+        .proj-card:hover .card-stack img:nth-child(1) { transform:rotate(0deg) translateX(0); }
+        .proj-card:hover .card-stack img:nth-child(2) { transform:rotate(0deg) translateX(11px); }
+        .proj-card:hover .card-stack img:nth-child(3) { transform:rotate(0deg) translateX(22px); }
+        @media (max-width:640px) {
+            .card-stack img { width:65px; height:65px; }
+            .card-stack img:nth-child(2) { left:36px; }
+            .card-stack img:nth-child(3) { left:72px; }
+        }
+
+        /* Theme toggle */
+        .theme-toggle {
+            width:32px; height:32px; border-radius:50%; background:transparent;
+            border:1px solid #d4d4d4; cursor:pointer;
+            display:flex; align-items:center; justify-content:center;
+            transition: border-color .3s, background .3s;
+            flex-shrink:0; padding:0; color:#525252;
+        }
+        .theme-toggle:hover { border-color:#a3a3a3; background:#fafafa; }
+        .dark .theme-toggle { border-color:#333; color:#888; }
+        .dark .theme-toggle:hover { border-color:#555; background:#1a1a1a; }
+        .theme-toggle .icon-sun { display:block; }
+        .theme-toggle .icon-moon { display:none; }
+        .dark .theme-toggle .icon-sun { display:none; }
+        .dark .theme-toggle .icon-moon { display:block; }
+
+        /* Custom cursor */
+        #cursor-dot {
+            position:fixed; width:12px; height:12px; border-radius:50%;
+            background:#888; pointer-events:none; z-index:9999; opacity:0;
+            transform:translate(-50%,-50%);
+            transition: opacity .25s, transform .15s cubic-bezier(.22,1,.36,1);
+            mix-blend-mode:difference;
+        }
+        #cursor-dot.visible { opacity:1; }
+        #cursor-dot.inside { opacity:0; }
+
+        /* Reveal animations */
+        .reveal {
+            opacity:0; transform:translateY(32px);
+            transition: opacity 1.2s cubic-bezier(.22,1,.36,1), transform 1.2s cubic-bezier(.22,1,.36,1);
+        }
+        .reveal.visible { opacity:1; transform:translateY(0); }
+        .reveal-delay-1 { transition-delay:.18s; }
+        .reveal-delay-2 { transition-delay:.36s; }
+        .reveal-delay-3 { transition-delay:.54s; }
+        .reveal-delay-4 { transition-delay:.72s; }
+
+        /* Hero intro — triggered after preloader, with longer stagger */
+        .hero-reveal {
+            opacity:0; transform:translateY(40px);
+            transition: opacity .9s cubic-bezier(.22,1,.36,1), transform .9s cubic-bezier(.22,1,.36,1);
+        }
+        .hero-reveal.visible { opacity:1; transform:translateY(0); }
+        .hero-delay-1 { transition-delay:.1s; }
+        .hero-delay-2 { transition-delay:.2s; }
+        .hero-delay-3 { transition-delay:.35s; }
+        .hero-delay-4 { transition-delay:.5s; }
+
+        /* Header reveal — fade + slide down */
+        .header-reveal {
+            opacity:0; transform:translateY(-16px);
+            transition: opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1);
+        }
+        .header-reveal.visible { opacity:1; transform:translateY(0); }
+
+        body { transition: background-color .3s, color .3s; }
+    </style>
 </head>
+<body class="antialiased selection:bg-neutral-800 selection:text-white dark:selection:bg-neutral-200 dark:selection:text-black min-h-screen flex flex-col text-neutral-500 dark:text-neutral-400 font-sans bg-white dark:bg-[#0a0a0a]">
 
-<body
-    class="antialiased selection:bg-neutral-200 selection:text-neutral-900 min-h-screen flex flex-col text-neutral-600 font-sans bg-white">
+    <!-- Preloader -->
+    <div id="preloader">
+        <span class="counter">0</span>
+        <div class="line" style="width:0%"></div>
+    </div>
 
+    <!-- Page transition overlay -->
+    <div id="page-transition"></div>
 
+    <!-- Custom cursor -->
+    <div id="cursor-dot"></div>
 
+    <div id="content-area" class="max-w-3xl mx-auto px-6 py-16 md:py-32 w-full flex-grow flex flex-col gap-32">
 
-    <div class="max-w-3xl mx-auto px-6 py-12 md:py-24 w-full flex-grow flex flex-col gap-24">
-
-        <!-- Header / Navigation -->
-        <header class="flex items-center justify-between w-full">
-            <a href="/" aria-label="Home"
-                class="text-neutral-900 font-semibold tracking-tighter text-lg hover:text-black transition-colors">
-                d. safonov
+        <!-- Header -->
+        <header class="header-reveal flex items-center justify-between w-full">
+            <a href="/" aria-label="Home" class="text-black dark:text-white font-medium tracking-wide text-[13px] uppercase">
+                d.safonov
             </a>
-            <nav class="flex items-center gap-6 text-sm font-medium">
-                <a href="#about" class="hover:text-neutral-900 transition-colors">About</a>
-                <a href="#experience" class="hover:text-neutral-900 transition-colors">Experience</a>
-                <a href="#projects" class="hover:text-neutral-900 transition-colors">Projects</a>
+            <nav class="flex items-center gap-6 text-[13px] font-normal uppercase tracking-wider">
+                <a href="#about" class="link-underline text-neutral-500 dark:text-neutral-400 hover:text-black dark:hover:text-white transition-colors">About</a>
+                <a href="#experience" class="link-underline text-neutral-500 dark:text-neutral-400 hover:text-black dark:hover:text-white transition-colors">Experience</a>
+                <a href="#projects" class="link-underline text-neutral-500 dark:text-neutral-400 hover:text-black dark:hover:text-white transition-colors">Projects</a>
+                <button class="theme-toggle" onclick="document.documentElement.classList.toggle('dark'); localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light')" aria-label="Toggle theme">
+                    <iconify-icon class="icon-moon" icon="solar:moon-bold" width="16"></iconify-icon>
+                    <iconify-icon class="icon-sun" icon="solar:sun-bold" width="16"></iconify-icon>
+                </button>
             </nav>
         </header>
 
-        <!-- Hero Section -->
-        <main class="flex flex-col gap-24">
-            <section class="flex flex-col gap-6 md:pt-20 pt-12 gap-x-6 gap-y-6" id="about">
-                <img src="profile-new.png" alt="Profile Photo"
-                    class="w-20 h-20 md:w-24 md:h-24 rounded-md object-cover ring-1 ring-neutral-900/5 shadow-sm">
-                <h1 class="text-3xl md:text-5xl font-semibold tracking-tight text-neutral-900 max-w-2xl leading-tight">
-                    Hi, I'm Denis - Product Designer who cares about the details.
+        <!-- Hero -->
+        <main class="flex flex-col gap-32">
+            <section class="flex flex-col gap-6 md:pt-24 pt-16" id="about">
+                <img src="./profile-new.png" alt="Profile Photo" class="hero-reveal hero-delay-1 w-16 h-16 md:w-20 md:h-20 rounded-lg object-cover ring-1 ring-black/5 dark:ring-white/10 shadow-sm">
+
+                <h1 class="hero-reveal hero-delay-2 text-[24px] md:text-[30px] font-medium tracking-[-1.2px] text-black dark:text-white max-w-2xl leading-[1.3] uppercase">
+                    Hi, I'm Denis — <span class="text-neutral-400 dark:text-neutral-400">Product Designer building scalable SaaS solutions and high-conversion digital experiences.</span>
                 </h1>
-                <p class="text-base leading-relaxed max-w-xl text-neutral-600">
-                    I think design should be sharp, both in form and function. I enjoy thinking through user journeys
-                    and shipping taste-driven solutions. My expertise lies in SaaS, eshops, and complex data-heavy
-                    workflows.
+                <p class="hero-reveal hero-delay-3 text-[14px] leading-[1.8] max-w-md text-neutral-500 dark:text-neutral-400 font-normal">
+                    I bridge the gap between business goals and user needs. With 4 years of experience, I've led the end-to-end design of SaaS platforms and e-commerce products, focusing on clarity, system thinking, and measurable results.
                 </p>
-                <div class="flex items-center gap-4 mt-4 text-sm font-medium">
-                    <a href="#"
-                        class="flex items-center gap-1.5 text-neutral-900 hover:text-black transition-colors group">
-                        <iconify-icon icon="solar:letter-linear" width="18" stroke-width="1.5"></iconify-icon>
+                <div class="hero-reveal hero-delay-4 flex items-center gap-5 mt-3 text-[13px] font-normal uppercase tracking-wider">
+                    <a href="#" class="link-underline flex items-center gap-1.5 text-black dark:text-white">
+                        <iconify-icon icon="solar:letter-linear" width="16" stroke-width="1.5"></iconify-icon>
                         <span>Email</span>
                     </a>
-                    <a href="#"
-                        class="flex items-center gap-1.5 text-neutral-500 hover:text-neutral-900 transition-colors group">
-                        <iconify-icon icon="solar:code-circle-linear" width="18" stroke-width="1.5"></iconify-icon>
-                        <span>GitHub</span>
-                    </a>
-                    <a href="#"
-                        class="flex items-center gap-1.5 text-neutral-500 hover:text-neutral-900 transition-colors group">
-                        <iconify-icon icon="solar:user-circle-linear" width="18" stroke-width="1.5"></iconify-icon>
-                        <span>LinkedIn</span>
+                    <a href="#" class="link-underline flex items-center gap-1.5 text-neutral-500 dark:text-neutral-400 hover:text-black dark:hover:text-white transition-colors">
+                        <iconify-icon icon="mingcute:telegram-line" width="16"></iconify-icon>
+                        <span>Telegram</span>
                     </a>
                 </div>
             </section>
 
-            <!-- Experience Section -->
+            <!-- Experience -->
             <section id="experience" class="flex flex-col gap-8">
-                <h2 class="text-xs font-semibold uppercase tracking-widest text-neutral-400">Experience</h2>
-
+                <h2 class="reveal text-[12px] font-medium uppercase tracking-widest text-neutral-500 dark:text-neutral-500">Experience</h2>
                 <div class="flex flex-col gap-12">
-                    <!-- Experience Item 1 -->
-                    <div class="group relative grid pb-1 sm:grid-cols-8 sm:gap-8 md:gap-4 transition-all">
-                        <!-- Card Hover Background -->
-                        <div
-                            class="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-2xl transition-all duration-300 ease-out motion-reduce:transition-none sm:-inset-x-6 sm:block sm:group-hover:bg-neutral-50/80 sm:group-hover:scale-[1.01]">
+                    <div class="reveal flex flex-col gap-2">
+                        <div class="text-[12px] font-medium text-neutral-500 dark:text-neutral-500 tracking-wide uppercase">
+                            May 2022 — Jan 2026
                         </div>
-
-                        <div
-                            class="z-10 mb-2 mt-1 text-xs font-medium text-neutral-500 sm:col-span-2 tracking-wide uppercase">
-                            2022 — Present
-                        </div>
-                        <div class="z-10 sm:col-span-6 flex flex-col gap-2">
-                            <h3 class="font-medium text-base text-neutral-900 leading-snug">
-                                Senior Frontend Engineer <span class="text-neutral-500">· Stripe</span>
+                        <div class="flex flex-col gap-2">
+                            <h3 class="font-medium text-[15px] text-black dark:text-white leading-snug uppercase tracking-wider">
+                                Product Designer (SaaS & Web) <span class="text-neutral-500 dark:text-neutral-500">· Redcase.gr</span>
                             </h3>
-                            <p class="text-sm leading-relaxed text-neutral-600">
-                                Lead development of core dashboard features. Implemented a new component library
-                                reducing development time by 30%. Mentored junior engineers and established frontend
-                                testing standards.
-                            </p>
-                            <ul class="flex flex-wrap gap-2 mt-2">
-                                <li
-                                    class="flex items-center rounded-full bg-neutral-100 px-3 py-1 text-xs font-medium text-neutral-600">
-                                    React</li>
-                                <li
-                                    class="flex items-center rounded-full bg-neutral-100 px-3 py-1 text-xs font-medium text-neutral-600">
-                                    TypeScript</li>
-                                <li
-                                    class="flex items-center rounded-full bg-neutral-100 px-3 py-1 text-xs font-medium text-neutral-600">
-                                    Tailwind</li>
+                            <ul class="text-[14px] leading-[1.7] text-neutral-500 dark:text-neutral-400 list-disc list-outside ml-4 flex flex-col gap-1.5 font-normal">
+                                <li>Led the entire design lifecycle for a digital agency and its flagship SaaS product, Crowdcruit.gr.</li>
+                                <li>Designed a complex recruitment SaaS from scratch: from brand identity and CJMs to high-fidelity dashboards and design systems.</li>
+                                <li>Delivered 20+ projects, including large-scale e-commerce platforms and multi-page corporate sites, ensuring pixel-perfect handoffs to development.</li>
+                                <li>Established a unified design process that reduced time-to-market for new features by 30%.</li>
                             </ul>
-                        </div>
-                    </div>
-
-                    <!-- Experience Item 2 -->
-                    <div class="group relative grid pb-1 sm:grid-cols-8 sm:gap-8 md:gap-4 transition-all">
-                        <!-- Card Hover Background -->
-                        <div
-                            class="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-2xl transition-all duration-300 ease-out motion-reduce:transition-none sm:-inset-x-6 sm:block sm:group-hover:bg-neutral-50/80 sm:group-hover:scale-[1.01]">
-                        </div>
-
-                        <div
-                            class="z-10 mb-2 mt-1 text-xs font-medium text-neutral-500 sm:col-span-2 tracking-wide uppercase">
-                            2019 — 2022
-                        </div>
-                        <div class="z-10 sm:col-span-6 flex flex-col gap-2">
-                            <h3 class="font-medium text-base text-neutral-900 leading-snug">
-                                UI Engineer <span class="text-neutral-500">· Vercel</span>
-                            </h3>
-                            <p class="text-sm leading-relaxed text-neutral-600">
-                                Developed responsive, accessible, and performant interfaces for the main marketing site
-                                and documentation. Collaborated closely with designers to ensure pixel-perfect
-                                implementation.
-                            </p>
                             <ul class="flex flex-wrap gap-2 mt-2">
-                                <li
-                                    class="flex items-center rounded-full bg-neutral-100 px-3 py-1 text-xs font-medium text-neutral-600">
-                                    Next.js</li>
-                                <li
-                                    class="flex items-center rounded-full bg-neutral-100 px-3 py-1 text-xs font-medium text-neutral-600">
-                                    CSS Modules</li>
-                                <li
-                                    class="flex items-center rounded-full bg-neutral-100 px-3 py-1 text-xs font-medium text-neutral-600">
-                                    Figma</li>
+                                <li class="flex items-center rounded-full bg-[#fafafa] dark:bg-white/5 px-3 py-1 text-[12px] font-normal text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">Product Design</li>
+                                <li class="flex items-center rounded-full bg-[#fafafa] dark:bg-white/5 px-3 py-1 text-[12px] font-normal text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">Design Systems</li>
+                                <li class="flex items-center rounded-full bg-[#fafafa] dark:bg-white/5 px-3 py-1 text-[12px] font-normal text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">SaaS</li>
+                                <li class="flex items-center rounded-full bg-[#fafafa] dark:bg-white/5 px-3 py-1 text-[12px] font-normal text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">UX Research</li>
+                                <li class="flex items-center rounded-full bg-[#fafafa] dark:bg-white/5 px-3 py-1 text-[12px] font-normal text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">Figma</li>
+                                <li class="flex items-center rounded-full bg-[#fafafa] dark:bg-white/5 px-3 py-1 text-[12px] font-normal text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">E-commerce</li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- Projects Section -->
+            <!-- Projects -->
             <section id="projects" class="flex flex-col gap-8">
-                <h2 class="text-xs font-semibold uppercase tracking-widest text-neutral-400">Selected Projects</h2>
-
-                <div class="flex flex-col gap-12">
-                    <!-- Project Item 1 -->
-                    <div class="group relative grid pb-1 sm:grid-cols-8 sm:gap-8 md:gap-4 transition-all">
-                        <!-- Card Hover Background -->
-                        <div
-                            class="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-2xl transition-all duration-300 ease-out motion-reduce:transition-none sm:-inset-x-6 sm:block sm:group-hover:bg-neutral-50/80 sm:group-hover:scale-[1.01]">
-                        </div>
-
-                        <div
-                            class="z-10 mb-2 mt-1 text-xs font-medium text-neutral-500 sm:col-span-2 tracking-wide uppercase">
-                            2023
-                        </div>
-                        <div class="z-10 sm:col-span-6 flex flex-col gap-2">
-                            <a href="#"
-                                class="inline-flex items-baseline gap-1.5 font-medium text-base text-neutral-900 hover:text-black focus-visible:text-black group/link transition-colors">
-                                <span>Design System UI</span>
-                                <iconify-icon icon="solar:arrow-right-up-linear" width="16"
-                                    class="translate-y-[1px] text-neutral-400 group-hover/link:text-black transition-all group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5"></iconify-icon>
-                            </a>
-                            <p class="text-sm leading-relaxed text-neutral-600">
-                                An open-source, highly customizable component library built on top of Radix UI and
-                                Tailwind CSS. Focuses on accessibility and developer experience.
+                <h2 class="reveal text-[12px] font-medium uppercase tracking-widest text-neutral-500 dark:text-neutral-500">Selected Projects</h2>
+                <div class="flex flex-col gap-16">
+                    <a href="#" class="reveal proj-card page-link">
+                        <div class="flex flex-col gap-2">
+                            <p class="text-[12px] text-neutral-500 dark:text-neutral-500 uppercase tracking-wide font-medium">HR Tech</p>
+                            <h3 class="font-medium text-[15px] text-black dark:text-white leading-snug flex items-center gap-2 uppercase tracking-wider">
+                                Crowdcruit — HR Tech SaaS
+                                <iconify-icon icon="solar:arrow-right-up-linear" width="14" class="proj-arrow text-neutral-400"></iconify-icon>
+                            </h3>
+                            <p class="text-[14px] leading-[1.7] text-neutral-500 dark:text-neutral-400 font-normal max-w-lg">
+                                An all-in-one recruitment platform. Designed the end-to-end user journey, complex data-heavy dashboards, and a scalable UI kit.
                             </p>
                         </div>
-                    </div>
-
-                    <!-- Project Item 2 -->
-                    <div class="group relative grid pb-1 sm:grid-cols-8 sm:gap-8 md:gap-4 transition-all">
-                        <!-- Card Hover Background -->
-                        <div
-                            class="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-2xl transition-all duration-300 ease-out motion-reduce:transition-none sm:-inset-x-6 sm:block sm:group-hover:bg-neutral-50/80 sm:group-hover:scale-[1.01]">
+                        <div class="card-stack">
+                            <img src="./Selected projects pictures/1.webp" alt="Crowdcruit UI">
+                            <img src="./Selected projects pictures/2.webp" alt="Crowdcruit Dashboard">
+                            <img src="./Selected projects pictures/3.webp" alt="Crowdcruit Forms">
                         </div>
-
-                        <div
-                            class="z-10 mb-2 mt-1 text-xs font-medium text-neutral-500 sm:col-span-2 tracking-wide uppercase">
-                            2022
-                        </div>
-                        <div class="z-10 sm:col-span-6 flex flex-col gap-2">
-                            <a href="#"
-                                class="inline-flex items-baseline gap-1.5 font-medium text-base text-neutral-900 hover:text-black focus-visible:text-black group/link transition-colors">
-                                <span>Analytics Dashboard</span>
-                                <iconify-icon icon="solar:arrow-right-up-linear" width="16"
-                                    class="translate-y-[1px] text-neutral-400 group-hover/link:text-black transition-all group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5"></iconify-icon>
-                            </a>
-                            <p class="text-sm leading-relaxed text-neutral-600">
-                                A real-time data visualization dashboard for SaaS metrics. Features complex D3.js
-                                charts, light/dark mode support, and seamless state management.
+                    </a>
+                    <a href="#" class="reveal proj-card page-link">
+                        <div class="flex flex-col gap-2">
+                            <p class="text-[12px] text-neutral-500 dark:text-neutral-500 uppercase tracking-wide font-medium">E-commerce</p>
+                            <h3 class="font-medium text-[15px] text-black dark:text-white leading-snug flex items-center gap-2 uppercase tracking-wider">
+                                Premium E-commerce Solutions
+                                <iconify-icon icon="solar:arrow-right-up-linear" width="14" class="proj-arrow text-neutral-400"></iconify-icon>
+                            </h3>
+                            <p class="text-[14px] leading-[1.7] text-neutral-500 dark:text-neutral-400 font-normal max-w-lg">
+                                High-performing online stores for various clients. Responsive layouts, competitor research, and optimized checkout conversion flows.
                             </p>
                         </div>
-                    </div>
+                        <div class="card-stack">
+                            <img src="./Selected projects pictures/4.webp" alt="E-commerce CIM">
+                            <img src="./Selected projects pictures/5.webp" alt="E-commerce AI">
+                            <img src="./Selected projects pictures/6.webp" alt="E-commerce Landing">
+                        </div>
+                    </a>
                 </div>
             </section>
         </main>
 
         <!-- Footer -->
-        <footer
-            class="mt-12 pt-8 border-t border-neutral-100 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-medium text-neutral-500">
-            <p>© 2024 Fay. All rights reserved.</p>
+        <footer class="reveal mt-16 pt-10 border-t border-neutral-200 dark:border-neutral-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-[12px] font-normal text-neutral-500 dark:text-neutral-500 uppercase tracking-widest">
+            <p>&copy; 2026 Denis Safonov</p>
             <div class="flex items-center gap-4">
-                <a href="#" class="hover:text-neutral-900 transition-colors">Twitter</a>
-                <a href="#" class="hover:text-neutral-900 transition-colors">GitHub</a>
-                <a href="#" class="hover:text-neutral-900 transition-colors">Dribbble</a>
+                <a href="#" class="link-underline hover:text-black dark:hover:text-white transition-colors">Email</a>
+                <a href="#" class="link-underline hover:text-black dark:hover:text-white transition-colors">Telegram</a>
             </div>
         </footer>
 
     </div>
 
-</body>
+    <script>
+        // Theme
+        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        }
 
-</html>
+        // Preloader
+        (() => {
+            const counter = document.querySelector('#preloader .counter');
+            const line = document.querySelector('#preloader .line');
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 12 + 3;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                    counter.textContent = '100';
+                    line.style.width = '100%';
+                    setTimeout(() => {
+                        document.getElementById('preloader').classList.add('done');
+                        // Trigger hero + header reveals after preloader
+                        setTimeout(() => {
+                            document.querySelectorAll('.header-reveal, .hero-reveal').forEach(el => {
+                                el.classList.add('visible');
+                            });
+                        }, 100);
+                    }, 300);
+                    return;
+                }
+                counter.textContent = Math.floor(progress);
+                line.style.width = progress + '%';
+            }, 60);
+        })();
+
+        // Page transitions for internal links
+        document.querySelectorAll('.page-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                const href = link.getAttribute('href');
+                if (href && href !== '#' && !href.startsWith('#')) {
+                    e.preventDefault();
+                    const overlay = document.getElementById('page-transition');
+                    overlay.classList.add('active');
+                    setTimeout(() => {
+                        window.location.href = href;
+                    }, 600);
+                }
+            });
+        });
+
+        // On page show (back/forward), slide out
+        window.addEventListener('pageshow', () => {
+            const overlay = document.getElementById('page-transition');
+            if (overlay.classList.contains('active')) {
+                overlay.classList.remove('active');
+                overlay.classList.add('exit');
+                setTimeout(() => overlay.classList.remove('exit'), 600);
+            }
+        });
+
+        // Custom cursor
+        const dot = document.getElementById('cursor-dot');
+        const content = document.getElementById('content-area');
+        document.addEventListener('mousemove', (e) => {
+            dot.style.left = e.clientX + 'px';
+            dot.style.top = e.clientY + 'px';
+            dot.classList.add('visible');
+            const rect = content.getBoundingClientRect();
+            const inside = e.clientX >= rect.left && e.clientX <= rect.right && e.clientY >= rect.top && e.clientY <= rect.bottom;
+            dot.classList.toggle('inside', inside);
+        });
+        document.addEventListener('mouseleave', () => dot.classList.remove('visible'));
+
+        // Scroll reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+</body></html>
