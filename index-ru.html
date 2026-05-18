@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script>(function(){try{var s=localStorage.getItem('lang');if(s==='ru'){location.replace('index-ru.html');return;}if(!s&&(navigator.language||'').toLowerCase().indexOf('ru')===0){location.replace('index-ru.html');}}catch(e){}})();</script>
-    <title>Denis Safonov — Product Designer</title>
+    <script>(function(){try{if(localStorage.getItem('lang')==='en'){location.replace('index.html');}}catch(e){}})();</script>
+    <title>Денис Сафонов — Продуктовый дизайнер</title>
     <link rel="stylesheet" href="./Font2/stylesheet.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -60,23 +60,15 @@
         .scr { opacity: 0; transform: translateY(44px); transition: opacity .85s cubic-bezier(.16,1,.3,1), transform .85s cubic-bezier(.16,1,.3,1); }
         .scr.in { opacity: 1; transform: none; }
 
-        /* Service list group-hover: dim siblings, highlight hovered */
-        .services-list:hover li { opacity: 0.3; }
-        .services-list li:hover  { opacity: 1 !important; }
-        .services-list li { transition: opacity .2s cubic-bezier(.22,1,.36,1); }
-
-        /* Card image overlay */
-        .card-img-wrap { position: relative; overflow: hidden; }
-        .card-img-wrap::after { content: ''; position: absolute; inset: 0; background: transparent; transition: background .4s; pointer-events: none; }
-        .card-link:hover .card-img-wrap::after { background: rgba(0,0,0,0.06); }
-
         /* Underline hover */
         .ul { position: relative; }
         .ul::after { content: ''; position: absolute; bottom: -1px; left: 0; right: 0; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: right; transition: transform .35s cubic-bezier(.22,1,.36,1); }
         .ul:hover::after { transform: scaleX(1); transform-origin: left; }
 
-        /* Giant text */
-        .giant { font-size: clamp(72px, 13.5vw, 196px); }
+        /* Card image overlay */
+        .card-img-wrap { position: relative; overflow: hidden; }
+        .card-img-wrap::after { content: ''; position: absolute; inset: 0; background: transparent; transition: background .4s; pointer-events: none; }
+        .card-link:hover .card-img-wrap::after { background: rgba(0,0,0,0.06); }
 
         /* Hero scroll parallax */
         #hero-inner { transform-origin: 50% 16%; will-change: transform, opacity; }
@@ -99,17 +91,17 @@
     <!-- ─── HEADER ─── -->
     <header class="relative z-30 bg-[#FAFAFA] dark:bg-[#0C0C0C] border-b border-[#E5E5E5] dark:border-[#1F1F1F] transition-colors duration-300">
         <div class="max-w-[1280px] mx-auto px-8 h-12 flex items-center justify-between">
-            <a href="/" class="text-[14px] font-medium hi">d.safonov</a>
+            <a href="index-ru.html" class="text-[14px] font-medium hi">d.safonov</a>
             <nav class="flex items-center gap-7 hi">
-                <a href="#work" class="text-[14px] text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white transition-colors duration-200 ul">Work</a>
-                <a href="#about" class="text-[14px] text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white transition-colors duration-200 ul">About</a>
-                <a href="mailto:densaf92@d-gtl.com" class="text-[14px] text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white transition-colors duration-200 ul">Contact</a>
-                <div class="flex items-center gap-1.5 text-[12px]" aria-label="Language">
-                    <span class="font-medium">EN</span>
+                <a href="#work" class="text-[14px] text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white transition-colors duration-200 ul">Проекты</a>
+                <a href="#about" class="text-[14px] text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white transition-colors duration-200 ul">Обо мне</a>
+                <a href="mailto:densaf92@d-gtl.com" class="text-[14px] text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white transition-colors duration-200 ul">Контакты</a>
+                <div class="flex items-center gap-1.5 text-[12px]" aria-label="Язык">
+                    <a href="index.html" onclick="localStorage.setItem('lang','en')" class="text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white transition-colors duration-200">EN</a>
                     <span class="text-black/50 dark:text-white/50">/</span>
-                    <a href="index-ru.html" onclick="localStorage.setItem('lang','ru')" class="text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white transition-colors duration-200">RU</a>
+                    <span class="font-medium">RU</span>
                 </div>
-                <button onclick="toggleTheme()" class="w-7 h-7 rounded-full border border-[#E5E5E5] dark:border-[#1F1F1F] flex items-center justify-center text-black/50 dark:text-white/50 hover:border-black/40 dark:hover:border-white/40 transition-colors duration-200" aria-label="Toggle theme">
+                <button onclick="toggleTheme()" class="w-7 h-7 rounded-full border border-[#E5E5E5] dark:border-[#1F1F1F] flex items-center justify-center text-black/50 dark:text-white/50 hover:border-black/40 dark:hover:border-white/40 transition-colors duration-200" aria-label="Переключить тему">
                     <svg id="ico-sun" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
                     </svg>
@@ -125,31 +117,31 @@
     <section id="about" class="sticky top-0 z-0">
         <div id="hero-inner" class="max-w-[1280px] mx-auto px-8 pt-24 pb-20">
         <div class="mb-16">
-            <h1 class="font-haas text-[clamp(52px,6.8vw,96px)] font-medium leading-[1.03] tracking-[-0.03em] mb-6 r r1">
-                Product Designer in<br>SaaS &amp; E-commerce.
+            <h1 class="font-haas text-[clamp(44px,6.2vw,88px)] font-medium leading-[1.04] tracking-[-0.03em] mb-6 r r1">
+                Продуктовый дизайнер<br>в SaaS и e-commerce.
             </h1>
             <p class="text-[clamp(15px,1.25vw,17px)] font-normal leading-relaxed text-black/50 dark:text-white/50 max-w-lg r r2">
-                Building scalable platforms and e-commerce systems that are fast, clear, and built to last.
+                Создаю масштабируемые платформы и e-commerce-системы — быстрые, понятные и надёжные.
             </p>
         </div>
         <div class="border-t border-[#E5E5E5] dark:border-[#1F1F1F] pt-8 grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-10 r r3">
             <div>
-                <p class="text-[12px] text-black/50 dark:text-white/50 mb-2.5">Availability</p>
+                <p class="text-[12px] text-black/50 dark:text-white/50 mb-2.5">Доступность</p>
                 <p class="text-[14px] leading-none flex items-center gap-1.5">
-                    <span class="w-1.5 h-1.5 rounded-full bg-green-500 flex-shrink-0"></span>Open to work
+                    <span class="w-1.5 h-1.5 rounded-full bg-green-500 flex-shrink-0"></span>Открыт к работе
                 </p>
             </div>
             <div>
-                <p class="text-[12px] text-black/50 dark:text-white/50 mb-2.5">Experience</p>
-                <p class="text-[14px] leading-snug">4 Years /<br>Product Designer</p>
+                <p class="text-[12px] text-black/50 dark:text-white/50 mb-2.5">Опыт</p>
+                <p class="text-[14px] leading-snug">4 года /<br>Продуктовый дизайнер</p>
             </div>
             <div>
-                <p class="text-[12px] text-black/50 dark:text-white/50 mb-2.5">Specialization</p>
+                <p class="text-[12px] text-black/50 dark:text-white/50 mb-2.5">Специализация</p>
                 <p class="text-[14px] leading-snug">SaaS /<br>E-commerce</p>
             </div>
             <div>
-                <p class="text-[12px] text-black/50 dark:text-white/50 mb-2.5">Location</p>
-                <p class="text-[14px] leading-snug">Athens, GR<br><span id="clock" class="text-black/50 dark:text-white/50">—:—</span></p>
+                <p class="text-[12px] text-black/50 dark:text-white/50 mb-2.5">Локация</p>
+                <p class="text-[14px] leading-snug">Афины, Греция<br><span id="clock" class="text-black/50 dark:text-white/50">—:—</span></p>
             </div>
         </div>
         </div>
@@ -159,68 +151,66 @@
     <!-- ─── FEATURED WORK ─── -->
     <section id="work" class="max-w-[1280px] mx-auto px-8 pt-24 pb-20">
         <div class="flex items-center justify-between mb-6 scr">
-            <span class="text-[12px] text-black/50 dark:text-white/50">Featured work</span>
+            <span class="text-[12px] text-black/50 dark:text-white/50">Избранные проекты</span>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <!-- Blue CRM -->
-            <a href="./blue-crm.html" class="page-link card-link group block scr">
+            <a href="./blue-crm-ru.html" class="page-link card-link group block scr">
                 <div class="card-img-wrap w-full bg-[#0D0D14]" style="aspect-ratio:4/3">
                     <img src="./Featured work/BLUE THUMBNAIL.png" alt="Blue CRM" class="w-full h-full object-cover object-top group-hover:scale-[1.03] transition-transform duration-700 ease-out">
                 </div>
                 <div class="pt-4 pb-2 flex items-start justify-between gap-4">
                     <p class="text-[14px] font-medium leading-none">Blue CRM</p>
-                    <p class="text-[12px] text-black/50 dark:text-white/50 text-right leading-none">Product Design, E-commerce SaaS</p>
+                    <p class="text-[12px] text-black/50 dark:text-white/50 text-right leading-none">Продуктовый дизайн, E-commerce SaaS</p>
                 </div>
             </a>
             <!-- Crowdcruit -->
-            <a href="./crowdcruit.html" class="page-link card-link group block scr" style="transition-delay:.1s">
+            <a href="./crowdcruit-ru.html" class="page-link card-link group block scr" style="transition-delay:.1s">
                 <div class="card-img-wrap w-full bg-[#EDEDED] dark:bg-[#161616]" style="aspect-ratio:4/3">
                     <img src="./Crowdcruit/Thumbnail Crowdcruit.png" alt="Crowdcruit" class="w-full h-full object-cover object-top group-hover:scale-[1.03] transition-transform duration-700 ease-out">
                 </div>
                 <div class="pt-4 pb-2 flex items-start justify-between gap-4">
                     <p class="text-[14px] font-medium leading-none">Crowdcruit</p>
-                    <p class="text-[12px] text-black/50 dark:text-white/50 text-right leading-none">Product Design, HR Tech SaaS</p>
+                    <p class="text-[12px] text-black/50 dark:text-white/50 text-right leading-none">Продуктовый дизайн, HR Tech SaaS</p>
                 </div>
             </a>
         </div>
     </section>
 
-
-
     <!-- ─── EXPERIENCE ─── -->
     <section class="max-w-[1280px] mx-auto px-8 pt-20 pb-24">
         <div class="flex items-center justify-between mb-3 scr">
-            <span class="text-[12px] text-black/50 dark:text-white/50">Experience</span>
+            <span class="text-[12px] text-black/50 dark:text-white/50">Опыт</span>
         </div>
         <hr class="border-[#E5E5E5] dark:border-[#1F1F1F] mb-8 scr">
         <div class="flex flex-col md:flex-row items-start justify-between gap-8 pb-8 border-b border-[#E5E5E5] dark:border-[#1F1F1F] scr">
             <div class="flex-1">
                 <h3 class="text-[22px] font-medium tracking-[-0.02em] mb-1">Redcase.gr</h3>
-                <p class="text-[14px] text-black/50 dark:text-white/50 mb-5">Product Designer — SaaS &amp; Web</p>
-                <p class="text-[14px] text-black/50 dark:text-white/50 leading-relaxed max-w-xl">Led the entire design lifecycle for a digital agency and its flagship SaaS product, Crowdcruit.gr. Designed complex recruitment SaaS from scratch — from brand identity and CJMs to high-fidelity dashboards and design systems. Delivered 20+ projects including large-scale e-commerce platforms and multi-page corporate sites.</p>
+                <p class="text-[14px] text-black/50 dark:text-white/50 mb-5">Продуктовый дизайнер — SaaS и веб</p>
+                <p class="text-[14px] text-black/50 dark:text-white/50 leading-relaxed max-w-xl">Вёл весь цикл дизайна для digital-агентства и его флагманского SaaS-продукта Crowdcruit.gr. Спроектировал сложный рекрутинговый SaaS с нуля — от фирменного стиля и карт пути пользователя до детальных дашбордов и дизайн-систем. Реализовал более 20 проектов, включая крупные e-commerce-платформы и многостраничные корпоративные сайты.</p>
                 <div class="flex flex-wrap gap-2 mt-5">
-                    <span class="text-[12px] text-black/50 dark:text-white/50 border border-[#E5E5E5] dark:border-[#1F1F1F] px-2.5 py-1">Product Design</span>
-                    <span class="text-[12px] text-black/50 dark:text-white/50 border border-[#E5E5E5] dark:border-[#1F1F1F] px-2.5 py-1">Design Systems</span>
+                    <span class="text-[12px] text-black/50 dark:text-white/50 border border-[#E5E5E5] dark:border-[#1F1F1F] px-2.5 py-1">Продуктовый дизайн</span>
+                    <span class="text-[12px] text-black/50 dark:text-white/50 border border-[#E5E5E5] dark:border-[#1F1F1F] px-2.5 py-1">Дизайн-системы</span>
                     <span class="text-[12px] text-black/50 dark:text-white/50 border border-[#E5E5E5] dark:border-[#1F1F1F] px-2.5 py-1">SaaS</span>
                     <span class="text-[12px] text-black/50 dark:text-white/50 border border-[#E5E5E5] dark:border-[#1F1F1F] px-2.5 py-1">E-commerce</span>
                     <span class="text-[12px] text-black/50 dark:text-white/50 border border-[#E5E5E5] dark:border-[#1F1F1F] px-2.5 py-1">Figma</span>
                 </div>
             </div>
-            <p class="text-[12px] text-black/50 dark:text-white/50 whitespace-nowrap flex-shrink-0">May 2022 — Jan 2026</p>
+            <p class="text-[12px] text-black/50 dark:text-white/50 whitespace-nowrap flex-shrink-0">Май 2022 — Янв 2026</p>
         </div>
         <div class="flex flex-col md:flex-row items-start justify-between gap-8 pt-8 scr">
             <div class="flex-1">
-                <h3 class="text-[22px] font-medium tracking-[-0.02em] mb-1">Freelance Product Designer</h3>
-                <p class="text-[14px] text-black/50 dark:text-white/50 mb-5">Self-employed</p>
-                <p class="text-[14px] text-black/50 dark:text-white/50 leading-relaxed max-w-xl">Providing end-to-end UI/UX and product design services for clients across various industries including marine, real estate, and SaaS. Designed web and mobile interfaces from concept to handoff, created wireframes, interactive prototypes, and design systems. Collaborated directly with clients to define product requirements and translate them into user-centered solutions.</p>
+                <h3 class="text-[22px] font-medium tracking-[-0.02em] mb-1">Продуктовый дизайнер на фрилансе</h3>
+                <p class="text-[14px] text-black/50 dark:text-white/50 mb-5">Самозанятый</p>
+                <p class="text-[14px] text-black/50 dark:text-white/50 leading-relaxed max-w-xl">Оказываю услуги UI/UX- и продуктового дизайна полного цикла для клиентов из разных отраслей — морская индустрия, недвижимость, SaaS. Проектировал веб- и мобильные интерфейсы от концепции до передачи в разработку, создавал вайрфреймы, интерактивные прототипы и дизайн-системы. Работал напрямую с клиентами: формулировал продуктовые требования и превращал их в решения, ориентированные на пользователя.</p>
                 <div class="flex flex-wrap gap-2 mt-5">
-                    <span class="text-[12px] text-black/50 dark:text-white/50 border border-[#E5E5E5] dark:border-[#1F1F1F] px-2.5 py-1">UI/UX Design</span>
-                    <span class="text-[12px] text-black/50 dark:text-white/50 border border-[#E5E5E5] dark:border-[#1F1F1F] px-2.5 py-1">Product Design</span>
+                    <span class="text-[12px] text-black/50 dark:text-white/50 border border-[#E5E5E5] dark:border-[#1F1F1F] px-2.5 py-1">UI/UX-дизайн</span>
+                    <span class="text-[12px] text-black/50 dark:text-white/50 border border-[#E5E5E5] dark:border-[#1F1F1F] px-2.5 py-1">Продуктовый дизайн</span>
                     <span class="text-[12px] text-black/50 dark:text-white/50 border border-[#E5E5E5] dark:border-[#1F1F1F] px-2.5 py-1">Figma</span>
-                    <span class="text-[12px] text-black/50 dark:text-white/50 border border-[#E5E5E5] dark:border-[#1F1F1F] px-2.5 py-1">Prototyping</span>
+                    <span class="text-[12px] text-black/50 dark:text-white/50 border border-[#E5E5E5] dark:border-[#1F1F1F] px-2.5 py-1">Прототипирование</span>
                 </div>
             </div>
-            <p class="text-[12px] text-black/50 dark:text-white/50 whitespace-nowrap flex-shrink-0">Feb 2021 — May 2022<br>Feb 2026 — Present</p>
+            <p class="text-[12px] text-black/50 dark:text-white/50 whitespace-nowrap flex-shrink-0">Фев 2021 — Май 2022<br>Фев 2026 — Наст. время</p>
         </div>
     </section>
 
@@ -228,13 +218,13 @@
     <section class="max-w-[1280px] mx-auto px-8 pt-16 pb-10">
         <div class="flex flex-col md:flex-row items-start md:items-end justify-between gap-10 mb-6 scr">
             <div>
-                <p class="text-[14px] text-black/50 dark:text-white/50 mb-3">Keen to explore possibilities?</p>
-                <a href="mailto:densaf92@d-gtl.com" class="font-haas inline-block text-[clamp(24px,3.6vw,44px)] font-medium tracking-[-0.025em] leading-none border-b border-[#0C0C0C] dark:border-[#FAFAFA] pb-1 hover:opacity-40 transition-opacity duration-200">
-                    Open to new projects. Let's talk. <svg class="inline-block align-middle mb-1" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+                <p class="text-[14px] text-black/50 dark:text-white/50 mb-3">Хотите обсудить сотрудничество?</p>
+                <a href="mailto:densaf92@d-gtl.com" class="font-haas inline-block text-[clamp(22px,3.4vw,40px)] font-medium tracking-[-0.025em] leading-[1.1] border-b border-[#0C0C0C] dark:border-[#FAFAFA] pb-1 hover:opacity-40 transition-opacity duration-200">
+                    Открыт к новым проектам. Давайте обсудим. <svg class="inline-block align-middle mb-1" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
                 </a>
             </div>
             <div class="text-right space-y-1.5 scr">
-                <a href="mailto:densaf92@d-gtl.com" class="block text-[14px] text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white transition-colors duration-200 ul">Email</a>
+                <a href="mailto:densaf92@d-gtl.com" class="block text-[14px] text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white transition-colors duration-200 ul">Почта</a>
                 <a href="#" class="block text-[14px] text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white transition-colors duration-200 ul">Telegram</a>
                 <p class="text-[12px] text-black/50 dark:text-white/50 pt-1">densaf92@d-gtl.com</p>
             </div>
@@ -245,7 +235,7 @@
     <script>
         let lenis = null;
 
-        // Theme — light by default (matches thiti.design reference)
+        // Тема — светлая по умолчанию
         (() => {
             const saved = localStorage.getItem('theme');
             if (saved === 'dark') {
@@ -277,7 +267,6 @@
                         if (lenis) lenis.start();
                         setTimeout(() => {
                             document.querySelectorAll('.hi, .r').forEach(el => el.classList.add('in'));
-                            // IO for scroll elements
                             const obs = new IntersectionObserver(entries => {
                                 entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
                             }, { threshold: 0.06 });
@@ -310,7 +299,7 @@
             }
         });
 
-        // Smooth scroll (Lenis) + hero parallax driven per frame
+        // Плавный скролл (Lenis) + параллакс hero, синхронный с кадром
         (() => {
             const hero = document.getElementById('hero-inner');
             function applyParallax() {
@@ -343,9 +332,9 @@
             }
         })();
 
-        // Live clock — Athens
+        // Часы — Афины
         function tick() {
-            document.getElementById('clock').textContent = new Date().toLocaleTimeString('en-GB', {
+            document.getElementById('clock').textContent = new Date().toLocaleTimeString('ru-RU', {
                 hour: '2-digit', minute: '2-digit', second: '2-digit',
                 timeZone: 'Europe/Athens', hour12: false
             });

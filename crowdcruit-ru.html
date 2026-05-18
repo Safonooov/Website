@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>(function(){try{if(localStorage.getItem('lang')==='en'){location.replace('crowdcruit.html');}}catch(e){}})();</script>
+    <title>Crowdcruit — Денис Сафонов</title>
+    <link rel="stylesheet" href="./Font2/stylesheet.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        haas: ['"Neue Haas Grotesk Display Pro"', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1/dist/lenis.min.js"></script>
+    <style>
+        #preloader {
+            position: fixed; inset: 0; z-index: 10000; background: #0C0C0C;
+            display: flex; align-items: center; justify-content: center;
+            transition: opacity .5s cubic-bezier(.22,1,.36,1), visibility .5s;
+        }
+        #preloader.done { opacity: 0; visibility: hidden; pointer-events: none; }
+        #preloader .cnt { font-family: 'Neue Haas Grotesk Display Pro', sans-serif; font-size: 32px; font-weight: 500; color: #FAFAFA; letter-spacing: -0.02em; }
+        #preloader .ln  { position: absolute; bottom: 0; left: 0; height: 1px; background: rgba(250,250,250,0.15); transition: width .05s linear; }
+
+        #pt { position: fixed; inset: 0; z-index: 9998; background: #0C0C0C; transform: translateY(100%); transition: transform .6s cubic-bezier(.76,0,.24,1); }
+        #pt.active { transform: translateY(0); }
+        #pt.exit   { transform: translateY(-100%); }
+
+        /* Animations */
+        .r  { opacity: 0; transform: translateY(64px); transition: opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1); }
+        .r.in { opacity: 1; transform: none; }
+        .r1 { transition-delay: 0s; } .r2 { transition-delay: .12s; } .r3 { transition-delay: .26s; } .r4 { transition-delay: .40s; }
+        .hi { opacity: 0; transform: translateY(-14px); transition: opacity .6s .05s cubic-bezier(.22,1,.36,1), transform .6s .05s cubic-bezier(.22,1,.36,1); }
+        .hi.in { opacity: 1; transform: none; }
+        .scr { opacity: 0; transform: translateY(44px); transition: opacity .85s cubic-bezier(.16,1,.3,1), transform .85s cubic-bezier(.16,1,.3,1); }
+        .scr.in { opacity: 1; transform: none; }
+
+        /* Underline hover */
+        .ul { position: relative; }
+        .ul::after { content: ''; position: absolute; bottom: -1px; left: 0; right: 0; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: right; transition: transform .35s cubic-bezier(.22,1,.36,1); }
+        .ul:hover::after { transform: scaleX(1); transform-origin: left; }
+
+        /* Image frame — stable, no hover transform */
+        .img-frame { background: #0D0D14; overflow: hidden; }
+        .dark .img-frame { background: #0A0A0F; }
+        .img-frame-light { background: #F2F2F2; overflow: hidden; }
+        .dark .img-frame-light { background: #141414; }
+        .img-frame img, .img-frame-light img { display: block; width: 100%; cursor: zoom-in; }
+
+        /* Lightbox */
+        #lightbox {
+            position: fixed; inset: 0; z-index: 9999; display: none;
+            align-items: center; justify-content: center;
+            background: rgba(8,8,10,0.92); padding: 24px;
+            opacity: 0; transition: opacity .22s ease; cursor: zoom-out;
+        }
+        #lightbox.open { opacity: 1; }
+        #lightbox img { max-width: 94vw; max-height: 90vh; object-fit: contain; cursor: default; }
+        #lbclose {
+            position: absolute; top: 18px; right: 20px; width: 40px; height: 40px;
+            display: flex; align-items: center; justify-content: center;
+            color: #FAFAFA; background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.16); cursor: pointer;
+            transition: background .2s ease;
+        }
+        #lbclose:hover { background: rgba(255,255,255,0.18); }
+
+        /* Smooth scroll (Lenis) */
+        html.lenis, html.lenis body { height: auto; }
+        .lenis.lenis-smooth { scroll-behavior: auto !important; }
+        .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+        .lenis.lenis-stopped { overflow: hidden; }
+    </style>
+</head>
+<body class="font-sans antialiased bg-[#FAFAFA] text-[#0C0C0C] dark:bg-[#0C0C0C] dark:text-[#FAFAFA] transition-colors duration-300">
+
+    <div id="preloader"><span class="cnt">0</span><div class="ln" style="width:0%"></div></div>
+    <div id="pt"></div>
+
+    <!-- ─── HEADER ─── -->
+    <header class="sticky top-0 z-50 bg-[#FAFAFA] dark:bg-[#0C0C0C] border-b border-[#E5E5E5] dark:border-[#1F1F1F] transition-colors duration-300">
+        <div class="max-w-[1280px] mx-auto px-8 h-12 flex items-center justify-between">
+            <a href="index-ru.html" class="page-link text-[14px] font-medium flex items-center gap-2 hi">
+                <svg class="w-3 h-3 -translate-x-0 group-hover:-translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+                d.safonov
+            </a>
+            <nav class="flex items-center gap-7 hi">
+                <a href="index-ru.html#work" class="text-[14px] text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white transition-colors duration-200 ul">Проекты</a>
+                <a href="index-ru.html#about" class="text-[14px] text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white transition-colors duration-200 ul">Обо мне</a>
+                <a href="mailto:densaf92@d-gtl.com" class="text-[14px] text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white transition-colors duration-200 ul">Контакты</a>
+                <div class="flex items-center gap-1.5 text-[12px]" aria-label="Язык">
+                    <a href="crowdcruit.html" onclick="localStorage.setItem('lang','en')" class="text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white transition-colors duration-200">EN</a>
+                    <span class="text-black/50 dark:text-white/50">/</span>
+                    <span class="font-medium">RU</span>
+                </div>
+                <button onclick="toggleTheme()" class="w-7 h-7 rounded-full border border-[#E5E5E5] dark:border-[#1F1F1F] flex items-center justify-center text-black/50 dark:text-white/50 hover:border-black/40 dark:hover:border-white/40 transition-colors duration-200" aria-label="Переключить тему">
+                    <svg id="ico-sun" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+                    <svg id="ico-moon" class="w-3.5 h-3.5 hidden" fill="currentColor" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ─── PROJECT HEADER ─── -->
+    <section class="max-w-[1280px] mx-auto px-8 pt-20 pb-16">
+        <h1 class="font-haas text-[clamp(52px,6.8vw,96px)] font-medium leading-[1.03] tracking-[-0.03em] mb-3 r r1">Crowdcruit</h1>
+        <p class="text-[clamp(15px,1.3vw,18px)] leading-relaxed text-black/50 dark:text-white/50 max-w-xl mb-8 r r2">AI-платформа для найма: рекрутеры, кандидаты и компании.</p>
+        <div class="grid grid-cols-2 md:grid-cols-[200px_1fr_1fr_1fr] gap-6 md:gap-x-12 border-t border-[#E5E5E5] dark:border-[#1F1F1F] pt-6 r r3">
+            <div>
+                <p class="text-[12px] text-black/50 dark:text-white/50 mb-2">Роль</p>
+                <p class="text-[14px] leading-snug">Продуктовый дизайнер</p>
+            </div>
+            <div>
+                <p class="text-[12px] text-black/50 dark:text-white/50 mb-2">Платформа</p>
+                <p class="text-[14px] leading-snug">Веб-приложение</p>
+            </div>
+            <div>
+                <p class="text-[12px] text-black/50 dark:text-white/50 mb-2">Статус</p>
+                <p class="text-[14px] leading-snug flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-green-500 flex-shrink-0"></span>Запущенный MVP</p>
+            </div>
+            <div>
+                <p class="text-[12px] text-black/50 dark:text-white/50 mb-2">Результат</p>
+                <p class="text-[14px] leading-snug">Работает · Приносит доход</p>
+            </div>
+        </div>
+        <hr class="border-[#E5E5E5] dark:border-[#1F1F1F] my-8 r r4">
+        <!-- Overview -->
+        <div class="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-8 md:gap-12 r r4">
+            <div>
+                <p class="text-[12px] text-black/50 dark:text-white/50 md:pt-1">Обзор</p>
+            </div>
+            <div>
+                <p class="text-[16px] leading-[1.7] text-black/70 dark:text-white/70 max-w-2xl">
+                    Crowdcruit начинался как MVP-челлендж: определить ядро продуктового опыта для трёхсторонней AI-платформы найма и довести её до продакшена. Цель — выйти за рамки статичных экранов и спроектировать процессы, необходимые для пригодного к использованию, приносящего доход продукта.
+                </p>
+                <p class="text-[16px] leading-[1.7] text-black/70 dark:text-white/70 max-w-2xl mt-5">
+                    Crowdcruit построен вокруг AI-подбора пар «кандидат — вакансия». Задача была не только показать оценку соответствия, но и спроектировать процессы вокруг неё: рекрутерам нужно понимать и предлагать кандидатов, кандидатам — контролировать доступ к профилю, а компаниям — иметь понятный способ рассматривать, проводить интервью и оставлять обратную связь.
+                </p>
+                <div class="flex flex-wrap gap-x-10 gap-y-6 mt-7">
+                    <div><p class="text-[12px] text-black/50 dark:text-white/50 mb-1.5">Область работ</p><p class="text-[14px]">Дизайн MVP, UX-сценарии, UI-система, визуальная айдентика</p></div>
+                    <div><p class="text-[12px] text-black/50 dark:text-white/50 mb-1.5">Пользователи</p><p class="text-[14px]">Рекрутеры · Кандидаты · Компании</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ─── HERO IMAGE ─── -->
+    <section class="max-w-[1280px] mx-auto px-8 pb-20 scr">
+        <div class="img-frame-light w-full">
+            <img src="./Crowdcruit/Thumbnail Crowdcruit.png" alt="Crowdcruit — AI-платформа для найма" class="w-full h-auto object-cover">
+        </div>
+    </section>
+
+    <div class="max-w-[1280px] mx-auto px-8"><hr class="border-[#E5E5E5] dark:border-[#1F1F1F] scr"></div>
+
+    <!-- ─── PROBLEM ─── -->
+    <section class="max-w-[1280px] mx-auto px-8 py-20">
+        <div class="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-8 md:gap-12 items-start">
+            <div class="md:sticky md:top-20 scr">
+                <p class="text-[12px] text-black/50 dark:text-white/50">Проблема</p>
+            </div>
+            <div class="scr">
+                <h2 class="font-haas text-[clamp(24px,2.6vw,34px)] font-medium tracking-[-0.02em] leading-[1.14] mb-5">Проблема</h2>
+                <p class="text-[16px] leading-[1.7] text-black/70 dark:text-white/70 max-w-2xl">
+                    Процессы найма часто разбросаны по инструментам поиска, таблицам, базам кандидатов, календарям и формам обратной связи. AI-подбор может генерировать рекомендации, но без понятного обоснования, согласия и следующих шагов этим рекомендациям сложно доверять и сложно действовать по ним.
+                </p>
+                <ul class="mt-9 border-t border-[#E5E5E5] dark:border-[#1F1F1F]">
+                    <li class="border-b border-[#E5E5E5] dark:border-[#1F1F1F] py-4 flex gap-5">
+                        <span class="text-[12px] text-black/50 dark:text-white/50 pt-1 flex-shrink-0">01</span>
+                        <p class="text-[14px] leading-[1.6] text-black/70 dark:text-white/70">Рекрутерам нужно рабочее пространство для пар «кандидат — вакансия», в котором можно действовать.</p>
+                    </li>
+                    <li class="border-b border-[#E5E5E5] dark:border-[#1F1F1F] py-4 flex gap-5">
+                        <span class="text-[12px] text-black/50 dark:text-white/50 pt-1 flex-shrink-0">02</span>
+                        <p class="text-[14px] leading-[1.6] text-black/70 dark:text-white/70">Кандидатам нужны прозрачность и контроль над тем, кто получает доступ к их профилю.</p>
+                    </li>
+                    <li class="border-b border-[#E5E5E5] dark:border-[#1F1F1F] py-4 flex gap-5">
+                        <span class="text-[12px] text-black/50 dark:text-white/50 pt-1 flex-shrink-0">03</span>
+                        <p class="text-[14px] leading-[1.6] text-black/70 dark:text-white/70">Компаниям нужен сфокусированный процесс рассмотрения и обратной связи.</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <div class="max-w-[1280px] mx-auto px-8"><hr class="border-[#E5E5E5] dark:border-[#1F1F1F] scr"></div>
+
+    <!-- ─── APPROACH ─── -->
+    <section class="max-w-[1280px] mx-auto px-8 py-20">
+        <div class="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-8 md:gap-12 items-start">
+            <div class="md:sticky md:top-20 scr">
+                <p class="text-[12px] text-black/50 dark:text-white/50">Подход</p>
+            </div>
+            <div>
+                <div class="scr">
+                    <h2 class="font-haas text-[clamp(24px,2.6vw,34px)] font-medium tracking-[-0.02em] leading-[1.14] mb-6">Проектирование трёхстороннего процесса</h2>
+                    <div class="flex flex-wrap items-center gap-x-2.5 gap-y-3 mb-7">
+                        <span class="text-[12px] text-black/70 dark:text-white/70 border border-[#E5E5E5] dark:border-[#1F1F1F] px-3 py-2">Подбор рекрутером</span>
+                        <svg class="w-3.5 h-3.5 text-black/50 dark:text-white/50 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+                        <span class="text-[12px] text-black/70 dark:text-white/70 border border-[#E5E5E5] dark:border-[#1F1F1F] px-3 py-2">Доступ кандидата</span>
+                        <svg class="w-3.5 h-3.5 text-black/50 dark:text-white/50 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+                        <span class="text-[12px] text-black/70 dark:text-white/70 border border-[#E5E5E5] dark:border-[#1F1F1F] px-3 py-2">Рассмотрение компанией</span>
+                        <svg class="w-3.5 h-3.5 text-black/50 dark:text-white/50 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+                        <span class="text-[12px] text-black/70 dark:text-white/70 border border-[#E5E5E5] dark:border-[#1F1F1F] px-3 py-2">Интервью</span>
+                        <svg class="w-3.5 h-3.5 text-black/50 dark:text-white/50 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+                        <span class="text-[12px] text-black/70 dark:text-white/70 border border-[#E5E5E5] dark:border-[#1F1F1F] px-3 py-2">Обратная связь</span>
+                    </div>
+                    <p class="text-[16px] leading-[1.7] text-black/70 dark:text-white/70 max-w-2xl">
+                        Я выстроил MVP вокруг трёх рабочих пространств под конкретные роли, а не одного универсального дашборда найма. Каждое пространство использует одну визуальную систему и паттерны взаимодействия, но содержимое и действия специфичны для роли пользователя.
+                    </p>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-8 border-t border-[#E5E5E5] dark:border-[#1F1F1F] pt-6">
+                        <div>
+                            <p class="text-[14px] font-medium mb-1.5">Пространство рекрутера</p>
+                            <p class="text-[12px] leading-relaxed text-black/50 dark:text-white/50">Находит и предлагает пары «кандидат — вакансия».</p>
+                        </div>
+                        <div>
+                            <p class="text-[14px] font-medium mb-1.5">Пространство кандидата</p>
+                            <p class="text-[12px] leading-relaxed text-black/50 dark:text-white/50">Контролирует, какие компании получают доступ к профилю.</p>
+                        </div>
+                        <div>
+                            <p class="text-[14px] font-medium mb-1.5">Пространство компании</p>
+                            <p class="text-[12px] leading-relaxed text-black/50 dark:text-white/50">Рассматривает кандидатов, запрашивает интервью и даёт обратную связь.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-10 scr">
+                    <div>
+                        <div class="img-frame"><img src="./CC case study/Recruiter - Propose logic view 1.png" alt="Пространство рекрутера — карточка соответствия «кандидат — вакансия»" loading="lazy"></div>
+                        <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">Рекрутер — карточка соответствия</p>
+                    </div>
+                    <div>
+                        <div class="img-frame-light"><img src="./CC case study/candidate consent request flow 1.png" alt="Пространство кандидата — запрос доступа к профилю" loading="lazy"></div>
+                        <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">Кандидат — запрос доступа</p>
+                    </div>
+                    <div>
+                        <div class="img-frame"><img src="./CC case study/company candidates flow 1.png" alt="Пространство компании — предложение кандидата" loading="lazy"></div>
+                        <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">Компания — предложение кандидата</p>
+                    </div>
+                </div>
+                <p class="text-[12px] text-black/50 dark:text-white/50 mt-4 max-w-2xl">Вместо одного универсального дашборда я разделил опыт на три рабочих пространства с общими визуальными паттернами и действиями под конкретную роль.</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="max-w-[1280px] mx-auto px-8"><hr class="border-[#E5E5E5] dark:border-[#1F1F1F] scr"></div>
+
+    <!-- ─── RECRUITER WORKSPACE ─── -->
+    <section class="max-w-[1280px] mx-auto px-8 py-20">
+        <div class="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-8 md:gap-12 items-start">
+            <div class="md:sticky md:top-20 scr">
+                <p class="text-[12px] text-black/50 dark:text-white/50">Пространство рекрутера</p>
+            </div>
+            <div>
+                <div class="scr">
+                    <h2 class="font-haas text-[clamp(24px,2.6vw,34px)] font-medium tracking-[-0.02em] leading-[1.14] mb-5">Превращение AI-подбора в предложения</h2>
+                    <p class="text-[16px] leading-[1.7] text-black/70 dark:text-white/70 max-w-2xl">
+                        Опыт рекрутера выстроен вокруг одного объекта — пары «кандидат — вакансия». Интерфейс объединяет контекст кандидата, контекст вакансии, оценку соответствия, готовность, риски и следующее лучшее действие.
+                    </p>
+                </div>
+                <div class="scr mt-14">
+                    <div class="img-frame"><img src="./CC case study/Recruiter - Propose logic view 1.png" alt="Рекрутер — карточка соответствия «кандидат — вакансия»" loading="lazy"></div>
+                    <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">Карточка соответствия даёт рекрутеру сфокусированный вид на соответствие «кандидат — вакансия», риски, готовность и следующее лучшее действие.</p>
+                    <p class="text-[14px] leading-[1.7] text-black/70 dark:text-white/70 mt-4 max-w-2xl">Главный экран держит соответствие понятным: кто кандидат, с какой вакансией он сопоставлен, почему оценка высокая и что может помешать предложению. Правая панель зарезервирована для контекстных действий, чтобы не перегружать список или шапку.</p>
+                </div>
+                <div class="scr mt-14">
+                    <div class="img-frame"><img src="./CC case study/Recruiter - Propose logic view 2.png" alt="Рекрутер — панель предложения кандидата" loading="lazy"></div>
+                    <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">Процесс предложения живёт в правой панели, удерживая рекрутера в контексте во время подготовки питча по кандидату.</p>
+                    <p class="text-[14px] leading-[1.7] text-black/70 dark:text-white/70 mt-4 max-w-2xl">Процесс предложения объединяет проверки готовности, получателя, редактируемый питч рекрутера и элементы, включённые в предложение. Это делает процесс лёгким, но при этом рекрутер отвечает за финальное сообщение.</p>
+                </div>
+                <div class="scr mt-14">
+                    <div class="img-frame"><img src="./CC case study/Recruiter - Propose logic view 3.png" alt="Рекрутер — состояние «предложение отправлено»" loading="lazy"></div>
+                    <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">После отправки интерфейс возвращается в обновлённое состояние, а не сбрасывает процесс.</p>
+                    <p class="text-[14px] leading-[1.7] text-black/70 dark:text-white/70 mt-4 max-w-2xl">Завершённые действия обновляют состояние соответствия и меняют следующее лучшее действие. Этот паттерн помогает рекрутеру понимать, что уже произошло и что должно произойти дальше.</p>
+                </div>
+                <div class="scr mt-14">
+                    <div class="img-frame"><img src="./CC case study/Recruiter - Propose logic view 5.png" alt="Рекрутер — панель планирования интервью" loading="lazy"></div>
+                    <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">Планирование следует тому же паттерну контекстной панели: участники, предложенные слоты, переговорная и текст приглашения остаются привязанными к соответствию.</p>
+                    <p class="text-[14px] leading-[1.7] text-black/70 dark:text-white/70 mt-4 max-w-2xl">Планирование переиспользует контекстную панель — тип интервью, участники, предложенные и произвольные слоты времени, переговорная комната и текст приглашения — всё без выхода из карточки соответствия.</p>
+                </div>
+                <div class="scr mt-14">
+                    <div class="img-frame"><img src="./CC case study/Recruiter - Interviews.png" alt="Рекрутер — список интервью" loading="lazy"></div>
+                    <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">Запланированные интервью собираются в единый список с состояниями подтверждения и обратной связи.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="max-w-[1280px] mx-auto px-8"><hr class="border-[#E5E5E5] dark:border-[#1F1F1F] scr"></div>
+
+    <!-- ─── CANDIDATE WORKSPACE ─── -->
+    <section class="max-w-[1280px] mx-auto px-8 py-20">
+        <div class="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-8 md:gap-12 items-start">
+            <div class="md:sticky md:top-20 scr">
+                <p class="text-[12px] text-black/50 dark:text-white/50">Пространство кандидата</p>
+            </div>
+            <div>
+                <div class="scr">
+                    <h2 class="font-haas text-[clamp(24px,2.6vw,34px)] font-medium tracking-[-0.02em] leading-[1.14] mb-5">Доступ к профилю остаётся за кандидатом</h2>
+                    <p class="text-[16px] leading-[1.7] text-black/70 dark:text-white/70 max-w-2xl">
+                        Одним из ключевых решений MVP было не относиться к кандидатам как к пассивным записям в базе. Прежде чем компания сможет рассмотреть полный профиль, кандидат видит вакансию, компанию, соответствие и точный перечень запрашиваемых данных профиля.
+                    </p>
+                </div>
+                <div class="scr mt-14">
+                    <div class="img-frame-light"><img src="./CC case study/candidate consent request flow 1.png" alt="Кандидат — вакансия и запрос доступа" loading="lazy"></div>
+                    <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">Кандидат видит вакансию и запрос доступа до того, как что-либо будет передано.</p>
+                    <p class="text-[14px] leading-[1.7] text-black/70 dark:text-white/70 mt-4 max-w-2xl">Кандидат может оценить вакансию и компанию до одобрения доступа. Страница объясняет соответствие, вилку зарплаты, формат работы и то, что компания хочет рассмотреть.</p>
+                </div>
+                <div class="scr mt-14">
+                    <div class="img-frame-light"><img src="./CC case study/candidate consent request flow 2.png" alt="Кандидат — панель рассмотрения запроса" loading="lazy"></div>
+                    <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">Панель рассмотрения запроса делает передачу данных профиля явной и настраиваемой.</p>
+                    <p class="text-[14px] leading-[1.7] text-black/70 dark:text-white/70 mt-4 max-w-2xl">Панель запроса показывает, что будет передано: краткий профиль, подтверждённые навыки, резюме, доступность и зарплатные ожидания. Кандидат может одобрить доступ, отклонить запрос или изменить состав передаваемых данных.</p>
+                </div>
+                <div class="scr mt-14">
+                    <div class="img-frame-light"><img src="./CC case study/candidate consent request flow 3.png" alt="Кандидат — состояние «доступ одобрен»" loading="lazy"></div>
+                    <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">Состояния успеха подтверждают, что именно изменилось и что произойдёт дальше.</p>
+                    <p class="text-[14px] leading-[1.7] text-black/70 dark:text-white/70 mt-4 max-w-2xl">После одобрения система подтверждает компанию, вакансию, переданные данные и время действия. Это делает состояние приватности явным, а не скрытым.</p>
+                </div>
+                <div class="scr mt-14">
+                    <div class="img-frame-light"><img src="./CC case study/candidate consent request flow 4.png" alt="Кандидат — панель управления доступом" loading="lazy"></div>
+                    <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">Доступ — не одноразовое решение. Кандидат может управлять им или отозвать позже.</p>
+                    <p class="text-[14px] leading-[1.7] text-black/70 dark:text-white/70 mt-4 max-w-2xl">Состояние управления доступом укрепляет доверие: кандидат сохраняет контроль даже после одобрения запроса.</p>
+                </div>
+                <div class="scr mt-14">
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                        <div class="img-frame-light" style="aspect-ratio:4/3"><img src="./CC case study/candidate consent request flow 5.png" alt="Кандидат — не заинтересован" class="w-full h-full object-cover object-top" loading="lazy"></div>
+                        <div class="img-frame-light" style="aspect-ratio:4/3"><img src="./CC case study/candidate consent request flow 8.png" alt="Кандидат — отклонение запроса" class="w-full h-full object-cover object-top" loading="lazy"></div>
+                        <div class="img-frame-light" style="aspect-ratio:4/3"><img src="./CC case study/candidate consent request flow 9.png" alt="Кандидат — запрос отклонён" class="w-full h-full object-cover object-top" loading="lazy"></div>
+                        <div class="img-frame-light" style="aspect-ratio:4/3"><img src="./CC case study/candidate consent request flow 6.png" alt="Кандидат — вакансия в архиве" class="w-full h-full object-cover object-top" loading="lazy"></div>
+                    </div>
+                    <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">Вторичные состояния покрывают отклонение или архивацию, не превращая процесс в тяжёлый раздел настроек.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="max-w-[1280px] mx-auto px-8"><hr class="border-[#E5E5E5] dark:border-[#1F1F1F] scr"></div>
+
+    <!-- ─── COMPANY WORKSPACE ─── -->
+    <section class="max-w-[1280px] mx-auto px-8 py-20">
+        <div class="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-8 md:gap-12 items-start">
+            <div class="md:sticky md:top-20 scr">
+                <p class="text-[12px] text-black/50 dark:text-white/50">Пространство компании</p>
+            </div>
+            <div>
+                <div class="scr">
+                    <h2 class="font-haas text-[clamp(24px,2.6vw,34px)] font-medium tracking-[-0.02em] leading-[1.14] mb-5">Рассмотрение кандидатов и замыкание цикла</h2>
+                    <p class="text-[16px] leading-[1.7] text-black/70 dark:text-white/70 max-w-2xl">
+                        Сторона компании сфокусирована на решениях о найме. Вместо сырого профиля из базы интерфейс представляет каждого кандидата как предложение на конкретную вакансию.
+                    </p>
+                </div>
+                <div class="scr mt-14">
+                    <div class="img-frame"><img src="./CC case study/company candidates flow 1.png" alt="Компания — карточка предложения кандидата" loading="lazy"></div>
+                    <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">Компания получает сфокусированное предложение по кандидату, а не сырой профиль.</p>
+                    <p class="text-[14px] leading-[1.7] text-black/70 dark:text-white/70 mt-4 max-w-2xl">Карточка предложения отвечает на главный вопрос компании: стоит ли двигать этого кандидата дальше? Она показывает кандидата, вакансию, оценку соответствия, обоснование соответствия, подтверждённые сигналы, риски и доступные действия.</p>
+                </div>
+                <div class="scr mt-14">
+                    <div class="img-frame"><img src="./CC case study/company candidates flow 2.png" alt="Компания — панель добавления обратной связи" loading="lazy"></div>
+                    <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">Обратная связь достаточно структурирована, чтобы быть полезной, но достаточно лёгкая, чтобы заполнить её быстро.</p>
+                    <p class="text-[14px] leading-[1.7] text-black/70 dark:text-white/70 mt-4 max-w-2xl">Панель обратной связи фиксирует общее решение, оценку по навыкам, заметку команды и рекомендованный следующий шаг. Это превращает субъективное обсуждение в структурированный сигнал для найма.</p>
+                </div>
+                <div class="scr mt-14">
+                    <div class="img-frame"><img src="./CC case study/company candidates flow 3.png" alt="Компания — состояние «обратная связь отправлена»" loading="lazy"></div>
+                    <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">Отправленная обратная связь обновляет состояние кандидата и даёт компании понятное следующее действие.</p>
+                    <p class="text-[14px] leading-[1.7] text-black/70 dark:text-white/70 mt-4 max-w-2xl">Состояние успеха замыкает цикл и даёт команде найма понятный следующий шаг — например, посмотреть статус или запросить интервью.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="max-w-[1280px] mx-auto px-8"><hr class="border-[#E5E5E5] dark:border-[#1F1F1F] scr"></div>
+
+    <!-- ─── ROLE MANAGEMENT ─── -->
+    <section class="max-w-[1280px] mx-auto px-8 py-20">
+        <div class="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-8 md:gap-12 items-start">
+            <div class="md:sticky md:top-20 scr">
+                <p class="text-[12px] text-black/50 dark:text-white/50">Настройка вакансий</p>
+            </div>
+            <div>
+                <div class="scr">
+                    <h2 class="font-haas text-[clamp(24px,2.6vw,34px)] font-medium tracking-[-0.02em] leading-[1.14] mb-5">Управление вакансиями и их создание</h2>
+                    <p class="text-[16px] leading-[1.7] text-black/70 dark:text-white/70 max-w-2xl">
+                        Рабочему пространству компании также был нужен простой способ управлять открытыми вакансиями и создавать новые, не превращаясь в полноценную ATS.
+                    </p>
+                </div>
+                <div class="scr mt-14">
+                    <div class="img-frame"><img src="./CC case study/company roles.png" alt="Компания — страница открытых вакансий" loading="lazy"></div>
+                    <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">Открытые вакансии показаны как операционные строки: предложенные кандидаты, интервью, обратная связь и статус.</p>
+                    <p class="text-[14px] leading-[1.7] text-black/70 dark:text-white/70 mt-4 max-w-2xl">Страница вакансий избегает тяжёлой аналитики и фокусируется на том, какие вакансии требуют внимания. Каждая строка даёт команде найма достаточно контекста, чтобы открыть вакансию и продолжить работу.</p>
+                </div>
+                <div class="scr mt-14">
+                    <div class="img-frame"><img src="./CC case study/company create role.png" alt="Компания — панель создания вакансии" loading="lazy"></div>
+                    <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">Создание вакансии происходит в той же системе правой панели, удерживая компанию в контексте.</p>
+                    <p class="text-[14px] leading-[1.7] text-black/70 dark:text-white/70 mt-4 max-w-2xl">Процесс создания вакансии начинается с основ: название, команда, формат работы, локация, уровень, тип занятости и вилка зарплаты. Тот же паттерн панели позже может расшириться до требований и оценочной карты.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="max-w-[1280px] mx-auto px-8"><hr class="border-[#E5E5E5] dark:border-[#1F1F1F] scr"></div>
+
+    <!-- ─── DESIGN SYSTEM ─── -->
+    <section class="max-w-[1280px] mx-auto px-8 py-20">
+        <div class="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-8 md:gap-12 items-start">
+            <div class="md:sticky md:top-20 scr">
+                <p class="text-[12px] text-black/50 dark:text-white/50">Дизайн-система</p>
+            </div>
+            <div class="scr">
+                <h2 class="font-haas text-[clamp(24px,2.6vw,34px)] font-medium tracking-[-0.02em] leading-[1.14] mb-5">Одна система для трёх пользователей</h2>
+                <p class="text-[16px] leading-[1.7] text-black/70 dark:text-white/70 max-w-2xl">
+                    Визуальная система должна была поддерживать три разных рабочих пространства, не ощущаясь как три отдельных продукта. Я использовал общий тёмный язык интерфейса, сдержанные зелёные акценты, тонкие границы карточек, компактные паттерны статусов и контекстные правые панели на протяжении всего MVP.
+                </p>
+                <div class="flex flex-wrap gap-2 mt-7">
+                    <span class="text-[12px] text-black/50 dark:text-white/50 border border-[#E5E5E5] dark:border-[#1F1F1F] px-3 py-1.5">Тёмный премиальный интерфейс</span>
+                    <span class="text-[12px] text-black/50 dark:text-white/50 border border-[#E5E5E5] dark:border-[#1F1F1F] px-3 py-1.5">Зелёный — акцент действия и успеха</span>
+                    <span class="text-[12px] text-black/50 dark:text-white/50 border border-[#E5E5E5] dark:border-[#1F1F1F] px-3 py-1.5">Контекстные правые панели</span>
+                    <span class="text-[12px] text-black/50 dark:text-white/50 border border-[#E5E5E5] dark:border-[#1F1F1F] px-3 py-1.5">Карточки с тонкими границами</span>
+                    <span class="text-[12px] text-black/50 dark:text-white/50 border border-[#E5E5E5] dark:border-[#1F1F1F] px-3 py-1.5">Точки и пилюли статусов</span>
+                    <span class="text-[12px] text-black/50 dark:text-white/50 border border-[#E5E5E5] dark:border-[#1F1F1F] px-3 py-1.5">Единообразные вкладки</span>
+                    <span class="text-[12px] text-black/50 dark:text-white/50 border border-[#E5E5E5] dark:border-[#1F1F1F] px-3 py-1.5">Компактные строки данных</span>
+                    <span class="text-[12px] text-black/50 dark:text-white/50 border border-[#E5E5E5] dark:border-[#1F1F1F] px-3 py-1.5">Аватары и марки компаний</span>
+                    <span class="text-[12px] text-black/50 dark:text-white/50 border border-[#E5E5E5] dark:border-[#1F1F1F] px-3 py-1.5">Система типографики и отступов</span>
+                </div>
+                <p class="text-[16px] leading-[1.7] text-black/70 dark:text-white/70 max-w-2xl mt-7">
+                    Я также проработал направление визуальной айдентики, включая знак Crowdcruit, систему зелёного акцента, направление типографики и тёмный язык интерфейса. Айдентика осталась минималистичной, чтобы в фокусе оставались продуктовые процессы.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <div class="max-w-[1280px] mx-auto px-8"><hr class="border-[#E5E5E5] dark:border-[#1F1F1F] scr"></div>
+
+    <!-- ─── OUTCOME ─── -->
+    <section class="max-w-[1280px] mx-auto px-8 py-20">
+        <div class="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-8 md:gap-12 items-start">
+            <div class="md:sticky md:top-20 scr">
+                <p class="text-[12px] text-black/50 dark:text-white/50">Результат</p>
+            </div>
+            <div class="scr">
+                <h2 class="font-haas text-[clamp(24px,2.6vw,34px)] font-medium tracking-[-0.02em] leading-[1.14] mb-5">Результат</h2>
+                <div class="space-y-5">
+                    <p class="text-[16px] leading-[1.75] text-black/70 dark:text-white/70 max-w-2xl">MVP был выпущен в продакшен и сейчас используется как работающий, приносящий доход продукт. Финальный дизайн связал ключевые процессы трёх ролей: рекрутеры могут действовать по AI-подбору, кандидаты — контролировать доступ к профилю, а компании — рассматривать кандидатов, запрашивать интервью и отправлять обратную связь.</p>
+                    <p class="text-[16px] leading-[1.75] text-black/70 dark:text-white/70 max-w-2xl">Главное дизайн-решение — держать сложные процессы внутри контекстных правых панелей, чтобы пользователи могли действовать, не теряя окружающий контекст.</p>
+                    <p class="text-[16px] leading-[1.75] text-black/70 dark:text-white/70 max-w-2xl">Как проект продуктового дизайна, Crowdcruit помог определить информационную архитектуру, паттерны взаимодействия и визуальную систему для многосторонней AI-платформы найма, которая прошла путь от дизайна MVP до живого продукта.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="max-w-[1280px] mx-auto px-8"><hr class="border-[#E5E5E5] dark:border-[#1F1F1F] scr"></div>
+
+    <!-- ─── FOCUS ─── -->
+    <section class="max-w-[1280px] mx-auto px-8 py-20">
+        <div class="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-8 md:gap-12 items-start">
+            <div class="md:sticky md:top-20 scr">
+                <p class="text-[12px] text-black/50 dark:text-white/50">Фокус</p>
+            </div>
+            <div class="scr">
+                <h2 class="font-haas text-[clamp(24px,2.6vw,34px)] font-medium tracking-[-0.02em] leading-[1.14] mb-7">На чём я сфокусировался</h2>
+                <ul class="border-t border-[#E5E5E5] dark:border-[#1F1F1F]">
+                    <li class="border-b border-[#E5E5E5] dark:border-[#1F1F1F] py-4 text-[16px] leading-[1.6] text-black/70 dark:text-white/70">Проектирование AI-рекомендаций как объяснимых процессов, в которых можно действовать</li>
+                    <li class="border-b border-[#E5E5E5] dark:border-[#1F1F1F] py-4 text-[16px] leading-[1.6] text-black/70 dark:text-white/70">Передача кандидатам контроля над видимостью профиля</li>
+                    <li class="border-b border-[#E5E5E5] dark:border-[#1F1F1F] py-4 text-[16px] leading-[1.6] text-black/70 dark:text-white/70">Сохранение трёх ролей визуально единообразными, но функционально различными</li>
+                    <li class="border-b border-[#E5E5E5] dark:border-[#1F1F1F] py-4 text-[16px] leading-[1.6] text-black/70 dark:text-white/70">Использование контекстных панелей для сложных действий</li>
+                    <li class="border-b border-[#E5E5E5] dark:border-[#1F1F1F] py-4 text-[16px] leading-[1.6] text-black/70 dark:text-white/70">Баланс плотных данных найма со спокойным премиальным интерфейсом</li>
+                    <li class="border-b border-[#E5E5E5] dark:border-[#1F1F1F] py-4 text-[16px] leading-[1.6] text-black/70 dark:text-white/70">Определение объёма MVP, который можно выпустить в продакшен</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <div class="max-w-[1280px] mx-auto px-8"><hr class="border-[#E5E5E5] dark:border-[#1F1F1F] scr"></div>
+
+    <!-- ─── CLOSING LINE ─── -->
+    <section class="max-w-[1280px] mx-auto px-8 py-24">
+        <div class="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-8 md:gap-12 items-start">
+            <div class="scr">
+                <p class="text-[12px] text-black/50 dark:text-white/50">В заключение</p>
+            </div>
+            <div class="scr">
+                <p class="font-haas text-[clamp(24px,3vw,40px)] font-medium tracking-[-0.025em] leading-[1.18] max-w-3xl">Crowdcruit показывает, как AI-подбор, приватность и совместная работа над наймом могут работать как одна связанная продуктовая система.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ─── FOOTER CTA ─── -->
+    <section class="max-w-[1280px] mx-auto px-8 pt-20 pb-10">
+        <div class="flex flex-col md:flex-row items-start md:items-end justify-between gap-10 scr">
+            <div>
+                <p class="text-[14px] text-black/50 dark:text-white/50 mb-3">Хотите обсудить сотрудничество?</p>
+                <a href="mailto:densaf92@d-gtl.com" class="font-haas inline-block text-[clamp(22px,3.4vw,40px)] font-medium tracking-[-0.025em] leading-[1.1] border-b border-[#0C0C0C] dark:border-[#FAFAFA] pb-1 hover:opacity-40 transition-opacity duration-200">
+                    Открыт к новым проектам. Давайте обсудим. <svg class="inline-block align-middle mb-1" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+                </a>
+            </div>
+            <div class="text-right space-y-1.5 scr">
+                <a href="mailto:densaf92@d-gtl.com" class="block text-[14px] text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white transition-colors duration-200 ul">Почта</a>
+                <a href="#" class="block text-[14px] text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white transition-colors duration-200 ul">Telegram</a>
+                <p class="text-[12px] text-black/50 dark:text-white/50 pt-1">densaf92@d-gtl.com</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ─── LIGHTBOX ─── -->
+    <div id="lightbox" role="dialog" aria-modal="true" aria-label="Увеличенное изображение">
+        <button id="lbclose" aria-label="Закрыть увеличенное изображение">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+        <img id="lbimg" src="" alt="">
+    </div>
+
+    <script>
+        let lenis = null;
+
+        (() => {
+            const saved = localStorage.getItem('theme');
+            if (saved === 'dark') {
+                document.documentElement.classList.add('dark');
+                document.getElementById('ico-sun').classList.add('hidden');
+                document.getElementById('ico-moon').classList.remove('hidden');
+            }
+        })();
+
+        function toggleTheme() {
+            const isDark = document.documentElement.classList.toggle('dark');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            document.getElementById('ico-sun').classList.toggle('hidden', isDark);
+            document.getElementById('ico-moon').classList.toggle('hidden', !isDark);
+        }
+
+        (() => {
+            const cnt = document.querySelector('#preloader .cnt');
+            const ln  = document.querySelector('#preloader .ln');
+            let p = 0;
+            const iv = setInterval(() => {
+                p += Math.random() * 14 + 4;
+                if (p >= 100) {
+                    p = 100; clearInterval(iv);
+                    cnt.textContent = '100'; ln.style.width = '100%';
+                    setTimeout(() => {
+                        document.getElementById('preloader').classList.add('done');
+                        if (lenis) lenis.start();
+                        setTimeout(() => {
+                            document.querySelectorAll('.hi, .r').forEach(el => el.classList.add('in'));
+                            const obs = new IntersectionObserver(entries => {
+                                entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
+                            }, { threshold: 0.06 });
+                            document.querySelectorAll('.scr').forEach(el => obs.observe(el));
+                        }, 80);
+                    }, 280);
+                    return;
+                }
+                cnt.textContent = Math.floor(p);
+                ln.style.width = p + '%';
+            }, 55);
+        })();
+
+        document.querySelectorAll('.page-link').forEach(link => {
+            link.addEventListener('click', e => {
+                const href = link.getAttribute('href');
+                if (href && href !== '#' && !href.startsWith('#')) {
+                    e.preventDefault();
+                    document.getElementById('pt').classList.add('active');
+                    setTimeout(() => { window.location.href = href; }, 580);
+                }
+            });
+        });
+        window.addEventListener('pageshow', () => {
+            const ov = document.getElementById('pt');
+            if (ov.classList.contains('active')) {
+                ov.classList.remove('active'); ov.classList.add('exit');
+                setTimeout(() => ov.classList.remove('exit'), 600);
+            }
+        });
+
+        // Smooth scroll (Lenis)
+        (() => {
+            if (typeof Lenis === 'undefined') return;
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            lenis = new Lenis({ lerp: 0.09, smoothWheel: true });
+            lenis.stop();
+            function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+            requestAnimationFrame(raf);
+        })();
+
+        /* Lightbox — click-to-enlarge for case study images */
+        (() => {
+            const lb = document.getElementById('lightbox');
+            const lbimg = document.getElementById('lbimg');
+            let t;
+            function openLightbox(src, alt) {
+                clearTimeout(t);
+                lbimg.src = src; lbimg.alt = alt || '';
+                lb.style.display = 'flex';
+                requestAnimationFrame(() => requestAnimationFrame(() => lb.classList.add('open')));
+                if (lenis) lenis.stop(); else document.body.style.overflow = 'hidden';
+            }
+            function closeLightbox() {
+                lb.classList.remove('open');
+                if (lenis) lenis.start(); else document.body.style.overflow = '';
+                t = setTimeout(() => { lb.style.display = 'none'; lbimg.removeAttribute('src'); }, 240);
+            }
+            document.querySelectorAll('.img-frame img, .img-frame-light img').forEach(img => {
+                img.addEventListener('click', () => openLightbox(img.currentSrc || img.src, img.alt));
+            });
+            lb.addEventListener('click', e => { if (e.target === lb) closeLightbox(); });
+            document.getElementById('lbclose').addEventListener('click', closeLightbox);
+            document.addEventListener('keydown', e => { if (e.key === 'Escape' && lb.classList.contains('open')) closeLightbox(); });
+        })();
+    </script>
+</body>
+</html>
