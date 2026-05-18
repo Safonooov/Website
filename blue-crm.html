@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blue CRM — Denis Safonov</title>
+    <link rel="stylesheet" href="./Font2/stylesheet.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        haas: ['"Neue Haas Grotesk Display Pro"', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        #preloader {
+            position: fixed; inset: 0; z-index: 10000; background: #0C0C0C;
+            display: flex; align-items: center; justify-content: center;
+            transition: opacity .5s cubic-bezier(.22,1,.36,1), visibility .5s;
+        }
+        #preloader.done { opacity: 0; visibility: hidden; pointer-events: none; }
+        #preloader .cnt { font-family: 'Neue Haas Grotesk Display Pro', sans-serif; font-size: 32px; font-weight: 500; color: #FAFAFA; letter-spacing: -0.02em; }
+        #preloader .ln  { position: absolute; bottom: 0; left: 0; height: 1px; background: rgba(250,250,250,0.15); transition: width .05s linear; }
+
+        #pt { position: fixed; inset: 0; z-index: 9998; background: #0C0C0C; transform: translateY(100%); transition: transform .6s cubic-bezier(.76,0,.24,1); }
+        #pt.active { transform: translateY(0); }
+        #pt.exit   { transform: translateY(-100%); }
+
+        /* Animations */
+        .r  { opacity: 0; transform: translateY(64px); transition: opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1); }
+        .r.in { opacity: 1; transform: none; }
+        .r1 { transition-delay: 0s; } .r2 { transition-delay: .12s; } .r3 { transition-delay: .26s; } .r4 { transition-delay: .40s; }
+        .hi { opacity: 0; transform: translateY(-14px); transition: opacity .6s .05s cubic-bezier(.22,1,.36,1), transform .6s .05s cubic-bezier(.22,1,.36,1); }
+        .hi.in { opacity: 1; transform: none; }
+        .scr { opacity: 0; transform: translateY(44px); transition: opacity .85s cubic-bezier(.16,1,.3,1), transform .85s cubic-bezier(.16,1,.3,1); }
+        .scr.in { opacity: 1; transform: none; }
+
+        /* Underline hover */
+        .ul { position: relative; }
+        .ul::after { content: ''; position: absolute; bottom: -1px; left: 0; right: 0; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: right; transition: transform .35s cubic-bezier(.22,1,.36,1); }
+        .ul:hover::after { transform: scaleX(1); transform-origin: left; }
+
+        /* Image frame — stable, no hover transform */
+        .img-frame { background: #0D0D14; overflow: hidden; }
+        .dark .img-frame { background: #0A0A0F; }
+        .img-frame-light { background: #F2F2F2; overflow: hidden; }
+        .dark .img-frame-light { background: #141414; }
+        .img-frame img, .img-frame-light img { display: block; width: 100%; cursor: zoom-in; }
+
+        /* Lightbox */
+        #lightbox {
+            position: fixed; inset: 0; z-index: 9999; display: none;
+            align-items: center; justify-content: center;
+            background: rgba(8,8,10,0.92); padding: 24px;
+            opacity: 0; transition: opacity .22s ease; cursor: zoom-out;
+        }
+        #lightbox.open { opacity: 1; }
+        #lightbox img { max-width: 94vw; max-height: 90vh; object-fit: contain; cursor: default; }
+        #lbclose {
+            position: absolute; top: 18px; right: 20px; width: 40px; height: 40px;
+            display: flex; align-items: center; justify-content: center;
+            color: #FAFAFA; background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.16); cursor: pointer;
+            transition: background .2s ease;
+        }
+        #lbclose:hover { background: rgba(255,255,255,0.18); }
+    </style>
+</head>
+<body class="font-sans antialiased bg-[#FAFAFA] text-[#0C0C0C] dark:bg-[#0C0C0C] dark:text-[#FAFAFA] transition-colors duration-300">
+
+    <div id="preloader"><span class="cnt">0</span><div class="ln" style="width:0%"></div></div>
+    <div id="pt"></div>
+
+    <!-- ─── HEADER ─── -->
+    <header class="sticky top-0 z-50 bg-[#FAFAFA] dark:bg-[#0C0C0C] border-b border-[#E5E5E5] dark:border-[#1F1F1F] transition-colors duration-300">
+        <div class="max-w-[1280px] mx-auto px-8 h-12 flex items-center justify-between">
+            <a href="/" class="page-link text-[13px] font-medium flex items-center gap-2 hi">
+                <svg class="w-3 h-3 -translate-x-0 group-hover:-translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+                d.safonov
+            </a>
+            <nav class="flex items-center gap-7 hi">
+                <a href="/#work" class="text-[13px] text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white transition-colors duration-200 ul">Work</a>
+                <a href="/#about" class="text-[13px] text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white transition-colors duration-200 ul">About</a>
+                <a href="mailto:densaf92@d-gtl.com" class="text-[13px] text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white transition-colors duration-200 ul">Contact</a>
+                <button onclick="toggleTheme()" class="w-7 h-7 rounded-full border border-[#E5E5E5] dark:border-[#1F1F1F] flex items-center justify-center text-black/50 dark:text-white/50 hover:border-black/40 dark:hover:border-white/40 transition-colors duration-200" aria-label="Toggle theme">
+                    <svg id="ico-sun" class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+                    <svg id="ico-moon" class="w-3.5 h-3.5 hidden" fill="currentColor" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ─── PROJECT HEADER ─── -->
+    <section class="max-w-[1280px] mx-auto px-8 pt-20 pb-16">
+        <h1 class="font-haas text-[clamp(52px,6.8vw,96px)] font-medium leading-[1.03] tracking-[-0.03em] mb-3 r r1">Blue CRM</h1>
+        <p class="text-[clamp(15px,1.3vw,18px)] leading-relaxed text-black/55 dark:text-white/55 max-w-xl mb-8 r r2">Enterprise-grade e-commerce operations CRM.</p>
+        <div class="grid grid-cols-2 md:grid-cols-[200px_1fr_1fr_1fr] gap-6 md:gap-x-12 border-t border-[#E5E5E5] dark:border-[#1F1F1F] pt-6 r r3">
+            <div>
+                <p class="text-[11px] text-black/40 dark:text-white/40 mb-2">Role</p>
+                <p class="text-[13px] leading-snug">Product Designer</p>
+            </div>
+            <div>
+                <p class="text-[11px] text-black/40 dark:text-white/40 mb-2">Platform</p>
+                <p class="text-[13px] leading-snug">Web app</p>
+            </div>
+            <div>
+                <p class="text-[11px] text-black/40 dark:text-white/40 mb-2">Status</p>
+                <p class="text-[13px] leading-snug flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-green-500 flex-shrink-0"></span>Live product</p>
+            </div>
+            <div>
+                <p class="text-[11px] text-black/40 dark:text-white/40 mb-2">Outcome</p>
+                <p class="text-[13px] leading-snug">Used by real users</p>
+            </div>
+        </div>
+        <hr class="border-[#E5E5E5] dark:border-[#1F1F1F] my-8 r r4">
+        <!-- Overview -->
+        <div class="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-8 md:gap-12 r r4">
+            <div>
+                <p class="text-[11px] text-black/40 dark:text-white/40 md:pt-1">Overview</p>
+            </div>
+            <div>
+                <p class="text-[15px] leading-[1.7] text-black/70 dark:text-white/70 max-w-2xl">
+                    Blue CRM is an enterprise-grade e-commerce operational ecosystem designed to help teams manage fast-moving orders, customer context, warehouse workload, support conversations, product data, and operational planning in one structured workspace.
+                </p>
+                <p class="text-[15px] leading-[1.7] text-black/70 dark:text-white/70 max-w-2xl mt-5">
+                    The product challenge was not simply to display more data. E-commerce operators already deal with too much fragmented information. The goal was to reduce cognitive load, surface operational blockers earlier, and make warehouse-to-customer workflows easier to scan and act on.
+                </p>
+                <div class="flex flex-wrap gap-x-10 gap-y-6 mt-7">
+                    <div><p class="text-[11px] text-black/40 dark:text-white/40 mb-1.5">Scope</p><p class="text-[13px]">Product Design, Design System, Information Architecture</p></div>
+                    <div><p class="text-[11px] text-black/40 dark:text-white/40 mb-1.5">Surfaces</p><p class="text-[13px]">Dashboard · Orders · Products · Customers · Calendar · Messaging</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ─── HERO IMAGE ─── -->
+    <section class="max-w-[1280px] mx-auto px-8 pb-20 scr">
+        <div class="img-frame-light w-full">
+            <img src="./Featured work/BLUE THUMBNAIL.png" alt="Blue CRM — e-commerce operations CRM" class="w-full h-auto object-cover">
+        </div>
+    </section>
+
+    <div class="max-w-[1280px] mx-auto px-8"><hr class="border-[#E5E5E5] dark:border-[#1F1F1F] scr"></div>
+
+    <!-- ─── PROBLEM ─── -->
+    <section class="max-w-[1280px] mx-auto px-8 py-20">
+        <div class="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-8 md:gap-12 items-start">
+            <div class="md:sticky md:top-20 scr">
+                <p class="text-[11px] text-black/40 dark:text-white/40">Problem</p>
+            </div>
+            <div class="scr">
+                <h2 class="font-haas text-[clamp(24px,2.6vw,34px)] font-medium tracking-[-0.02em] leading-[1.14] mb-5">The problem</h2>
+                <p class="text-[15px] leading-[1.7] text-black/70 dark:text-white/70 max-w-2xl">
+                    E-commerce operators manage hundreds of fast-moving orders across fragmented tools, causing extreme cognitive overload. Critical operational blockers — such as warehouse backlog, delayed handovers, refund requests, system alerts, and stock-outs — can get buried under dense, unprioritized data noise, directly impacting fulfillment speed and customer satisfaction.
+                </p>
+                <ul class="mt-9 border-t border-[#E5E5E5] dark:border-[#1F1F1F]">
+                    <li class="border-b border-[#E5E5E5] dark:border-[#1F1F1F] py-4 flex gap-5">
+                        <span class="text-[11px] text-black/30 dark:text-white/30 pt-1 flex-shrink-0">01</span>
+                        <p class="text-[14px] leading-[1.6] text-black/70 dark:text-white/70">Operations managers need to understand the current order and warehouse state quickly.</p>
+                    </li>
+                    <li class="border-b border-[#E5E5E5] dark:border-[#1F1F1F] py-4 flex gap-5">
+                        <span class="text-[11px] text-black/30 dark:text-white/30 pt-1 flex-shrink-0">02</span>
+                        <p class="text-[14px] leading-[1.6] text-black/70 dark:text-white/70">Support agents need customer and order context next to communication.</p>
+                    </li>
+                    <li class="border-b border-[#E5E5E5] dark:border-[#1F1F1F] py-4 flex gap-5">
+                        <span class="text-[11px] text-black/30 dark:text-white/30 pt-1 flex-shrink-0">03</span>
+                        <p class="text-[14px] leading-[1.6] text-black/70 dark:text-white/70">Product teams need clean product data management without losing operational visibility.</p>
+                    </li>
+                    <li class="border-b border-[#E5E5E5] dark:border-[#1F1F1F] py-4 flex gap-5">
+                        <span class="text-[11px] text-black/30 dark:text-white/30 pt-1 flex-shrink-0">04</span>
+                        <p class="text-[14px] leading-[1.6] text-black/70 dark:text-white/70">Managers need alerts and dashboards that support action, not decorative reporting.</p>
+                    </li>
+                    <li class="border-b border-[#E5E5E5] dark:border-[#1F1F1F] py-4 flex gap-5">
+                        <span class="text-[11px] text-black/30 dark:text-white/30 pt-1 flex-shrink-0">05</span>
+                        <p class="text-[14px] leading-[1.6] text-black/70 dark:text-white/70">Teams need consistent patterns across orders, products, customers, calendar, and messaging.</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <div class="max-w-[1280px] mx-auto px-8"><hr class="border-[#E5E5E5] dark:border-[#1F1F1F] scr"></div>
+
+    <!-- ─── DISCOVERY ─── -->
+    <section class="max-w-[1280px] mx-auto px-8 py-20">
+        <div class="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-8 md:gap-12 items-start">
+            <div class="md:sticky md:top-20 scr">
+                <p class="text-[11px] text-black/40 dark:text-white/40">Discovery</p>
+            </div>
+            <div class="scr">
+                <h2 class="font-haas text-[clamp(24px,2.6vw,34px)] font-medium tracking-[-0.02em] leading-[1.14] mb-5">Discovery</h2>
+                <p class="text-[15px] leading-[1.7] text-black/70 dark:text-white/70 max-w-2xl">
+                    The discovery phase focused on mapping the operational flow from warehouse workload to customer communication. Instead of treating the CRM as a static database, I looked at how operators move through daily work: monitoring order status, identifying bottlenecks, reacting to stock issues, coordinating handovers, updating product data, and resolving customer requests.
+                </p>
+                <p class="text-[11px] text-black/40 dark:text-white/40 mt-9 mb-3">Jobs-to-be-done</p>
+                <ul class="space-y-2.5 border-t border-[#E5E5E5] dark:border-[#1F1F1F] pt-4">
+                    <li class="flex gap-3 text-[14px] leading-[1.6] text-black/70 dark:text-white/70"><span class="text-black/25 dark:text-white/25 flex-shrink-0">—</span>Operations managers need to see blockers before they become fulfillment delays.</li>
+                    <li class="flex gap-3 text-[14px] leading-[1.6] text-black/70 dark:text-white/70"><span class="text-black/25 dark:text-white/25 flex-shrink-0">—</span>Warehouse and fulfillment teams need order status and backlog signals to be easy to scan.</li>
+                    <li class="flex gap-3 text-[14px] leading-[1.6] text-black/70 dark:text-white/70"><span class="text-black/25 dark:text-white/25 flex-shrink-0">—</span>Support agents need customer telemetry, active orders, order history, and files next to the conversation.</li>
+                    <li class="flex gap-3 text-[14px] leading-[1.6] text-black/70 dark:text-white/70"><span class="text-black/25 dark:text-white/25 flex-shrink-0">—</span>Product managers need structured product editing with media, supplier data, categories, and variations.</li>
+                    <li class="flex gap-3 text-[14px] leading-[1.6] text-black/70 dark:text-white/70"><span class="text-black/25 dark:text-white/25 flex-shrink-0">—</span>Managers need planning tools for meetings, campaigns, shipments, and operational deadlines.</li>
+                </ul>
+                <p class="text-[15px] leading-[1.7] text-black/70 dark:text-white/70 max-w-2xl mt-7">
+                    This helped frame Blue CRM as an operational workspace rather than a simple contact database. The product needed to connect dashboard monitoring, order work, product management, customer support, calendar planning, and messaging into one system.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <div class="max-w-[1280px] mx-auto px-8"><hr class="border-[#E5E5E5] dark:border-[#1F1F1F] scr"></div>
+
+    <!-- ─── COMPETITIVE ANALYSIS ─── -->
+    <section class="max-w-[1280px] mx-auto px-8 py-20">
+        <div class="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-8 md:gap-12 items-start">
+            <div class="md:sticky md:top-20 scr">
+                <p class="text-[11px] text-black/40 dark:text-white/40">Competitive analysis</p>
+            </div>
+            <div class="scr">
+                <h2 class="font-haas text-[clamp(24px,2.6vw,34px)] font-medium tracking-[-0.02em] leading-[1.14] mb-5">Competitive analysis</h2>
+                <p class="text-[15px] leading-[1.7] text-black/70 dark:text-white/70 max-w-2xl">
+                    I reviewed CRM, e-commerce admin, order management, warehouse operations, and support tooling patterns to understand how complex operational data is usually organized. The recurring problem was not a lack of information, but weak prioritization: many tools show the data, but do not clearly separate urgent blockers from everyday operational context.
+                </p>
+                <p class="text-[11px] text-black/40 dark:text-white/40 mt-9 mb-3">What I looked for</p>
+                <ul class="space-y-2.5 border-t border-[#E5E5E5] dark:border-[#1F1F1F] pt-4">
+                    <li class="flex gap-3 text-[14px] leading-[1.6] text-black/70 dark:text-white/70"><span class="text-black/25 dark:text-white/25 flex-shrink-0">—</span>How e-commerce dashboards surface order and fulfillment status.</li>
+                    <li class="flex gap-3 text-[14px] leading-[1.6] text-black/70 dark:text-white/70"><span class="text-black/25 dark:text-white/25 flex-shrink-0">—</span>How warehouse tools expose backlog and bottlenecks.</li>
+                    <li class="flex gap-3 text-[14px] leading-[1.6] text-black/70 dark:text-white/70"><span class="text-black/25 dark:text-white/25 flex-shrink-0">—</span>How CRMs structure customer profiles and order history.</li>
+                    <li class="flex gap-3 text-[14px] leading-[1.6] text-black/70 dark:text-white/70"><span class="text-black/25 dark:text-white/25 flex-shrink-0">—</span>How support tools keep communication connected to customer data.</li>
+                    <li class="flex gap-3 text-[14px] leading-[1.6] text-black/70 dark:text-white/70"><span class="text-black/25 dark:text-white/25 flex-shrink-0">—</span>How product management tools handle product attributes, media, and variations.</li>
+                    <li class="flex gap-3 text-[14px] leading-[1.6] text-black/70 dark:text-white/70"><span class="text-black/25 dark:text-white/25 flex-shrink-0">—</span>How calendars and planning tools represent operational deadlines.</li>
+                    <li class="flex gap-3 text-[14px] leading-[1.6] text-black/70 dark:text-white/70"><span class="text-black/25 dark:text-white/25 flex-shrink-0">—</span>How dense tables stay scannable under high data volume.</li>
+                    <li class="flex gap-3 text-[14px] leading-[1.6] text-black/70 dark:text-white/70"><span class="text-black/25 dark:text-white/25 flex-shrink-0">—</span>How alert systems separate urgent issues from regular dashboard metrics.</li>
+                </ul>
+                <p class="text-[15px] leading-[1.7] text-black/70 dark:text-white/70 max-w-2xl mt-7">
+                    This shaped the product direction: Blue CRM should not become another dense admin panel. The interface needed a predictable layout system, strong information hierarchy, and clear separation between action, monitoring, and context.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <div class="max-w-[1280px] mx-auto px-8"><hr class="border-[#E5E5E5] dark:border-[#1F1F1F] scr"></div>
+
+    <!-- ─── PRODUCT STRATEGY ─── -->
+    <section class="max-w-[1280px] mx-auto px-8 py-20">
+        <div class="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-8 md:gap-12 items-start">
+            <div class="md:sticky md:top-20 scr">
+                <p class="text-[11px] text-black/40 dark:text-white/40">Product strategy</p>
+            </div>
+            <div class="scr">
+                <h2 class="font-haas text-[clamp(24px,2.6vw,34px)] font-medium tracking-[-0.02em] leading-[1.14] mb-7">Product strategy</h2>
+                <div class="border-t border-[#E5E5E5] dark:border-[#1F1F1F]">
+                    <div class="py-7 border-b border-[#E5E5E5] dark:border-[#1F1F1F]">
+                        <div class="flex items-baseline gap-3 mb-3">
+                            <span class="text-[11px] text-black/30 dark:text-white/30">01</span>
+                            <h3 class="text-[16px] font-medium tracking-[-0.01em]">Proportional Live Funnel</h3>
+                        </div>
+                        <p class="text-[14px] leading-[1.7] text-black/65 dark:text-white/65 max-w-2xl">Conventional bar charts can be too abstract for live operations. I replaced them with a proportional status funnel that instantly visualizes warehouse workload and current order backlog, helping managers spot fulfillment bottlenecks quickly.</p>
+                    </div>
+                    <div class="py-7 border-b border-[#E5E5E5] dark:border-[#1F1F1F]">
+                        <div class="flex items-baseline gap-3 mb-3">
+                            <span class="text-[11px] text-black/30 dark:text-white/30">02</span>
+                            <h3 class="text-[16px] font-medium tracking-[-0.01em]">Proactive Triage / Action Center</h3>
+                        </div>
+                        <p class="text-[14px] leading-[1.7] text-black/65 dark:text-white/65 max-w-2xl">I positioned a high-priority Action Center at the top of the workspace to separate critical operational threats — such as critical issues, refunds, stock-outs, and system alerts — from day-to-day metrics. The goal was to make urgent issues impossible to miss.</p>
+                    </div>
+                    <div class="py-7 border-b border-[#E5E5E5] dark:border-[#1F1F1F]">
+                        <div class="flex items-baseline gap-3 mb-3">
+                            <span class="text-[11px] text-black/30 dark:text-white/30">03</span>
+                            <h3 class="text-[16px] font-medium tracking-[-0.01em]">Context-First Messaging</h3>
+                        </div>
+                        <p class="text-[14px] leading-[1.7] text-black/65 dark:text-white/65 max-w-2xl">The communications hub was structured around context-first support. Customer details, lifetime value, total orders, last order, tags, files, and internal notes sit next to the conversation, so support agents can resolve issues without switching tabs.</p>
+                    </div>
+                    <div class="py-7 border-b border-[#E5E5E5] dark:border-[#1F1F1F]">
+                        <div class="flex items-baseline gap-3 mb-3">
+                            <span class="text-[11px] text-black/30 dark:text-white/30">04</span>
+                            <h3 class="text-[16px] font-medium tracking-[-0.01em]">Systematic Layout Integrity</h3>
+                        </div>
+                        <p class="text-[14px] leading-[1.7] text-black/65 dark:text-white/65 max-w-2xl">I applied a rigorous 8px layout grid, predictable left-aligned table architecture, soft card surfaces, and a muted Slate Blue analytical color scheme. High-intensity blue is reserved for primary actions, while the rest of the UI stays calm and scannable.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="max-w-[1280px] mx-auto px-8"><hr class="border-[#E5E5E5] dark:border-[#1F1F1F] scr"></div>
+
+    <!-- ─── PRODUCT HYPOTHESES ─── -->
+    <section class="max-w-[1280px] mx-auto px-8 py-20">
+        <div class="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-8 md:gap-12 items-start">
+            <div class="md:sticky md:top-20 scr">
+                <p class="text-[11px] text-black/40 dark:text-white/40">Hypotheses</p>
+            </div>
+            <div class="scr">
+                <h2 class="font-haas text-[clamp(24px,2.6vw,34px)] font-medium tracking-[-0.02em] leading-[1.14] mb-7">Product hypotheses</h2>
+                <div class="border-t border-[#E5E5E5] dark:border-[#1F1F1F]">
+                    <div class="py-6 border-b border-[#E5E5E5] dark:border-[#1F1F1F] grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-10">
+                        <div class="flex gap-4">
+                            <span class="text-[11px] text-black/30 dark:text-white/30 pt-1 flex-shrink-0">H1</span>
+                            <p class="text-[14px] leading-[1.6] text-black/70 dark:text-white/70">If critical operational alerts are separated from daily metrics, managers can respond to high-risk issues faster.</p>
+                        </div>
+                        <div>
+                            <p class="text-[11px] text-black/40 dark:text-white/40 mb-1.5">Design response</p>
+                            <p class="text-[13px] leading-[1.6] text-black/60 dark:text-white/60">Action Center positioned at the top of the dashboard for critical issues, refunds, stock-outs, and system alerts.</p>
+                        </div>
+                    </div>
+                    <div class="py-6 border-b border-[#E5E5E5] dark:border-[#1F1F1F] grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-10">
+                        <div class="flex gap-4">
+                            <span class="text-[11px] text-black/30 dark:text-white/30 pt-1 flex-shrink-0">H2</span>
+                            <p class="text-[14px] leading-[1.6] text-black/70 dark:text-white/70">If warehouse workload is shown as a proportional live funnel, managers can understand backlog distribution faster than with abstract charts.</p>
+                        </div>
+                        <div>
+                            <p class="text-[11px] text-black/40 dark:text-white/40 mb-1.5">Design response</p>
+                            <p class="text-[13px] leading-[1.6] text-black/60 dark:text-white/60">Status funnel that shows live order stages such as New, Assembly, Ready for Shipping, and Handed to Delivery.</p>
+                        </div>
+                    </div>
+                    <div class="py-6 border-b border-[#E5E5E5] dark:border-[#1F1F1F] grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-10">
+                        <div class="flex gap-4">
+                            <span class="text-[11px] text-black/30 dark:text-white/30 pt-1 flex-shrink-0">H3</span>
+                            <p class="text-[14px] leading-[1.6] text-black/70 dark:text-white/70">If recent orders are displayed in a predictable, scannable table, operators can prioritize fulfillment and exceptions faster.</p>
+                        </div>
+                        <div>
+                            <p class="text-[11px] text-black/40 dark:text-white/40 mb-1.5">Design response</p>
+                            <p class="text-[13px] leading-[1.6] text-black/60 dark:text-white/60">Recent Orders table with order ID, customer, date, total, payment state, fulfillment status, and row actions.</p>
+                        </div>
+                    </div>
+                    <div class="py-6 border-b border-[#E5E5E5] dark:border-[#1F1F1F] grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-10">
+                        <div class="flex gap-4">
+                            <span class="text-[11px] text-black/30 dark:text-white/30 pt-1 flex-shrink-0">H4</span>
+                            <p class="text-[14px] leading-[1.6] text-black/70 dark:text-white/70">If order details combine fulfillment status, item list, payment summary, customer context, and address data, operators can complete fulfillment actions without switching screens.</p>
+                        </div>
+                        <div>
+                            <p class="text-[11px] text-black/40 dark:text-white/40 mb-1.5">Design response</p>
+                            <p class="text-[13px] leading-[1.6] text-black/60 dark:text-white/60">Order detail page with fulfillment timeline, item breakdown, payment summary, customer card, address, and primary action.</p>
+                        </div>
+                    </div>
+                    <div class="py-6 border-b border-[#E5E5E5] dark:border-[#1F1F1F] grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-10">
+                        <div class="flex gap-4">
+                            <span class="text-[11px] text-black/30 dark:text-white/30 pt-1 flex-shrink-0">H5</span>
+                            <p class="text-[14px] leading-[1.6] text-black/70 dark:text-white/70">If product editing keeps attributes, supplier data, categories, dimensions, media, and variations in one structured layout, teams can maintain catalog data with fewer mistakes.</p>
+                        </div>
+                        <div>
+                            <p class="text-[11px] text-black/40 dark:text-white/40 mb-1.5">Design response</p>
+                            <p class="text-[13px] leading-[1.6] text-black/60 dark:text-white/60">Product detail editor with grouped sections, media upload, supplier metadata, categories, and variation management.</p>
+                        </div>
+                    </div>
+                    <div class="py-6 border-b border-[#E5E5E5] dark:border-[#1F1F1F] grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-10">
+                        <div class="flex gap-4">
+                            <span class="text-[11px] text-black/30 dark:text-white/30 pt-1 flex-shrink-0">H6</span>
+                            <p class="text-[14px] leading-[1.6] text-black/70 dark:text-white/70">If customer telemetry is visible next to messaging, support agents can resolve issues without switching tabs.</p>
+                        </div>
+                        <div>
+                            <p class="text-[11px] text-black/40 dark:text-white/40 mb-1.5">Design response</p>
+                            <p class="text-[13px] leading-[1.6] text-black/60 dark:text-white/60">Three-panel messaging layout with inbox, conversation, and customer context panel.</p>
+                        </div>
+                    </div>
+                    <div class="py-6 border-b border-[#E5E5E5] dark:border-[#1F1F1F] grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-10">
+                        <div class="flex gap-4">
+                            <span class="text-[11px] text-black/30 dark:text-white/30 pt-1 flex-shrink-0">H7</span>
+                            <p class="text-[14px] leading-[1.6] text-black/70 dark:text-white/70">If calendar planning uses the same visual system as the rest of the product, operations, shipments, campaigns, and meetings feel connected.</p>
+                        </div>
+                        <div>
+                            <p class="text-[11px] text-black/40 dark:text-white/40 mb-1.5">Design response</p>
+                            <p class="text-[13px] leading-[1.6] text-black/60 dark:text-white/60">Calendar page with month/week/day controls, calendar categories, upcoming events, and operational deadlines.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="max-w-[1280px] mx-auto px-8"><hr class="border-[#E5E5E5] dark:border-[#1F1F1F] scr"></div>
+
+    <!-- ─── PRODUCT SCOPE ─── -->
+    <section class="max-w-[1280px] mx-auto px-8 py-20">
+        <div class="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-8 md:gap-12 items-start">
+            <div class="md:sticky md:top-20 scr">
+                <p class="text-[11px] text-black/40 dark:text-white/40">Scope</p>
+            </div>
+            <div class="scr">
+                <h2 class="font-haas text-[clamp(24px,2.6vw,34px)] font-medium tracking-[-0.02em] leading-[1.14] mb-5">Product scope</h2>
+                <p class="text-[15px] leading-[1.7] text-black/70 dark:text-white/70 max-w-2xl">
+                    Blue CRM was designed as an operational ecosystem rather than a simple contact database. The product needed to connect order tracking, warehouse workload, product management, customer support, calendar planning, and daily operational actions.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8 mt-9">
+                    <div>
+                        <p class="text-[11px] text-black/40 dark:text-white/40 pb-3 mb-3 border-b border-[#E5E5E5] dark:border-[#1F1F1F]">In scope</p>
+                        <ul class="space-y-2">
+                            <li class="flex gap-2.5 text-[13px] leading-[1.55] text-black/65 dark:text-white/65"><span class="text-black/25 dark:text-white/25 flex-shrink-0">—</span>Operational dashboard</li>
+                            <li class="flex gap-2.5 text-[13px] leading-[1.55] text-black/65 dark:text-white/65"><span class="text-black/25 dark:text-white/25 flex-shrink-0">—</span>Action Center / alert strip</li>
+                            <li class="flex gap-2.5 text-[13px] leading-[1.55] text-black/65 dark:text-white/65"><span class="text-black/25 dark:text-white/25 flex-shrink-0">—</span>Order status and warehouse workload monitoring</li>
+                            <li class="flex gap-2.5 text-[13px] leading-[1.55] text-black/65 dark:text-white/65"><span class="text-black/25 dark:text-white/25 flex-shrink-0">—</span>Proportional live status funnel</li>
+                            <li class="flex gap-2.5 text-[13px] leading-[1.55] text-black/65 dark:text-white/65"><span class="text-black/25 dark:text-white/25 flex-shrink-0">—</span>Recent orders table</li>
+                            <li class="flex gap-2.5 text-[13px] leading-[1.55] text-black/65 dark:text-white/65"><span class="text-black/25 dark:text-white/25 flex-shrink-0">—</span>Order detail and fulfillment workflow</li>
+                            <li class="flex gap-2.5 text-[13px] leading-[1.55] text-black/65 dark:text-white/65"><span class="text-black/25 dark:text-white/25 flex-shrink-0">—</span>Create order flow</li>
+                            <li class="flex gap-2.5 text-[13px] leading-[1.55] text-black/65 dark:text-white/65"><span class="text-black/25 dark:text-white/25 flex-shrink-0">—</span>Product detail editing</li>
+                            <li class="flex gap-2.5 text-[13px] leading-[1.55] text-black/65 dark:text-white/65"><span class="text-black/25 dark:text-white/25 flex-shrink-0">—</span>Customer profile and customer creation flow</li>
+                            <li class="flex gap-2.5 text-[13px] leading-[1.55] text-black/65 dark:text-white/65"><span class="text-black/25 dark:text-white/25 flex-shrink-0">—</span>Communications hub / messages</li>
+                            <li class="flex gap-2.5 text-[13px] leading-[1.55] text-black/65 dark:text-white/65"><span class="text-black/25 dark:text-white/25 flex-shrink-0">—</span>Calendar and operational planning</li>
+                            <li class="flex gap-2.5 text-[13px] leading-[1.55] text-black/65 dark:text-white/65"><span class="text-black/25 dark:text-white/25 flex-shrink-0">—</span>Manager / employee profile view</li>
+                            <li class="flex gap-2.5 text-[13px] leading-[1.55] text-black/65 dark:text-white/65"><span class="text-black/25 dark:text-white/25 flex-shrink-0">—</span>Analytics and performance cards</li>
+                            <li class="flex gap-2.5 text-[13px] leading-[1.55] text-black/65 dark:text-white/65"><span class="text-black/25 dark:text-white/25 flex-shrink-0">—</span>Design system foundations</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <p class="text-[11px] text-black/40 dark:text-white/40 pb-3 mb-3 border-b border-[#E5E5E5] dark:border-[#1F1F1F]">Out of scope / intentionally lightweight</p>
+                        <ul class="space-y-2">
+                            <li class="flex gap-2.5 text-[13px] leading-[1.55] text-black/45 dark:text-white/45"><span class="text-black/20 dark:text-white/20 flex-shrink-0">—</span>Complex enterprise permissions</li>
+                            <li class="flex gap-2.5 text-[13px] leading-[1.55] text-black/45 dark:text-white/45"><span class="text-black/20 dark:text-white/20 flex-shrink-0">—</span>Billing</li>
+                            <li class="flex gap-2.5 text-[13px] leading-[1.55] text-black/45 dark:text-white/45"><span class="text-black/20 dark:text-white/20 flex-shrink-0">—</span>Automation builder</li>
+                            <li class="flex gap-2.5 text-[13px] leading-[1.55] text-black/45 dark:text-white/45"><span class="text-black/20 dark:text-white/20 flex-shrink-0">—</span>Third-party integration management</li>
+                            <li class="flex gap-2.5 text-[13px] leading-[1.55] text-black/45 dark:text-white/45"><span class="text-black/20 dark:text-white/20 flex-shrink-0">—</span>Advanced admin configuration</li>
+                            <li class="flex gap-2.5 text-[13px] leading-[1.55] text-black/45 dark:text-white/45"><span class="text-black/20 dark:text-white/20 flex-shrink-0">—</span>Deep warehouse inventory logic beyond product scope</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="max-w-[1280px] mx-auto px-8"><hr class="border-[#E5E5E5] dark:border-[#1F1F1F] scr"></div>
+
+    <!-- ─── WORKFLOW 1 — DASHBOARD ─── -->
+    <section class="max-w-[1280px] mx-auto px-8 py-20">
+        <div class="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-8 md:gap-12 items-start">
+            <div class="md:sticky md:top-20 scr">
+                <p class="text-[11px] text-black/40 dark:text-white/40 mb-3">Operational dashboard</p>
+                <p class="text-[13px] leading-relaxed text-black/50 dark:text-white/50">Action first, analytics second.</p>
+            </div>
+            <div class="scr">
+                <p class="text-[15px] leading-[1.7] text-black/70 dark:text-white/70 max-w-2xl mb-7">The Action Center sits at the top of the workspace and isolates high-priority issues such as critical issues, refunds, stock-outs, and system alerts. Below it, order and support sections provide operational context without competing with urgent blockers.</p>
+                <div class="img-frame-light">
+                    <img src="./Blue crm/1.png" alt="Blue CRM — operational dashboard with Action Center, orders, customer support and status funnel" loading="lazy">
+                </div>
+                <p class="text-[11px] text-black/30 dark:text-white/30 mt-3">The dashboard separates urgent operational blockers from daily metrics, helping teams understand what needs attention first.</p>
+                <div class="mt-5 pt-4 border-t border-[#E5E5E5] dark:border-[#1F1F1F] flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                    <span class="text-[11px] text-black/40 dark:text-white/40 flex-shrink-0">Design decision</span>
+                    <span class="text-[13px] text-black/65 dark:text-white/65">Action first, analytics second.</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="max-w-[1280px] mx-auto px-8"><hr class="border-[#E5E5E5] dark:border-[#1F1F1F] scr"></div>
+
+    <!-- ─── WORKFLOW 2 — RECENT ORDERS ─── -->
+    <section class="max-w-[1280px] mx-auto px-8 py-20">
+        <div class="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-8 md:gap-12 items-start">
+            <div class="md:sticky md:top-20 scr">
+                <p class="text-[11px] text-black/40 dark:text-white/40 mb-3">Scannable order operations</p>
+                <p class="text-[13px] leading-relaxed text-black/50 dark:text-white/50">Dense table, low visual noise, clear status hierarchy.</p>
+            </div>
+            <div class="scr">
+                <p class="text-[15px] leading-[1.7] text-black/70 dark:text-white/70 max-w-2xl mb-7">The order table is designed for fast triage. Operators can scan order ID, customer, date, total, payment status, fulfillment status, and row actions without opening every order.</p>
+                <div class="img-frame-light">
+                    <img src="./Blue crm/2.png" alt="Blue CRM — recent orders table with order IDs, customers, dates, totals and statuses" loading="lazy">
+                </div>
+                <p class="text-[11px] text-black/30 dark:text-white/30 mt-3">Recent orders use predictable alignment and muted statuses to keep fast-moving operational data scannable.</p>
+                <div class="mt-5 pt-4 border-t border-[#E5E5E5] dark:border-[#1F1F1F] flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                    <span class="text-[11px] text-black/40 dark:text-white/40 flex-shrink-0">Design decision</span>
+                    <span class="text-[13px] text-black/65 dark:text-white/65">Dense table, low visual noise, clear status hierarchy.</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="max-w-[1280px] mx-auto px-8"><hr class="border-[#E5E5E5] dark:border-[#1F1F1F] scr"></div>
+
+    <!-- ─── WORKFLOW 3 — PRODUCT MANAGEMENT ─── -->
+    <section class="max-w-[1280px] mx-auto px-8 py-20">
+        <div class="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-8 md:gap-12 items-start">
+            <div class="md:sticky md:top-20 scr">
+                <p class="text-[11px] text-black/40 dark:text-white/40 mb-3">Structured product management</p>
+                <p class="text-[13px] leading-relaxed text-black/50 dark:text-white/50">Structured editing instead of a long unprioritized form.</p>
+            </div>
+            <div class="scr">
+                <p class="text-[15px] leading-[1.7] text-black/70 dark:text-white/70 max-w-2xl mb-7">Product data can become messy quickly in e-commerce operations. The editor keeps catalog attributes grouped into sections and uses consistent form patterns, chips, upload zones, and media previews.</p>
+                <div class="img-frame-light">
+                    <img src="./Blue crm/3.png" alt="Blue CRM — product detail editor with supplier data, categories, dimensions, media and variations" loading="lazy">
+                </div>
+                <p class="text-[11px] text-black/30 dark:text-white/30 mt-3">Product editing groups supplier data, categories, dimensions, media, and variations into a predictable structure.</p>
+                <div class="mt-5 pt-4 border-t border-[#E5E5E5] dark:border-[#1F1F1F] flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                    <span class="text-[11px] text-black/40 dark:text-white/40 flex-shrink-0">Design decision</span>
+                    <span class="text-[13px] text-black/65 dark:text-white/65">Structured editing instead of a long unprioritized form.</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="max-w-[1280px] mx-auto px-8"><hr class="border-[#E5E5E5] dark:border-[#1F1F1F] scr"></div>
+
+    <!-- ─── WORKFLOW 4 — ORDER DETAIL ─── -->
+    <section class="max-w-[1280px] mx-auto px-8 py-20">
+        <div class="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-8 md:gap-12 items-start">
+            <div class="md:sticky md:top-20 scr">
+                <p class="text-[11px] text-black/40 dark:text-white/40 mb-3">Order detail and fulfillment</p>
+                <p class="text-[13px] leading-relaxed text-black/50 dark:text-white/50">Bring order execution and customer context into one screen.</p>
+            </div>
+            <div class="scr">
+                <p class="text-[15px] leading-[1.7] text-black/70 dark:text-white/70 max-w-2xl mb-7">The fulfillment timeline makes the order state visible at the top. The operator can inspect items, payment state, customer information, addresses, and activity without switching between tools.</p>
+                <div class="img-frame-light">
+                    <img src="./Blue crm/4.png" alt="Blue CRM — order detail with fulfillment status, items, payment summary, customer and addresses" loading="lazy">
+                </div>
+                <p class="text-[11px] text-black/30 dark:text-white/30 mt-3">Order detail combines fulfillment status, item breakdown, payment summary, customer context, and delivery data in one workspace.</p>
+                <div class="mt-5 pt-4 border-t border-[#E5E5E5] dark:border-[#1F1F1F] flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                    <span class="text-[11px] text-black/40 dark:text-white/40 flex-shrink-0">Design decision</span>
+                    <span class="text-[13px] text-black/65 dark:text-white/65">Bring order execution and customer context into one screen.</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="max-w-[1280px] mx-auto px-8"><hr class="border-[#E5E5E5] dark:border-[#1F1F1F] scr"></div>
+
+    <!-- ─── WORKFLOW 5 — CREATE ORDER ─── -->
+    <section class="max-w-[1280px] mx-auto px-8 py-20">
+        <div class="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-8 md:gap-12 items-start">
+            <div class="md:sticky md:top-20 scr">
+                <p class="text-[11px] text-black/40 dark:text-white/40 mb-3">Contextual order creation</p>
+                <p class="text-[13px] leading-relaxed text-black/50 dark:text-white/50">Reduce mistakes by keeping the order summary visible.</p>
+            </div>
+            <div class="scr">
+                <p class="text-[15px] leading-[1.7] text-black/70 dark:text-white/70 max-w-2xl mb-7">Creating a manual order requires multiple decisions. The layout separates the main form from a persistent summary panel, so operators can review totals, payment method, and notes while building the order.</p>
+                <div class="img-frame-light">
+                    <img src="./Blue crm/5.png" alt="Blue CRM — create order page with customer search, products, shipping address, summary and payment method" loading="lazy">
+                </div>
+                <p class="text-[11px] text-black/30 dark:text-white/30 mt-3">Create Order keeps customer selection, products, shipping, payment method, and summary visible during the same flow.</p>
+                <div class="mt-5 pt-4 border-t border-[#E5E5E5] dark:border-[#1F1F1F] flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                    <span class="text-[11px] text-black/40 dark:text-white/40 flex-shrink-0">Design decision</span>
+                    <span class="text-[13px] text-black/65 dark:text-white/65">Reduce mistakes by keeping the order summary visible.</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="max-w-[1280px] mx-auto px-8"><hr class="border-[#E5E5E5] dark:border-[#1F1F1F] scr"></div>
+
+    <!-- ─── WORKFLOW 6 — TEAM PROFILE ─── -->
+    <section class="max-w-[1280px] mx-auto px-8 py-20">
+        <div class="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-8 md:gap-12 items-start">
+            <div class="md:sticky md:top-20 scr">
+                <p class="text-[11px] text-black/40 dark:text-white/40 mb-3">Operational team profiles</p>
+                <p class="text-[13px] leading-relaxed text-black/50 dark:text-white/50">Operational visibility extends beyond customers and orders.</p>
+            </div>
+            <div class="scr">
+                <p class="text-[15px] leading-[1.7] text-black/70 dark:text-white/70 max-w-2xl mb-7">Blue CRM also supports internal operations. The manager profile gives visibility into earnings, orders handled, plan progress, performance, role, schedule, team members, and day-off balance.</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="img-frame-light">
+                        <img src="./Blue crm/6.png" alt="Blue CRM — manager profile with earnings, orders handled, plan progress and payment history" loading="lazy">
+                    </div>
+                    <div class="img-frame-light">
+                        <img src="./Blue crm/7.png" alt="Blue CRM — manager profile with performance chart, schedule, day-off balance and team" loading="lazy">
+                    </div>
+                </div>
+                <p class="text-[11px] text-black/30 dark:text-white/30 mt-3">Team profiles combine performance, payment history, schedule, contact data, and role context in one place.</p>
+                <div class="mt-5 pt-4 border-t border-[#E5E5E5] dark:border-[#1F1F1F] flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                    <span class="text-[11px] text-black/40 dark:text-white/40 flex-shrink-0">Design decision</span>
+                    <span class="text-[13px] text-black/65 dark:text-white/65">Operational visibility extends beyond customers and orders.</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="max-w-[1280px] mx-auto px-8"><hr class="border-[#E5E5E5] dark:border-[#1F1F1F] scr"></div>
+
+    <!-- ─── WORKFLOW 7 — ADD CUSTOMER ─── -->
+    <section class="max-w-[1280px] mx-auto px-8 py-20">
+        <div class="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-8 md:gap-12 items-start">
+            <div class="md:sticky md:top-20 scr">
+                <p class="text-[11px] text-black/40 dark:text-white/40 mb-3">Contextual creation flows</p>
+                <p class="text-[13px] leading-relaxed text-black/50 dark:text-white/50">Short focused modal instead of full-page navigation.</p>
+            </div>
+            <div class="scr">
+                <p class="text-[15px] leading-[1.7] text-black/70 dark:text-white/70 max-w-2xl mb-7">The Add New Customer modal supports individual/business profile type, contact data, country, segment, tags, welcome email, and marketing subscription while keeping the underlying customer context visible.</p>
+                <div class="img-frame-light">
+                    <img src="./Blue crm/8.png" alt="Blue CRM — add new customer modal over the customer profile page" loading="lazy">
+                </div>
+                <p class="text-[11px] text-black/30 dark:text-white/30 mt-3">Creation flows stay focused and modal-based, letting users add records without losing their current workspace.</p>
+                <div class="mt-5 pt-4 border-t border-[#E5E5E5] dark:border-[#1F1F1F] flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                    <span class="text-[11px] text-black/40 dark:text-white/40 flex-shrink-0">Design decision</span>
+                    <span class="text-[13px] text-black/65 dark:text-white/65">Short focused modal instead of full-page navigation.</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="max-w-[1280px] mx-auto px-8"><hr class="border-[#E5E5E5] dark:border-[#1F1F1F] scr"></div>
+
+    <!-- ─── WORKFLOW 8 — CALENDAR ─── -->
+    <section class="max-w-[1280px] mx-auto px-8 py-20">
+        <div class="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-8 md:gap-12 items-start">
+            <div class="md:sticky md:top-20 scr">
+                <p class="text-[11px] text-black/40 dark:text-white/40 mb-3">Operational planning</p>
+                <p class="text-[13px] leading-relaxed text-black/50 dark:text-white/50">Planning is part of the operational system, not a separate tool.</p>
+            </div>
+            <div class="scr">
+                <p class="text-[15px] leading-[1.7] text-black/70 dark:text-white/70 max-w-2xl mb-7">The calendar gives teams a shared view of operational events: standups, shipments, campaign launches, warehouse inventory, planning deadlines, and reviews.</p>
+                <div class="img-frame-light">
+                    <img src="./Blue crm/10.png" alt="Blue CRM — calendar with month view, calendar categories and upcoming events" loading="lazy">
+                </div>
+                <p class="text-[11px] text-black/30 dark:text-white/30 mt-3">Calendar planning reuses the same visual system to connect meetings, campaigns, shipments, and deadlines.</p>
+                <div class="mt-5 pt-4 border-t border-[#E5E5E5] dark:border-[#1F1F1F] flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                    <span class="text-[11px] text-black/40 dark:text-white/40 flex-shrink-0">Design decision</span>
+                    <span class="text-[13px] text-black/65 dark:text-white/65">Planning is part of the operational system, not a separate tool.</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="max-w-[1280px] mx-auto px-8"><hr class="border-[#E5E5E5] dark:border-[#1F1F1F] scr"></div>
+
+    <!-- ─── WORKFLOW 9 — MESSAGES ─── -->
+    <section class="max-w-[1280px] mx-auto px-8 py-20">
+        <div class="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-8 md:gap-12 items-start">
+            <div class="md:sticky md:top-20 scr">
+                <p class="text-[11px] text-black/40 dark:text-white/40 mb-3">Context-first messaging</p>
+                <p class="text-[13px] leading-relaxed text-black/50 dark:text-white/50">Support conversations are connected to operational customer data.</p>
+            </div>
+            <div class="scr">
+                <p class="text-[15px] leading-[1.7] text-black/70 dark:text-white/70 max-w-2xl mb-7">The messaging layout uses three panels: inbox, conversation, and customer context. This reduces tab-switching by keeping lifetime value, total orders, last order, tags, shared files, and internal notes visible.</p>
+                <div class="img-frame-light">
+                    <img src="./Blue crm/11.png" alt="Blue CRM — messages with inbox, conversation and customer context panel" loading="lazy">
+                </div>
+                <p class="text-[11px] text-black/30 dark:text-white/30 mt-3">Support agents can resolve issues with customer telemetry, tags, files, and order context next to the conversation.</p>
+                <div class="mt-5 pt-4 border-t border-[#E5E5E5] dark:border-[#1F1F1F] flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                    <span class="text-[11px] text-black/40 dark:text-white/40 flex-shrink-0">Design decision</span>
+                    <span class="text-[13px] text-black/65 dark:text-white/65">Support conversations are connected to operational customer data.</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="max-w-[1280px] mx-auto px-8"><hr class="border-[#E5E5E5] dark:border-[#1F1F1F] scr"></div>
+
+    <!-- ─── DESIGN SYSTEM ─── -->
+    <section class="max-w-[1280px] mx-auto px-8 py-20">
+        <div class="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-8 md:gap-12 items-start">
+            <div class="md:sticky md:top-20 scr">
+                <p class="text-[11px] text-black/40 dark:text-white/40">Design system</p>
+            </div>
+            <div class="scr">
+                <h2 class="font-haas text-[clamp(24px,2.6vw,34px)] font-medium tracking-[-0.02em] leading-[1.14] mb-5">Reducing visual noise in a data-heavy product</h2>
+                <p class="text-[15px] leading-[1.7] text-black/70 dark:text-white/70 max-w-2xl">
+                    The UI system was designed to reduce visual noise in a data-heavy operational product. I used a muted Slate Blue analytical palette, strict 8px spacing logic, left-aligned table architecture, soft card surfaces, and restrained use of high-intensity blue for primary actions.
+                </p>
+                <div class="flex flex-wrap gap-2 mt-7">
+                    <span class="text-[12px] text-black/55 dark:text-white/55 border border-[#E5E5E5] dark:border-[#1F1F1F] px-3 py-1.5">8px grid</span>
+                    <span class="text-[12px] text-black/55 dark:text-white/55 border border-[#E5E5E5] dark:border-[#1F1F1F] px-3 py-1.5">Muted Slate Blue palette</span>
+                    <span class="text-[12px] text-black/55 dark:text-white/55 border border-[#E5E5E5] dark:border-[#1F1F1F] px-3 py-1.5">Brand blue reserved for primary CTAs</span>
+                    <span class="text-[12px] text-black/55 dark:text-white/55 border border-[#E5E5E5] dark:border-[#1F1F1F] px-3 py-1.5">Soft white / light gray surfaces</span>
+                    <span class="text-[12px] text-black/55 dark:text-white/55 border border-[#E5E5E5] dark:border-[#1F1F1F] px-3 py-1.5">Consistent sidebar</span>
+                    <span class="text-[12px] text-black/55 dark:text-white/55 border border-[#E5E5E5] dark:border-[#1F1F1F] px-3 py-1.5">Card and panel system</span>
+                    <span class="text-[12px] text-black/55 dark:text-white/55 border border-[#E5E5E5] dark:border-[#1F1F1F] px-3 py-1.5">Dense but scannable tables</span>
+                    <span class="text-[12px] text-black/55 dark:text-white/55 border border-[#E5E5E5] dark:border-[#1F1F1F] px-3 py-1.5">Status labels and pills</span>
+                    <span class="text-[12px] text-black/55 dark:text-white/55 border border-[#E5E5E5] dark:border-[#1F1F1F] px-3 py-1.5">Form fields and modals</span>
+                    <span class="text-[12px] text-black/55 dark:text-white/55 border border-[#E5E5E5] dark:border-[#1F1F1F] px-3 py-1.5">Charts and funnel patterns</span>
+                    <span class="text-[12px] text-black/55 dark:text-white/55 border border-[#E5E5E5] dark:border-[#1F1F1F] px-3 py-1.5">Calendar categories</span>
+                    <span class="text-[12px] text-black/55 dark:text-white/55 border border-[#E5E5E5] dark:border-[#1F1F1F] px-3 py-1.5">Messaging panels</span>
+                    <span class="text-[12px] text-black/55 dark:text-white/55 border border-[#E5E5E5] dark:border-[#1F1F1F] px-3 py-1.5">Typography and spacing</span>
+                </div>
+                <p class="text-[15px] leading-[1.7] text-black/70 dark:text-white/70 max-w-2xl mt-7">
+                    The design system had to work across very different surfaces — dashboards, order tables, product forms, order detail pages, customer profiles, modals, calendars, and messaging — without each section feeling like a separate product.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <div class="max-w-[1280px] mx-auto px-8"><hr class="border-[#E5E5E5] dark:border-[#1F1F1F] scr"></div>
+
+    <!-- ─── OUTCOME ─── -->
+    <section class="max-w-[1280px] mx-auto px-8 py-20">
+        <div class="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-8 md:gap-12 items-start">
+            <div class="md:sticky md:top-20 scr">
+                <p class="text-[11px] text-black/40 dark:text-white/40">Outcome</p>
+            </div>
+            <div class="scr">
+                <h2 class="font-haas text-[clamp(24px,2.6vw,34px)] font-medium tracking-[-0.02em] leading-[1.14] mb-5">Outcome</h2>
+                <div class="space-y-5">
+                    <p class="text-[15px] leading-[1.75] text-black/70 dark:text-white/70 max-w-2xl">Blue CRM is a live product used by real users. The final design defines an enterprise-grade e-commerce operations workspace that connects order visibility, warehouse workload, product data, customer context, support communication, calendar planning, and daily operational actions in one system.</p>
+                    <p class="text-[15px] leading-[1.75] text-black/70 dark:text-white/70 max-w-2xl">The main product decision was to reduce cognitive load by separating urgent alerts from analytical context and keeping customer and order information close to the workflows where decisions happen.</p>
+                    <p class="text-[15px] leading-[1.75] text-black/70 dark:text-white/70 max-w-2xl">The result is a more structured operational interface where teams can monitor issues, manage orders, update products, support customers, and plan work without constantly switching between disconnected tools.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="max-w-[1280px] mx-auto px-8"><hr class="border-[#E5E5E5] dark:border-[#1F1F1F] scr"></div>
+
+    <!-- ─── FOCUS ─── -->
+    <section class="max-w-[1280px] mx-auto px-8 py-20">
+        <div class="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-8 md:gap-12 items-start">
+            <div class="md:sticky md:top-20 scr">
+                <p class="text-[11px] text-black/40 dark:text-white/40">Focus</p>
+            </div>
+            <div class="scr">
+                <h2 class="font-haas text-[clamp(24px,2.6vw,34px)] font-medium tracking-[-0.02em] leading-[1.14] mb-7">What I focused on</h2>
+                <ul class="border-t border-[#E5E5E5] dark:border-[#1F1F1F]">
+                    <li class="border-b border-[#E5E5E5] dark:border-[#1F1F1F] py-4 text-[15px] leading-[1.6] text-black/70 dark:text-white/70">Designing dense operational systems without overwhelming users</li>
+                    <li class="border-b border-[#E5E5E5] dark:border-[#1F1F1F] py-4 text-[15px] leading-[1.6] text-black/70 dark:text-white/70">Separating urgent alerts from analytical context</li>
+                    <li class="border-b border-[#E5E5E5] dark:border-[#1F1F1F] py-4 text-[15px] leading-[1.6] text-black/70 dark:text-white/70">Turning dashboard data into action-oriented workflows</li>
+                    <li class="border-b border-[#E5E5E5] dark:border-[#1F1F1F] py-4 text-[15px] leading-[1.6] text-black/70 dark:text-white/70">Keeping customer and order context close to support communication</li>
+                    <li class="border-b border-[#E5E5E5] dark:border-[#1F1F1F] py-4 text-[15px] leading-[1.6] text-black/70 dark:text-white/70">Using layout discipline and color restraint to reduce cognitive load</li>
+                    <li class="border-b border-[#E5E5E5] dark:border-[#1F1F1F] py-4 text-[15px] leading-[1.6] text-black/70 dark:text-white/70">Building reusable UI patterns across dashboards, tables, forms, modals, calendars, and messaging</li>
+                    <li class="border-b border-[#E5E5E5] dark:border-[#1F1F1F] py-4 text-[15px] leading-[1.6] text-black/70 dark:text-white/70">Designing a live product system that supports daily e-commerce operations</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <div class="max-w-[1280px] mx-auto px-8"><hr class="border-[#E5E5E5] dark:border-[#1F1F1F] scr"></div>
+
+    <!-- ─── CLOSING LINE ─── -->
+    <section class="max-w-[1280px] mx-auto px-8 py-24">
+        <div class="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-8 md:gap-12 items-start">
+            <div class="scr">
+                <p class="text-[11px] text-black/40 dark:text-white/40">In closing</p>
+            </div>
+            <div class="scr">
+                <p class="font-haas text-[clamp(24px,3vw,40px)] font-medium tracking-[-0.025em] leading-[1.18] max-w-3xl">Blue CRM is a live e-commerce operations CRM designed to reduce data chaos, lower cognitive load, and connect order management, product data, customer support, and planning into one operational system.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ─── FOOTER CTA ─── -->
+    <section class="max-w-[1280px] mx-auto px-8 pt-20 pb-10">
+        <div class="flex flex-col md:flex-row items-start md:items-end justify-between gap-10 scr">
+            <div>
+                <p class="text-[13px] text-black/40 dark:text-white/40 mb-3">Keen to explore possibilities?</p>
+                <a href="mailto:densaf92@d-gtl.com" class="font-haas inline-block text-[clamp(24px,3.6vw,44px)] font-medium tracking-[-0.025em] leading-none border-b border-[#0C0C0C] dark:border-[#FAFAFA] pb-1 hover:opacity-40 transition-opacity duration-200">
+                    Open to new projects. Let's talk. <svg class="inline-block align-middle mb-1" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+                </a>
+            </div>
+            <div class="text-right space-y-1.5 scr">
+                <a href="mailto:densaf92@d-gtl.com" class="block text-[13px] text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white transition-colors duration-200 ul">Email</a>
+                <a href="#" class="block text-[13px] text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white transition-colors duration-200 ul">Telegram</a>
+                <p class="text-[12px] text-black/30 dark:text-white/30 pt-1">densaf92@d-gtl.com</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ─── LIGHTBOX ─── -->
+    <div id="lightbox" role="dialog" aria-modal="true" aria-label="Enlarged image">
+        <button id="lbclose" aria-label="Close enlarged image">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+        <img id="lbimg" src="" alt="">
+    </div>
+
+    <script>
+        (() => {
+            const saved = localStorage.getItem('theme');
+            if (saved === 'dark') {
+                document.documentElement.classList.add('dark');
+                document.getElementById('ico-sun').classList.add('hidden');
+                document.getElementById('ico-moon').classList.remove('hidden');
+            }
+        })();
+
+        function toggleTheme() {
+            const isDark = document.documentElement.classList.toggle('dark');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            document.getElementById('ico-sun').classList.toggle('hidden', isDark);
+            document.getElementById('ico-moon').classList.toggle('hidden', !isDark);
+        }
+
+        (() => {
+            const cnt = document.querySelector('#preloader .cnt');
+            const ln  = document.querySelector('#preloader .ln');
+            let p = 0;
+            const iv = setInterval(() => {
+                p += Math.random() * 14 + 4;
+                if (p >= 100) {
+                    p = 100; clearInterval(iv);
+                    cnt.textContent = '100'; ln.style.width = '100%';
+                    setTimeout(() => {
+                        document.getElementById('preloader').classList.add('done');
+                        setTimeout(() => {
+                            document.querySelectorAll('.hi, .r').forEach(el => el.classList.add('in'));
+                            const obs = new IntersectionObserver(entries => {
+                                entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
+                            }, { threshold: 0.06 });
+                            document.querySelectorAll('.scr').forEach(el => obs.observe(el));
+                        }, 80);
+                    }, 280);
+                    return;
+                }
+                cnt.textContent = Math.floor(p);
+                ln.style.width = p + '%';
+            }, 55);
+        })();
+
+        document.querySelectorAll('.page-link').forEach(link => {
+            link.addEventListener('click', e => {
+                const href = link.getAttribute('href');
+                if (href && href !== '#' && !href.startsWith('#')) {
+                    e.preventDefault();
+                    document.getElementById('pt').classList.add('active');
+                    setTimeout(() => { window.location.href = href; }, 580);
+                }
+            });
+        });
+        window.addEventListener('pageshow', () => {
+            const ov = document.getElementById('pt');
+            if (ov.classList.contains('active')) {
+                ov.classList.remove('active'); ov.classList.add('exit');
+                setTimeout(() => ov.classList.remove('exit'), 600);
+            }
+        });
+
+        /* Lightbox — click-to-enlarge for case study images */
+        (() => {
+            const lb = document.getElementById('lightbox');
+            const lbimg = document.getElementById('lbimg');
+            let t;
+            function openLightbox(src, alt) {
+                clearTimeout(t);
+                lbimg.src = src; lbimg.alt = alt || '';
+                lb.style.display = 'flex';
+                requestAnimationFrame(() => requestAnimationFrame(() => lb.classList.add('open')));
+                document.body.style.overflow = 'hidden';
+            }
+            function closeLightbox() {
+                lb.classList.remove('open');
+                document.body.style.overflow = '';
+                t = setTimeout(() => { lb.style.display = 'none'; lbimg.removeAttribute('src'); }, 240);
+            }
+            document.querySelectorAll('.img-frame img, .img-frame-light img').forEach(img => {
+                img.addEventListener('click', () => openLightbox(img.currentSrc || img.src, img.alt));
+            });
+            lb.addEventListener('click', e => { if (e.target === lb) closeLightbox(); });
+            document.getElementById('lbclose').addEventListener('click', closeLightbox);
+            document.addEventListener('keydown', e => { if (e.key === 'Escape' && lb.classList.contains('open')) closeLightbox(); });
+        })();
+    </script>
+</body>
+</html>
