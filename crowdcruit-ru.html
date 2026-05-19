@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script>(function(){try{if(localStorage.getItem('lang')==='en'){location.replace('crowdcruit.html');}}catch(e){}})();</script>
-    <title>Crowdcruit — Денис Сафонов</title>
+    <title>Crowdcruit – Денис Сафонов</title>
     <link rel="stylesheet" href="./Font2/stylesheet.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -52,7 +52,7 @@
         .ul::after { content: ''; position: absolute; bottom: -1px; left: 0; right: 0; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: right; transition: transform .35s cubic-bezier(.22,1,.36,1); }
         .ul:hover::after { transform: scaleX(1); transform-origin: left; }
 
-        /* Image frame — stable, no hover transform */
+        /* Image frame – stable, no hover transform */
         .img-frame { background: #0D0D14; overflow: hidden; }
         .dark .img-frame { background: #0A0A0F; }
         .img-frame-light { background: #F2F2F2; overflow: hidden; }
@@ -97,14 +97,18 @@
                 d.safonov
             </a>
             <nav class="flex items-center gap-5 hi">
+                <a href="./CV-Denis-Safonov-RU.pdf" download="Denis-Safonov-CV.pdf" class="flex items-center gap-1.5 text-[12px] text-black/50 dark:text-white/50 border border-[#E5E5E5] dark:border-[#1F1F1F] px-3 py-1.5 hover:text-black dark:hover:text-white hover:border-black/40 dark:hover:border-white/40 transition-colors duration-200">
+                    CV
+                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
+                </a>
                 <div class="flex items-center gap-1.5 text-[12px]" aria-label="Язык">
                     <a href="crowdcruit.html" onclick="localStorage.setItem('lang','en')" class="text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white transition-colors duration-200">EN</a>
                     <span class="text-black/50 dark:text-white/50">/</span>
                     <span class="font-medium">RU</span>
                 </div>
                 <button onclick="toggleTheme()" class="flex items-center justify-center text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white transition-colors duration-200" aria-label="Переключить тему">
-                    <svg id="ico-sun" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
-                    <svg id="ico-moon" class="w-4 h-4 hidden" fill="currentColor" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg>
+                    <svg id="ico-sun" class="w-4 h-4" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/></svg>
+                    <svg id="ico-moon" class="w-4 h-4 hidden" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor"/></svg>
                 </button>
             </nav>
         </div>
@@ -140,10 +144,10 @@
             </div>
             <div>
                 <p class="text-[16px] leading-[1.7] text-black/70 dark:text-white/70 max-w-2xl">
-                    Crowdcruit начинался как MVP-челлендж: определить ядро продуктового опыта для трёхсторонней AI-платформы найма и довести её до продакшена. Цель — выйти за рамки статичных экранов и спроектировать процессы, необходимые для пригодного к использованию, приносящего доход продукта.
+                    Crowdcruit начинался как MVP-челлендж: определить ядро продуктового опыта для трёхсторонней AI-платформы найма и довести её до продакшена. Цель – выйти за рамки статичных экранов и спроектировать процессы, необходимые для пригодного к использованию, приносящего доход продукта.
                 </p>
                 <p class="text-[16px] leading-[1.7] text-black/70 dark:text-white/70 max-w-2xl mt-5">
-                    Crowdcruit построен вокруг AI-подбора пар «кандидат — вакансия». Задача была не только показать оценку соответствия, но и спроектировать процессы вокруг неё: рекрутерам нужно понимать и предлагать кандидатов, кандидатам — контролировать доступ к профилю, а компаниям — иметь понятный способ рассматривать, проводить интервью и оставлять обратную связь.
+                    Crowdcruit построен вокруг AI-подбора пар «кандидат – вакансия». Задача была не только показать оценку соответствия, но и спроектировать процессы вокруг неё: рекрутерам нужно понимать и предлагать кандидатов, кандидатам – контролировать доступ к профилю, а компаниям – иметь понятный способ рассматривать, проводить интервью и оставлять обратную связь.
                 </p>
                 <div class="flex flex-wrap gap-x-10 gap-y-6 mt-7">
                     <div><p class="text-[12px] text-black/50 dark:text-white/50 mb-1.5">Область работ</p><p class="text-[14px]">Дизайн MVP, UX-сценарии, UI-система, визуальная айдентика</p></div>
@@ -156,7 +160,7 @@
     <!-- ─── HERO IMAGE ─── -->
     <section class="max-w-[1280px] mx-auto px-8 pb-20 scr">
         <div class="img-frame-light w-full">
-            <img src="./Crowdcruit/Thumbnail Crowdcruit.png" alt="Crowdcruit — AI-платформа для найма" class="w-full h-auto object-cover">
+            <img src="./Crowdcruit/Thumbnail Crowdcruit.png" alt="Crowdcruit – AI-платформа для найма" class="w-full h-auto object-cover">
         </div>
     </section>
 
@@ -176,7 +180,7 @@
                 <ul class="mt-9 border-t border-[#E5E5E5] dark:border-[#1F1F1F]">
                     <li class="border-b border-[#E5E5E5] dark:border-[#1F1F1F] py-4 flex gap-5">
                         <span class="text-[12px] text-black/50 dark:text-white/50 pt-1 flex-shrink-0">01</span>
-                        <p class="text-[14px] leading-[1.6] text-black/70 dark:text-white/70">Рекрутерам нужно рабочее пространство для пар «кандидат — вакансия», в котором можно действовать.</p>
+                        <p class="text-[14px] leading-[1.6] text-black/70 dark:text-white/70">Рекрутерам нужно рабочее пространство для пар «кандидат – вакансия», в котором можно действовать.</p>
                     </li>
                     <li class="border-b border-[#E5E5E5] dark:border-[#1F1F1F] py-4 flex gap-5">
                         <span class="text-[12px] text-black/50 dark:text-white/50 pt-1 flex-shrink-0">02</span>
@@ -219,7 +223,7 @@
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-8 border-t border-[#E5E5E5] dark:border-[#1F1F1F] pt-6">
                         <div>
                             <p class="text-[14px] font-medium mb-1.5">Пространство рекрутера</p>
-                            <p class="text-[12px] leading-relaxed text-black/50 dark:text-white/50">Находит и предлагает пары «кандидат — вакансия».</p>
+                            <p class="text-[12px] leading-relaxed text-black/50 dark:text-white/50">Находит и предлагает пары «кандидат – вакансия».</p>
                         </div>
                         <div>
                             <p class="text-[14px] font-medium mb-1.5">Пространство кандидата</p>
@@ -233,16 +237,16 @@
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-10 scr">
                     <div>
-                        <div class="img-frame"><img src="./CC case study/Recruiter - Propose logic view 1.png" alt="Пространство рекрутера — карточка соответствия «кандидат — вакансия»" loading="lazy"></div>
-                        <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">Рекрутер — карточка соответствия</p>
+                        <div class="img-frame"><img src="./CC case study/Recruiter - Propose logic view 1.png" alt="Пространство рекрутера – карточка соответствия «кандидат – вакансия»" loading="lazy"></div>
+                        <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">Рекрутер – карточка соответствия</p>
                     </div>
                     <div>
-                        <div class="img-frame-light"><img src="./CC case study/candidate consent request flow 1.png" alt="Пространство кандидата — запрос доступа к профилю" loading="lazy"></div>
-                        <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">Кандидат — запрос доступа</p>
+                        <div class="img-frame-light"><img src="./CC case study/candidate consent request flow 1.png" alt="Пространство кандидата – запрос доступа к профилю" loading="lazy"></div>
+                        <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">Кандидат – запрос доступа</p>
                     </div>
                     <div>
-                        <div class="img-frame"><img src="./CC case study/company candidates flow 1.png" alt="Пространство компании — предложение кандидата" loading="lazy"></div>
-                        <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">Компания — предложение кандидата</p>
+                        <div class="img-frame"><img src="./CC case study/company candidates flow 1.png" alt="Пространство компании – предложение кандидата" loading="lazy"></div>
+                        <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">Компания – предложение кандидата</p>
                     </div>
                 </div>
                 <p class="text-[12px] text-black/50 dark:text-white/50 mt-4 max-w-2xl">Вместо одного универсального дашборда я разделил опыт на три рабочих пространства с общими визуальными паттернами и действиями под конкретную роль.</p>
@@ -262,31 +266,31 @@
                 <div class="scr">
                     <h2 class="font-haas text-[clamp(24px,2.6vw,34px)] font-medium tracking-[-0.02em] leading-[1.14] mb-5">Превращение AI-подбора в предложения</h2>
                     <p class="text-[16px] leading-[1.7] text-black/70 dark:text-white/70 max-w-2xl">
-                        Опыт рекрутера выстроен вокруг одного объекта — пары «кандидат — вакансия». Интерфейс объединяет контекст кандидата, контекст вакансии, оценку соответствия, готовность, риски и следующее лучшее действие.
+                        Опыт рекрутера выстроен вокруг одного объекта – пары «кандидат – вакансия». Интерфейс объединяет контекст кандидата, контекст вакансии, оценку соответствия, готовность, риски и следующее лучшее действие.
                     </p>
                 </div>
                 <div class="scr mt-14">
-                    <div class="img-frame"><img src="./CC case study/Recruiter - Propose logic view 1.png" alt="Рекрутер — карточка соответствия «кандидат — вакансия»" loading="lazy"></div>
-                    <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">Карточка соответствия даёт рекрутеру сфокусированный вид на соответствие «кандидат — вакансия», риски, готовность и следующее лучшее действие.</p>
+                    <div class="img-frame"><img src="./CC case study/Recruiter - Propose logic view 1.png" alt="Рекрутер – карточка соответствия «кандидат – вакансия»" loading="lazy"></div>
+                    <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">Карточка соответствия даёт рекрутеру сфокусированный вид на соответствие «кандидат – вакансия», риски, готовность и следующее лучшее действие.</p>
                     <p class="text-[14px] leading-[1.7] text-black/70 dark:text-white/70 mt-4 max-w-2xl">Главный экран держит соответствие понятным: кто кандидат, с какой вакансией он сопоставлен, почему оценка высокая и что может помешать предложению. Правая панель зарезервирована для контекстных действий, чтобы не перегружать список или шапку.</p>
                 </div>
                 <div class="scr mt-14">
-                    <div class="img-frame"><img src="./CC case study/Recruiter - Propose logic view 2.png" alt="Рекрутер — панель предложения кандидата" loading="lazy"></div>
+                    <div class="img-frame"><img src="./CC case study/Recruiter - Propose logic view 2.png" alt="Рекрутер – панель предложения кандидата" loading="lazy"></div>
                     <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">Процесс предложения живёт в правой панели, удерживая рекрутера в контексте во время подготовки питча по кандидату.</p>
                     <p class="text-[14px] leading-[1.7] text-black/70 dark:text-white/70 mt-4 max-w-2xl">Процесс предложения объединяет проверки готовности, получателя, редактируемый питч рекрутера и элементы, включённые в предложение. Это делает процесс лёгким, но при этом рекрутер отвечает за финальное сообщение.</p>
                 </div>
                 <div class="scr mt-14">
-                    <div class="img-frame"><img src="./CC case study/Recruiter - Propose logic view 3.png" alt="Рекрутер — состояние «предложение отправлено»" loading="lazy"></div>
+                    <div class="img-frame"><img src="./CC case study/Recruiter - Propose logic view 3.png" alt="Рекрутер – состояние «предложение отправлено»" loading="lazy"></div>
                     <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">После отправки интерфейс возвращается в обновлённое состояние, а не сбрасывает процесс.</p>
                     <p class="text-[14px] leading-[1.7] text-black/70 dark:text-white/70 mt-4 max-w-2xl">Завершённые действия обновляют состояние соответствия и меняют следующее лучшее действие. Этот паттерн помогает рекрутеру понимать, что уже произошло и что должно произойти дальше.</p>
                 </div>
                 <div class="scr mt-14">
-                    <div class="img-frame"><img src="./CC case study/Recruiter - Propose logic view 5.png" alt="Рекрутер — панель планирования интервью" loading="lazy"></div>
+                    <div class="img-frame"><img src="./CC case study/Recruiter - Propose logic view 5.png" alt="Рекрутер – панель планирования интервью" loading="lazy"></div>
                     <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">Планирование следует тому же паттерну контекстной панели: участники, предложенные слоты, переговорная и текст приглашения остаются привязанными к соответствию.</p>
-                    <p class="text-[14px] leading-[1.7] text-black/70 dark:text-white/70 mt-4 max-w-2xl">Планирование переиспользует контекстную панель — тип интервью, участники, предложенные и произвольные слоты времени, переговорная комната и текст приглашения — всё без выхода из карточки соответствия.</p>
+                    <p class="text-[14px] leading-[1.7] text-black/70 dark:text-white/70 mt-4 max-w-2xl">Планирование переиспользует контекстную панель – тип интервью, участники, предложенные и произвольные слоты времени, переговорная комната и текст приглашения – всё без выхода из карточки соответствия.</p>
                 </div>
                 <div class="scr mt-14">
-                    <div class="img-frame"><img src="./CC case study/Recruiter - Interviews.png" alt="Рекрутер — список интервью" loading="lazy"></div>
+                    <div class="img-frame"><img src="./CC case study/Recruiter - Interviews.png" alt="Рекрутер – список интервью" loading="lazy"></div>
                     <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">Запланированные интервью собираются в единый список с состояниями подтверждения и обратной связи.</p>
                 </div>
             </div>
@@ -309,31 +313,31 @@
                     </p>
                 </div>
                 <div class="scr mt-14">
-                    <div class="img-frame-light"><img src="./CC case study/candidate consent request flow 1.png" alt="Кандидат — вакансия и запрос доступа" loading="lazy"></div>
+                    <div class="img-frame-light"><img src="./CC case study/candidate consent request flow 1.png" alt="Кандидат – вакансия и запрос доступа" loading="lazy"></div>
                     <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">Кандидат видит вакансию и запрос доступа до того, как что-либо будет передано.</p>
                     <p class="text-[14px] leading-[1.7] text-black/70 dark:text-white/70 mt-4 max-w-2xl">Кандидат может оценить вакансию и компанию до одобрения доступа. Страница объясняет соответствие, вилку зарплаты, формат работы и то, что компания хочет рассмотреть.</p>
                 </div>
                 <div class="scr mt-14">
-                    <div class="img-frame-light"><img src="./CC case study/candidate consent request flow 2.png" alt="Кандидат — панель рассмотрения запроса" loading="lazy"></div>
+                    <div class="img-frame-light"><img src="./CC case study/candidate consent request flow 2.png" alt="Кандидат – панель рассмотрения запроса" loading="lazy"></div>
                     <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">Панель рассмотрения запроса делает передачу данных профиля явной и настраиваемой.</p>
                     <p class="text-[14px] leading-[1.7] text-black/70 dark:text-white/70 mt-4 max-w-2xl">Панель запроса показывает, что будет передано: краткий профиль, подтверждённые навыки, резюме, доступность и зарплатные ожидания. Кандидат может одобрить доступ, отклонить запрос или изменить состав передаваемых данных.</p>
                 </div>
                 <div class="scr mt-14">
-                    <div class="img-frame-light"><img src="./CC case study/candidate consent request flow 3.png" alt="Кандидат — состояние «доступ одобрен»" loading="lazy"></div>
+                    <div class="img-frame-light"><img src="./CC case study/candidate consent request flow 3.png" alt="Кандидат – состояние «доступ одобрен»" loading="lazy"></div>
                     <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">Состояния успеха подтверждают, что именно изменилось и что произойдёт дальше.</p>
                     <p class="text-[14px] leading-[1.7] text-black/70 dark:text-white/70 mt-4 max-w-2xl">После одобрения система подтверждает компанию, вакансию, переданные данные и время действия. Это делает состояние приватности явным, а не скрытым.</p>
                 </div>
                 <div class="scr mt-14">
-                    <div class="img-frame-light"><img src="./CC case study/candidate consent request flow 4.png" alt="Кандидат — панель управления доступом" loading="lazy"></div>
-                    <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">Доступ — не одноразовое решение. Кандидат может управлять им или отозвать позже.</p>
+                    <div class="img-frame-light"><img src="./CC case study/candidate consent request flow 4.png" alt="Кандидат – панель управления доступом" loading="lazy"></div>
+                    <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">Доступ – не одноразовое решение. Кандидат может управлять им или отозвать позже.</p>
                     <p class="text-[14px] leading-[1.7] text-black/70 dark:text-white/70 mt-4 max-w-2xl">Состояние управления доступом укрепляет доверие: кандидат сохраняет контроль даже после одобрения запроса.</p>
                 </div>
                 <div class="scr mt-14">
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-                        <div class="img-frame-light" style="aspect-ratio:4/3"><img src="./CC case study/candidate consent request flow 5.png" alt="Кандидат — не заинтересован" class="w-full h-full object-cover object-top" loading="lazy"></div>
-                        <div class="img-frame-light" style="aspect-ratio:4/3"><img src="./CC case study/candidate consent request flow 8.png" alt="Кандидат — отклонение запроса" class="w-full h-full object-cover object-top" loading="lazy"></div>
-                        <div class="img-frame-light" style="aspect-ratio:4/3"><img src="./CC case study/candidate consent request flow 9.png" alt="Кандидат — запрос отклонён" class="w-full h-full object-cover object-top" loading="lazy"></div>
-                        <div class="img-frame-light" style="aspect-ratio:4/3"><img src="./CC case study/candidate consent request flow 6.png" alt="Кандидат — вакансия в архиве" class="w-full h-full object-cover object-top" loading="lazy"></div>
+                        <div class="img-frame-light" style="aspect-ratio:4/3"><img src="./CC case study/candidate consent request flow 5.png" alt="Кандидат – не заинтересован" class="w-full h-full object-cover object-top" loading="lazy"></div>
+                        <div class="img-frame-light" style="aspect-ratio:4/3"><img src="./CC case study/candidate consent request flow 8.png" alt="Кандидат – отклонение запроса" class="w-full h-full object-cover object-top" loading="lazy"></div>
+                        <div class="img-frame-light" style="aspect-ratio:4/3"><img src="./CC case study/candidate consent request flow 9.png" alt="Кандидат – запрос отклонён" class="w-full h-full object-cover object-top" loading="lazy"></div>
+                        <div class="img-frame-light" style="aspect-ratio:4/3"><img src="./CC case study/candidate consent request flow 6.png" alt="Кандидат – вакансия в архиве" class="w-full h-full object-cover object-top" loading="lazy"></div>
                     </div>
                     <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">Вторичные состояния покрывают отклонение или архивацию, не превращая процесс в тяжёлый раздел настроек.</p>
                 </div>
@@ -357,19 +361,19 @@
                     </p>
                 </div>
                 <div class="scr mt-14">
-                    <div class="img-frame"><img src="./CC case study/company candidates flow 1.png" alt="Компания — карточка предложения кандидата" loading="lazy"></div>
+                    <div class="img-frame"><img src="./CC case study/company candidates flow 1.png" alt="Компания – карточка предложения кандидата" loading="lazy"></div>
                     <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">Компания получает сфокусированное предложение по кандидату, а не сырой профиль.</p>
                     <p class="text-[14px] leading-[1.7] text-black/70 dark:text-white/70 mt-4 max-w-2xl">Карточка предложения отвечает на главный вопрос компании: стоит ли двигать этого кандидата дальше? Она показывает кандидата, вакансию, оценку соответствия, обоснование соответствия, подтверждённые сигналы, риски и доступные действия.</p>
                 </div>
                 <div class="scr mt-14">
-                    <div class="img-frame"><img src="./CC case study/company candidates flow 2.png" alt="Компания — панель добавления обратной связи" loading="lazy"></div>
+                    <div class="img-frame"><img src="./CC case study/company candidates flow 2.png" alt="Компания – панель добавления обратной связи" loading="lazy"></div>
                     <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">Обратная связь достаточно структурирована, чтобы быть полезной, но достаточно лёгкая, чтобы заполнить её быстро.</p>
                     <p class="text-[14px] leading-[1.7] text-black/70 dark:text-white/70 mt-4 max-w-2xl">Панель обратной связи фиксирует общее решение, оценку по навыкам, заметку команды и рекомендованный следующий шаг. Это превращает субъективное обсуждение в структурированный сигнал для найма.</p>
                 </div>
                 <div class="scr mt-14">
-                    <div class="img-frame"><img src="./CC case study/company candidates flow 3.png" alt="Компания — состояние «обратная связь отправлена»" loading="lazy"></div>
+                    <div class="img-frame"><img src="./CC case study/company candidates flow 3.png" alt="Компания – состояние «обратная связь отправлена»" loading="lazy"></div>
                     <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">Отправленная обратная связь обновляет состояние кандидата и даёт компании понятное следующее действие.</p>
-                    <p class="text-[14px] leading-[1.7] text-black/70 dark:text-white/70 mt-4 max-w-2xl">Состояние успеха замыкает цикл и даёт команде найма понятный следующий шаг — например, посмотреть статус или запросить интервью.</p>
+                    <p class="text-[14px] leading-[1.7] text-black/70 dark:text-white/70 mt-4 max-w-2xl">Состояние успеха замыкает цикл и даёт команде найма понятный следующий шаг – например, посмотреть статус или запросить интервью.</p>
                 </div>
             </div>
         </div>
@@ -391,12 +395,12 @@
                     </p>
                 </div>
                 <div class="scr mt-14">
-                    <div class="img-frame"><img src="./CC case study/company roles.png" alt="Компания — страница открытых вакансий" loading="lazy"></div>
+                    <div class="img-frame"><img src="./CC case study/company roles.png" alt="Компания – страница открытых вакансий" loading="lazy"></div>
                     <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">Открытые вакансии показаны как операционные строки: предложенные кандидаты, интервью, обратная связь и статус.</p>
                     <p class="text-[14px] leading-[1.7] text-black/70 dark:text-white/70 mt-4 max-w-2xl">Страница вакансий избегает тяжёлой аналитики и фокусируется на том, какие вакансии требуют внимания. Каждая строка даёт команде найма достаточно контекста, чтобы открыть вакансию и продолжить работу.</p>
                 </div>
                 <div class="scr mt-14">
-                    <div class="img-frame"><img src="./CC case study/company create role.png" alt="Компания — панель создания вакансии" loading="lazy"></div>
+                    <div class="img-frame"><img src="./CC case study/company create role.png" alt="Компания – панель создания вакансии" loading="lazy"></div>
                     <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">Создание вакансии происходит в той же системе правой панели, удерживая компанию в контексте.</p>
                     <p class="text-[14px] leading-[1.7] text-black/70 dark:text-white/70 mt-4 max-w-2xl">Процесс создания вакансии начинается с основ: название, команда, формат работы, локация, уровень, тип занятости и вилка зарплаты. Тот же паттерн панели позже может расшириться до требований и оценочной карты.</p>
                 </div>
@@ -419,7 +423,7 @@
                 </p>
                 <div class="flex flex-wrap gap-2 mt-7">
                     <span class="text-[12px] text-black/50 dark:text-white/50 border border-[#E5E5E5] dark:border-[#1F1F1F] px-3 py-1.5">Тёмный премиальный интерфейс</span>
-                    <span class="text-[12px] text-black/50 dark:text-white/50 border border-[#E5E5E5] dark:border-[#1F1F1F] px-3 py-1.5">Зелёный — акцент действия и успеха</span>
+                    <span class="text-[12px] text-black/50 dark:text-white/50 border border-[#E5E5E5] dark:border-[#1F1F1F] px-3 py-1.5">Зелёный – акцент действия и успеха</span>
                     <span class="text-[12px] text-black/50 dark:text-white/50 border border-[#E5E5E5] dark:border-[#1F1F1F] px-3 py-1.5">Контекстные правые панели</span>
                     <span class="text-[12px] text-black/50 dark:text-white/50 border border-[#E5E5E5] dark:border-[#1F1F1F] px-3 py-1.5">Карточки с тонкими границами</span>
                     <span class="text-[12px] text-black/50 dark:text-white/50 border border-[#E5E5E5] dark:border-[#1F1F1F] px-3 py-1.5">Точки и пилюли статусов</span>
@@ -446,8 +450,8 @@
             <div class="scr">
                 <h2 class="font-haas text-[clamp(24px,2.6vw,34px)] font-medium tracking-[-0.02em] leading-[1.14] mb-5">Результат</h2>
                 <div class="space-y-5">
-                    <p class="text-[16px] leading-[1.75] text-black/70 dark:text-white/70 max-w-2xl">MVP был выпущен в продакшен и сейчас используется как работающий, приносящий доход продукт. Финальный дизайн связал ключевые процессы трёх ролей: рекрутеры могут действовать по AI-подбору, кандидаты — контролировать доступ к профилю, а компании — рассматривать кандидатов, запрашивать интервью и отправлять обратную связь.</p>
-                    <p class="text-[16px] leading-[1.75] text-black/70 dark:text-white/70 max-w-2xl">Главное дизайн-решение — держать сложные процессы внутри контекстных правых панелей, чтобы пользователи могли действовать, не теряя окружающий контекст.</p>
+                    <p class="text-[16px] leading-[1.75] text-black/70 dark:text-white/70 max-w-2xl">MVP был выпущен в продакшен и сейчас используется как работающий, приносящий доход продукт. Финальный дизайн связал ключевые процессы трёх ролей: рекрутеры могут действовать по AI-подбору, кандидаты – контролировать доступ к профилю, а компании – рассматривать кандидатов, запрашивать интервью и отправлять обратную связь.</p>
+                    <p class="text-[16px] leading-[1.75] text-black/70 dark:text-white/70 max-w-2xl">Главное дизайн-решение – держать сложные процессы внутри контекстных правых панелей, чтобы пользователи могли действовать, не теряя окружающий контекст.</p>
                     <p class="text-[16px] leading-[1.75] text-black/70 dark:text-white/70 max-w-2xl">Как проект продуктового дизайна, Crowdcruit помог определить информационную архитектуру, паттерны взаимодействия и визуальную систему для многосторонней AI-платформы найма, которая прошла путь от дизайна MVP до живого продукта.</p>
                 </div>
             </div>
@@ -492,17 +496,11 @@
 
     <!-- ─── FOOTER CTA ─── -->
     <section class="max-w-[1280px] mx-auto px-8 pt-20 pb-10">
-        <div class="flex flex-col md:flex-row items-start md:items-end justify-between gap-10 scr">
-            <div>
-                <p class="text-[14px] text-black/50 dark:text-white/50 mb-3">Хотите обсудить сотрудничество?</p>
-                <a href="mailto:densaf92@d-gtl.com" class="font-haas inline-block text-[clamp(22px,3.4vw,40px)] font-medium tracking-[-0.025em] leading-[1.1] border-b border-[#0C0C0C] dark:border-[#FAFAFA] pb-1 hover:opacity-40 transition-opacity duration-200">
-                    Открыт к новым проектам. Давайте обсудим. <svg class="inline-block align-middle mb-1" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
-                </a>
-            </div>
-            <div class="text-right space-y-1.5 scr">
-                <a href="mailto:densaf92@d-gtl.com" class="block text-[14px] text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white transition-colors duration-200 ul">Почта</a>
-                <a href="https://t.me/den_safonov" target="_blank" rel="noopener" class="block text-[14px] text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white transition-colors duration-200 ul">Telegram</a>
-            </div>
+        <div class="flex flex-col md:flex-row items-start md:items-end justify-between gap-6 md:gap-10 scr">
+            <a href="mailto:densaf92@d-gtl.com" class="font-haas inline-block text-[clamp(22px,3.4vw,40px)] font-medium tracking-[-0.025em] leading-[1.1] ul">
+                Давайте обсудим <svg class="inline-block align-middle mb-1" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+            </a>
+            <a href="https://t.me/den_safonov" target="_blank" rel="noopener" class="font-haas inline-block text-[clamp(22px,3.4vw,40px)] font-medium tracking-[-0.025em] leading-[1.1] ul">Telegram</a>
         </div>
     </section>
 
@@ -588,7 +586,7 @@
             requestAnimationFrame(raf);
         })();
 
-        /* Lightbox — click-to-enlarge for case study images */
+        /* Lightbox – click-to-enlarge for case study images */
         (() => {
             const lb = document.getElementById('lightbox');
             const lbimg = document.getElementById('lbimg');
