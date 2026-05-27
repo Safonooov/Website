@@ -197,6 +197,169 @@
 
     <div class="max-w-[1280px] mx-auto px-8"><hr class="border-[#E5E5E5] dark:border-[#1F1F1F] scr"></div>
 
+    <!-- ─── DISCOVERY ─── -->
+    <section class="max-w-[1280px] mx-auto px-8 py-20">
+        <div class="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-8 md:gap-12 items-start">
+            <div class="md:sticky md:top-20 scr">
+                <p class="text-[12px] text-black/50 dark:text-white/50">Discovery</p>
+            </div>
+            <div class="scr">
+                <h2 class="font-haas text-[clamp(24px,2.6vw,34px)] font-medium tracking-[-0.02em] leading-[1.14] mb-5">Discovery</h2>
+                <p class="text-[16px] leading-[1.7] text-black/70 dark:text-white/70 max-w-2xl">
+                    Before moving into interface design, I focused on understanding the core workflow that the MVP needed to support. The product had to work for three different sides at once: recruiters, candidates, and companies.
+                </p>
+                <p class="text-[12px] text-black/50 dark:text-white/50 mt-9 mb-3">Jobs-to-be-done</p>
+                <ul class="space-y-2.5 border-t border-[#E5E5E5] dark:border-[#1F1F1F] pt-4">
+                    <li class="flex gap-3 text-[14px] leading-[1.6] text-black/70 dark:text-white/70"><span class="text-black/50 dark:text-white/50 flex-shrink-0">–</span>Recruiters needed to identify strong candidate-role matches and move them forward quickly.</li>
+                    <li class="flex gap-3 text-[14px] leading-[1.6] text-black/70 dark:text-white/70"><span class="text-black/50 dark:text-white/50 flex-shrink-0">–</span>Candidates needed control over when their profile was shared and with whom.</li>
+                    <li class="flex gap-3 text-[14px] leading-[1.6] text-black/70 dark:text-white/70"><span class="text-black/50 dark:text-white/50 flex-shrink-0">–</span>Companies needed a simple way to review proposed candidates, request interviews, and leave structured feedback.</li>
+                </ul>
+                <p class="text-[16px] leading-[1.7] text-black/70 dark:text-white/70 max-w-2xl mt-7">
+                    This helped define the MVP around one core loop rather than a large ATS-like product: match → access → review → interview → feedback.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <div class="max-w-[1280px] mx-auto px-8"><hr class="border-[#E5E5E5] dark:border-[#1F1F1F] scr"></div>
+
+    <!-- ─── COMPETITIVE ANALYSIS ─── -->
+    <section class="max-w-[1280px] mx-auto px-8 py-20">
+        <div class="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-8 md:gap-12 items-start">
+            <div class="md:sticky md:top-20 scr">
+                <p class="text-[12px] text-black/50 dark:text-white/50">Competitive analysis</p>
+            </div>
+            <div class="scr">
+                <h2 class="font-haas text-[clamp(24px,2.6vw,34px)] font-medium tracking-[-0.02em] leading-[1.14] mb-5">Competitive analysis</h2>
+                <p class="text-[16px] leading-[1.7] text-black/70 dark:text-white/70 max-w-2xl">
+                    The competitive landscape was still emerging. Most products I reviewed were solving only parts of the workflow: sourcing, applicant tracking, AI screening, scheduling, or talent CRM. There were fewer direct references for a three-sided workflow where recruiters, candidates, and companies all had separate but connected workspaces.
+                </p>
+                <p class="text-[12px] text-black/50 dark:text-white/50 mt-9 mb-3">What I looked for</p>
+                <ul class="space-y-2.5 border-t border-[#E5E5E5] dark:border-[#1F1F1F] pt-4">
+                    <li class="flex gap-3 text-[14px] leading-[1.6] text-black/70 dark:text-white/70"><span class="text-black/50 dark:text-white/50 flex-shrink-0">–</span>How AI recruiting tools explain candidate-role fit.</li>
+                    <li class="flex gap-3 text-[14px] leading-[1.6] text-black/70 dark:text-white/70"><span class="text-black/50 dark:text-white/50 flex-shrink-0">–</span>How sourcing platforms move candidates into pipelines.</li>
+                    <li class="flex gap-3 text-[14px] leading-[1.6] text-black/70 dark:text-white/70"><span class="text-black/50 dark:text-white/50 flex-shrink-0">–</span>How ATS products structure review and feedback.</li>
+                    <li class="flex gap-3 text-[14px] leading-[1.6] text-black/70 dark:text-white/70"><span class="text-black/50 dark:text-white/50 flex-shrink-0">–</span>How marketplaces handle candidate visibility and access.</li>
+                    <li class="flex gap-3 text-[14px] leading-[1.6] text-black/70 dark:text-white/70"><span class="text-black/50 dark:text-white/50 flex-shrink-0">–</span>How scheduling and feedback flows are handled after a match.</li>
+                </ul>
+                <p class="text-[16px] leading-[1.7] text-black/70 dark:text-white/70 max-w-2xl mt-7">
+                    This shaped one of the main product decisions: Crowdcruit should not look like another ATS. The MVP needed to focus on the handoff between roles – from recruiter match, to candidate access approval, to company review and feedback.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <div class="max-w-[1280px] mx-auto px-8"><hr class="border-[#E5E5E5] dark:border-[#1F1F1F] scr"></div>
+
+    <!-- ─── MVP HYPOTHESES ─── -->
+    <section class="max-w-[1280px] mx-auto px-8 py-20">
+        <div class="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-8 md:gap-12 items-start">
+            <div class="md:sticky md:top-20 scr">
+                <p class="text-[12px] text-black/50 dark:text-white/50">Hypotheses</p>
+            </div>
+            <div class="scr">
+                <h2 class="font-haas text-[clamp(24px,2.6vw,34px)] font-medium tracking-[-0.02em] leading-[1.14] mb-7">MVP hypotheses</h2>
+                <div class="border-t border-[#E5E5E5] dark:border-[#1F1F1F]">
+                    <div class="py-6 border-b border-[#E5E5E5] dark:border-[#1F1F1F] grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-10">
+                        <div class="flex gap-4">
+                            <span class="text-[12px] text-black/50 dark:text-white/50 pt-1 flex-shrink-0">H1</span>
+                            <p class="text-[14px] leading-[1.6] text-black/70 dark:text-white/70">If recruiters see match reasoning next to the candidate-role pair, they can act on AI recommendations with more confidence.</p>
+                        </div>
+                        <div>
+                            <p class="text-[12px] text-black/50 dark:text-white/50 mb-1.5">Design response</p>
+                            <p class="text-[14px] leading-[1.6] text-black/70 dark:text-white/70">Match detail page with score, candidate and role signals, blockers, and a contextual proposal panel.</p>
+                        </div>
+                    </div>
+                    <div class="py-6 border-b border-[#E5E5E5] dark:border-[#1F1F1F] grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-10">
+                        <div class="flex gap-4">
+                            <span class="text-[12px] text-black/50 dark:text-white/50 pt-1 flex-shrink-0">H2</span>
+                            <p class="text-[14px] leading-[1.6] text-black/70 dark:text-white/70">If proposal creation happens inside a right-side panel, recruiters can move candidates forward without losing match context.</p>
+                        </div>
+                        <div>
+                            <p class="text-[12px] text-black/50 dark:text-white/50 mb-1.5">Design response</p>
+                            <p class="text-[14px] leading-[1.6] text-black/70 dark:text-white/70">Propose Candidate flow inside the contextual panel.</p>
+                        </div>
+                    </div>
+                    <div class="py-6 border-b border-[#E5E5E5] dark:border-[#1F1F1F] grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-10">
+                        <div class="flex gap-4">
+                            <span class="text-[12px] text-black/50 dark:text-white/50 pt-1 flex-shrink-0">H3</span>
+                            <p class="text-[14px] leading-[1.6] text-black/70 dark:text-white/70">If candidates can review what a company will see before sharing their profile, the product can build trust without slowing down the hiring loop.</p>
+                        </div>
+                        <div>
+                            <p class="text-[12px] text-black/50 dark:text-white/50 mb-1.5">Design response</p>
+                            <p class="text-[14px] leading-[1.6] text-black/70 dark:text-white/70">Access Request flow with shared item controls and a Manage Access state.</p>
+                        </div>
+                    </div>
+                    <div class="py-6 border-b border-[#E5E5E5] dark:border-[#1F1F1F] grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-10">
+                        <div class="flex gap-4">
+                            <span class="text-[12px] text-black/50 dark:text-white/50 pt-1 flex-shrink-0">H4</span>
+                            <p class="text-[14px] leading-[1.6] text-black/70 dark:text-white/70">If companies receive candidates as role-specific proposals instead of raw profiles, they can make faster and clearer decisions.</p>
+                        </div>
+                        <div>
+                            <p class="text-[12px] text-black/50 dark:text-white/50 mb-1.5">Design response</p>
+                            <p class="text-[14px] leading-[1.6] text-black/70 dark:text-white/70">Company Candidate Proposal page with fit reasoning, risks, and actions like Request Interview or Add Feedback.</p>
+                        </div>
+                    </div>
+                    <div class="py-6 border-b border-[#E5E5E5] dark:border-[#1F1F1F] grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-10">
+                        <div class="flex gap-4">
+                            <span class="text-[12px] text-black/50 dark:text-white/50 pt-1 flex-shrink-0">H5</span>
+                            <p class="text-[14px] leading-[1.6] text-black/70 dark:text-white/70">If feedback is structured around decision and next step, it becomes useful product data instead of a loose note.</p>
+                        </div>
+                        <div>
+                            <p class="text-[12px] text-black/50 dark:text-white/50 mb-1.5">Design response</p>
+                            <p class="text-[14px] leading-[1.6] text-black/70 dark:text-white/70">Add Feedback flow with overall decision, skill feedback, hiring note, and recommended next step.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="max-w-[1280px] mx-auto px-8"><hr class="border-[#E5E5E5] dark:border-[#1F1F1F] scr"></div>
+
+    <!-- ─── MVP SCOPE ─── -->
+    <section class="max-w-[1280px] mx-auto px-8 py-20">
+        <div class="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-8 md:gap-12 items-start">
+            <div class="md:sticky md:top-20 scr">
+                <p class="text-[12px] text-black/50 dark:text-white/50">Scope</p>
+            </div>
+            <div class="scr">
+                <h2 class="font-haas text-[clamp(24px,2.6vw,34px)] font-medium tracking-[-0.02em] leading-[1.14] mb-5">MVP scope</h2>
+                <p class="text-[16px] leading-[1.7] text-black/70 dark:text-white/70 max-w-2xl">
+                    The goal was not to design a full recruiting suite. The first version had to support the smallest complete hiring loop that could create value in production.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8 mt-9">
+                    <div>
+                        <p class="text-[12px] text-black/50 dark:text-white/50 pb-3 mb-3 border-b border-[#E5E5E5] dark:border-[#1F1F1F]">MVP included</p>
+                        <ul class="space-y-2">
+                            <li class="flex gap-2.5 text-[14px] leading-[1.55] text-black/70 dark:text-white/70"><span class="text-black/50 dark:text-white/50 flex-shrink-0">–</span>Recruiter match review</li>
+                            <li class="flex gap-2.5 text-[14px] leading-[1.55] text-black/70 dark:text-white/70"><span class="text-black/50 dark:text-white/50 flex-shrink-0">–</span>Candidate proposal</li>
+                            <li class="flex gap-2.5 text-[14px] leading-[1.55] text-black/70 dark:text-white/70"><span class="text-black/50 dark:text-white/50 flex-shrink-0">–</span>Candidate access approval</li>
+                            <li class="flex gap-2.5 text-[14px] leading-[1.55] text-black/70 dark:text-white/70"><span class="text-black/50 dark:text-white/50 flex-shrink-0">–</span>Company candidate review</li>
+                            <li class="flex gap-2.5 text-[14px] leading-[1.55] text-black/70 dark:text-white/70"><span class="text-black/50 dark:text-white/50 flex-shrink-0">–</span>Interview scheduling</li>
+                            <li class="flex gap-2.5 text-[14px] leading-[1.55] text-black/70 dark:text-white/70"><span class="text-black/50 dark:text-white/50 flex-shrink-0">–</span>Company feedback</li>
+                            <li class="flex gap-2.5 text-[14px] leading-[1.55] text-black/70 dark:text-white/70"><span class="text-black/50 dark:text-white/50 flex-shrink-0">–</span>Role creation and management</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <p class="text-[12px] text-black/50 dark:text-white/50 pb-3 mb-3 border-b border-[#E5E5E5] dark:border-[#1F1F1F]">Intentionally out of scope</p>
+                        <ul class="space-y-2">
+                            <li class="flex gap-2.5 text-[14px] leading-[1.55] text-black/50 dark:text-white/50"><span class="text-black/50 dark:text-white/50 flex-shrink-0">–</span>Advanced analytics</li>
+                            <li class="flex gap-2.5 text-[14px] leading-[1.55] text-black/50 dark:text-white/50"><span class="text-black/50 dark:text-white/50 flex-shrink-0">–</span>Billing configuration</li>
+                            <li class="flex gap-2.5 text-[14px] leading-[1.55] text-black/50 dark:text-white/50"><span class="text-black/50 dark:text-white/50 flex-shrink-0">–</span>Deep CRM features</li>
+                            <li class="flex gap-2.5 text-[14px] leading-[1.55] text-black/50 dark:text-white/50"><span class="text-black/50 dark:text-white/50 flex-shrink-0">–</span>Complex automation</li>
+                        </ul>
+                    </div>
+                </div>
+                <p class="text-[16px] leading-[1.7] text-black/70 dark:text-white/70 max-w-2xl mt-7">
+                    Secondary areas such as advanced analytics, billing, deep CRM features, and complex automation were intentionally kept outside the first scope.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <div class="max-w-[1280px] mx-auto px-8"><hr class="border-[#E5E5E5] dark:border-[#1F1F1F] scr"></div>
+
     <!-- ─── APPROACH ─── -->
     <section class="max-w-[1280px] mx-auto px-8 py-20">
         <div class="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-8 md:gap-12 items-start">
@@ -272,26 +435,18 @@
                 <div class="scr mt-14">
                     <div class="img-frame"><img src="./CC case study/Recruiter - Propose logic view 1.png" alt="Recruiter – candidate-role match detail" loading="lazy"></div>
                     <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">Match detail gives the recruiter a focused view of the candidate-role fit, risks, readiness, and the next best action.</p>
-                    <p class="text-[14px] leading-[1.7] text-black/70 dark:text-white/70 mt-4 max-w-2xl">The main screen keeps the match understandable: who the candidate is, what role they match with, why the score is high, and what might block the proposal. The right-side panel is reserved for contextual actions instead of overloading the list or the header.</p>
                 </div>
                 <div class="scr mt-14">
                     <div class="img-frame"><img src="./CC case study/Recruiter - Propose logic view 2.png" alt="Recruiter – propose candidate panel" loading="lazy"></div>
-                    <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">The proposal flow lives in the right panel, keeping the recruiter in context while preparing the candidate pitch.</p>
-                    <p class="text-[14px] leading-[1.7] text-black/70 dark:text-white/70 mt-4 max-w-2xl">The proposal flow combines readiness checks, the recipient, an editable recruiter pitch, and the items included in the proposal. This keeps the workflow lightweight while still making the recruiter accountable for the final message.</p>
+                    <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">Keeping proposal creation inside the right panel lets recruiters act without losing the match context.</p>
                 </div>
                 <div class="scr mt-14">
-                    <div class="img-frame"><img src="./CC case study/Recruiter - Propose logic view 3.png" alt="Recruiter – proposal sent state" loading="lazy"></div>
-                    <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">After sending, the interface returns to an updated state instead of resetting the workflow.</p>
-                    <p class="text-[14px] leading-[1.7] text-black/70 dark:text-white/70 mt-4 max-w-2xl">Completed actions update the match state and change the next best action. This pattern helps the recruiter understand what already happened and what should happen next.</p>
-                </div>
-                <div class="scr mt-14">
-                    <div class="img-frame"><img src="./CC case study/Recruiter - Propose logic view 5.png" alt="Recruiter – schedule interview panel" loading="lazy"></div>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <div class="img-frame" style="aspect-ratio:4/3"><img src="./CC case study/Recruiter - Propose logic view 3.png" alt="Recruiter – proposal sent state" class="w-full h-full object-cover object-top" loading="lazy"></div>
+                        <div class="img-frame" style="aspect-ratio:4/3"><img src="./CC case study/Recruiter - Propose logic view 5.png" alt="Recruiter – schedule interview panel" class="w-full h-full object-cover object-top" loading="lazy"></div>
+                        <div class="img-frame" style="aspect-ratio:4/3"><img src="./CC case study/Recruiter - Interviews.png" alt="Recruiter – interviews list" class="w-full h-full object-cover object-top" loading="lazy"></div>
+                    </div>
                     <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">Scheduling follows the same contextual panel pattern: participants, suggested slots, meeting room, and invite message stay attached to the match.</p>
-                    <p class="text-[14px] leading-[1.7] text-black/70 dark:text-white/70 mt-4 max-w-2xl">Scheduling reuses the contextual panel – interview type, participants, suggested and custom time slots, the meeting room, and an invite message – all without leaving the match.</p>
-                </div>
-                <div class="scr mt-14">
-                    <div class="img-frame"><img src="./CC case study/Recruiter - Interviews.png" alt="Recruiter – interviews list" loading="lazy"></div>
-                    <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">Scheduled interviews collect into one list view, with confirmation and feedback states.</p>
                 </div>
             </div>
         </div>
@@ -314,32 +469,19 @@
                 </div>
                 <div class="scr mt-14">
                     <div class="img-frame-light"><img src="./CC case study/candidate consent request flow 1.png" alt="Candidate – opportunity and access request" loading="lazy"></div>
-                    <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">The candidate sees the opportunity and the access request before anything is shared.</p>
-                    <p class="text-[14px] leading-[1.7] text-black/70 dark:text-white/70 mt-4 max-w-2xl">The candidate can evaluate the role and company before approving access. The page explains the match, salary range, work mode, and what the company wants to review.</p>
+                    <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">The candidate sees the opportunity and access request before anything is shared.</p>
                 </div>
                 <div class="scr mt-14">
                     <div class="img-frame-light"><img src="./CC case study/candidate consent request flow 2.png" alt="Candidate – review request panel" loading="lazy"></div>
                     <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">The access review panel makes profile sharing explicit and configurable.</p>
-                    <p class="text-[14px] leading-[1.7] text-black/70 dark:text-white/70 mt-4 max-w-2xl">The request panel shows what will be shared: profile summary, verified skills, CV, availability, and salary expectations. The candidate can approve access, decline the request, or adjust the shared items.</p>
                 </div>
                 <div class="scr mt-14">
-                    <div class="img-frame-light"><img src="./CC case study/candidate consent request flow 3.png" alt="Candidate – access approved state" loading="lazy"></div>
-                    <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">Success states confirm exactly what changed and what happens next.</p>
-                    <p class="text-[14px] leading-[1.7] text-black/70 dark:text-white/70 mt-4 max-w-2xl">After approval, the system confirms the company, role, shared items, and time of the action. This makes the privacy state explicit instead of hidden.</p>
-                </div>
-                <div class="scr mt-14">
-                    <div class="img-frame-light"><img src="./CC case study/candidate consent request flow 4.png" alt="Candidate – manage access panel" loading="lazy"></div>
-                    <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">Access is not a one-time decision. The candidate can manage or revoke it later.</p>
-                    <p class="text-[14px] leading-[1.7] text-black/70 dark:text-white/70 mt-4 max-w-2xl">The manage access state reinforces trust: candidates stay in control even after approving a request.</p>
-                </div>
-                <div class="scr mt-14">
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-                        <div class="img-frame-light" style="aspect-ratio:4/3"><img src="./CC case study/candidate consent request flow 5.png" alt="Candidate – not interested" class="w-full h-full object-cover object-top" loading="lazy"></div>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                        <div class="img-frame-light" style="aspect-ratio:4/3"><img src="./CC case study/candidate consent request flow 3.png" alt="Candidate – access approved state" class="w-full h-full object-cover object-top" loading="lazy"></div>
+                        <div class="img-frame-light" style="aspect-ratio:4/3"><img src="./CC case study/candidate consent request flow 4.png" alt="Candidate – manage access panel" class="w-full h-full object-cover object-top" loading="lazy"></div>
                         <div class="img-frame-light" style="aspect-ratio:4/3"><img src="./CC case study/candidate consent request flow 8.png" alt="Candidate – decline request" class="w-full h-full object-cover object-top" loading="lazy"></div>
-                        <div class="img-frame-light" style="aspect-ratio:4/3"><img src="./CC case study/candidate consent request flow 9.png" alt="Candidate – request declined" class="w-full h-full object-cover object-top" loading="lazy"></div>
-                        <div class="img-frame-light" style="aspect-ratio:4/3"><img src="./CC case study/candidate consent request flow 6.png" alt="Candidate – opportunity archived" class="w-full h-full object-cover object-top" loading="lazy"></div>
                     </div>
-                    <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">Secondary states cover declining or archiving without turning the flow into a heavy settings experience.</p>
+                    <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">Access is not a one-time decision – the candidate can manage, revoke, or decline it later.</p>
                 </div>
             </div>
         </div>
@@ -363,46 +505,18 @@
                 <div class="scr mt-14">
                     <div class="img-frame"><img src="./CC case study/company candidates flow 1.png" alt="Company – candidate proposal detail" loading="lazy"></div>
                     <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">The company receives a focused candidate proposal, not a raw profile.</p>
-                    <p class="text-[14px] leading-[1.7] text-black/70 dark:text-white/70 mt-4 max-w-2xl">The proposal detail answers the company's main question: should we move this candidate forward? It shows the candidate, role, match score, fit reasoning, verified signals, risks, and available actions.</p>
                 </div>
                 <div class="scr mt-14">
                     <div class="img-frame"><img src="./CC case study/company candidates flow 2.png" alt="Company – add feedback panel" loading="lazy"></div>
                     <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">Feedback is structured enough to be useful, but lightweight enough to complete quickly.</p>
-                    <p class="text-[14px] leading-[1.7] text-black/70 dark:text-white/70 mt-4 max-w-2xl">The feedback panel captures an overall decision, skill-level feedback, a team note, and the recommended next step. This turns subjective discussion into a structured hiring signal.</p>
                 </div>
                 <div class="scr mt-14">
-                    <div class="img-frame"><img src="./CC case study/company candidates flow 3.png" alt="Company – feedback submitted state" loading="lazy"></div>
-                    <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">Submitted feedback updates the candidate state and gives the company a clear next action.</p>
-                    <p class="text-[14px] leading-[1.7] text-black/70 dark:text-white/70 mt-4 max-w-2xl">The success state closes the loop and gives the hiring team a clear follow-up, such as viewing status or requesting an interview.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <div class="max-w-[1280px] mx-auto px-8"><hr class="border-[#E5E5E5] dark:border-[#1F1F1F] scr"></div>
-
-    <!-- ─── ROLE MANAGEMENT ─── -->
-    <section class="max-w-[1280px] mx-auto px-8 py-20">
-        <div class="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-8 md:gap-12 items-start">
-            <div class="md:sticky md:top-20 scr">
-                <p class="text-[12px] text-black/50 dark:text-white/50">Role setup</p>
-            </div>
-            <div>
-                <div class="scr">
-                    <h2 class="font-haas text-[clamp(24px,2.6vw,34px)] font-medium tracking-[-0.02em] leading-[1.14] mb-5">Role management and setup</h2>
-                    <p class="text-[16px] leading-[1.7] text-black/70 dark:text-white/70 max-w-2xl">
-                        The company workspace also needed a simple way to manage open roles and create new ones without becoming a full ATS.
-                    </p>
-                </div>
-                <div class="scr mt-14">
-                    <div class="img-frame"><img src="./CC case study/company roles.png" alt="Company – open roles page" loading="lazy"></div>
-                    <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">Open roles are displayed as operational rows: proposed candidates, interviews, feedback, and status.</p>
-                    <p class="text-[14px] leading-[1.7] text-black/70 dark:text-white/70 mt-4 max-w-2xl">The roles page avoids heavy analytics and focuses on which roles need attention. Each row gives the hiring team enough context to open the role and continue work.</p>
-                </div>
-                <div class="scr mt-14">
-                    <div class="img-frame"><img src="./CC case study/company create role.png" alt="Company – create role panel" loading="lazy"></div>
-                    <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">Creating a role happens in the same right-panel system, keeping the company in context.</p>
-                    <p class="text-[14px] leading-[1.7] text-black/70 dark:text-white/70 mt-4 max-w-2xl">The create role flow starts with the essentials: title, team, work mode, location, seniority, employment type, and salary range. The same panel pattern can later extend into requirements and scorecard review.</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <div class="img-frame" style="aspect-ratio:4/3"><img src="./CC case study/company candidates flow 3.png" alt="Company – feedback submitted state" class="w-full h-full object-cover object-top" loading="lazy"></div>
+                        <div class="img-frame" style="aspect-ratio:4/3"><img src="./CC case study/company roles.png" alt="Company – open roles page" class="w-full h-full object-cover object-top" loading="lazy"></div>
+                        <div class="img-frame" style="aspect-ratio:4/3"><img src="./CC case study/company create role.png" alt="Company – create role panel" class="w-full h-full object-cover object-top" loading="lazy"></div>
+                    </div>
+                    <p class="text-[12px] text-black/50 dark:text-white/50 mt-3">Submitted feedback updates the candidate state. Role management reuses the same right-panel pattern to keep teams in context.</p>
                 </div>
             </div>
         </div>
