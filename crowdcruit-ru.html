@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script>(function(){try{if(localStorage.getItem('lang')==='en'){location.replace('crowdcruit.html');}}catch(e){}})();</script>
+    <script>(function(){try{if(localStorage.getItem('theme')!=='light')document.documentElement.classList.add('dark');}catch(e){}})();</script>
     <title>Crowdcruit – Денис Сафонов</title>
     <link rel="stylesheet" href="./Font2/stylesheet.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -600,7 +601,7 @@
 
         (() => {
             const saved = localStorage.getItem('theme');
-            if (saved === 'dark') {
+            if (saved !== 'light') {
                 document.documentElement.classList.add('dark');
                 document.getElementById('ico-sun').classList.add('hidden');
                 document.getElementById('ico-moon').classList.remove('hidden');

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script>(function(){try{if(localStorage.getItem('lang')==='en'){location.replace('index.html');}}catch(e){}})();</script>
+    <script>(function(){try{if(localStorage.getItem('theme')!=='light')document.documentElement.classList.add('dark');}catch(e){}})();</script>
     <title>Денис Сафонов – Продуктовый дизайнер</title>
     <link rel="stylesheet" href="./Font2/stylesheet.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -113,13 +114,18 @@
     <!-- ─── HERO ─── -->
     <section id="about" class="sticky top-0 z-0">
         <div id="hero-inner" class="max-w-[1280px] mx-auto px-8 pt-24 pb-20">
-        <div class="mb-16">
-            <h1 class="font-haas text-[clamp(35px,5vw,70px)] font-medium leading-[1.04] tracking-[-0.03em] mb-6 r r1">
-                Продуктовый дизайнер<br>в SaaS и e-commerce.
-            </h1>
-            <p class="text-[clamp(15px,1.25vw,17px)] font-normal leading-relaxed text-black/50 dark:text-white/50 max-w-lg r r2">
-                Создаю масштабируемые платформы и e-commerce-системы – быстрые, понятные и надёжные.
-            </p>
+        <div class="mb-16 flex items-start gap-8 md:gap-12">
+            <div class="flex-1 min-w-0">
+                <h1 class="font-haas text-[clamp(35px,5vw,70px)] font-medium leading-[1.04] tracking-[-0.03em] mb-6 r r1">
+                    Продуктовый дизайнер<br>в SaaS и e-commerce.
+                </h1>
+                <p class="text-[clamp(15px,1.25vw,17px)] font-normal leading-relaxed text-black/50 dark:text-white/50 max-w-lg r r2">
+                    Создаю масштабируемые платформы и e-commerce-системы – быстрые, понятные и надёжные.
+                </p>
+            </div>
+            <div class="hidden md:block flex-shrink-0 r r1">
+                <img src="./profile-new.png" alt="Денис Сафонов" class="w-[140px] h-[140px] object-cover object-[50%_20%]" loading="eager">
+            </div>
         </div>
         <div class="border-t border-[#E5E5E5] dark:border-[#1F1F1F] pt-8 grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-10 r r3">
             <div>
@@ -215,7 +221,7 @@
         // Тема – светлая по умолчанию
         (() => {
             const saved = localStorage.getItem('theme');
-            if (saved === 'dark') {
+            if (saved !== 'light') {
                 document.documentElement.classList.add('dark');
                 document.getElementById('ico-sun').classList.add('hidden');
                 document.getElementById('ico-moon').classList.remove('hidden');
